@@ -1,0 +1,54 @@
+[user]
+  name = Darin Haener
+  user = dphaener
+  email = darin.haener@hey.com
+
+[push]
+  default = simple
+
+[github]
+  user = dphaener
+  gpgsign = false
+
+[core]
+  excludesfile = ~/.gitignore_global
+  editor = nvim --noplugin
+
+[alias]
+  aa = add --all
+  b = branch
+  co = checkout
+  cleanup = !git remote prune origin && git gc && git clean -df && git stash clear
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  rhm = !git checkout master && git fetch && git reset --hard origin/master
+  st = status
+  fix = "!f() { ${EDITOR} `git diff --name-only | uniq`; }; f"
+  po = !git push -u origin "$(git rev-parse --abbrev-ref HEAD)"
+  rc = !git rebase --continue
+  ri = rebase -i
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+
+[color "diff"]
+  meta = yellow
+
+[apply]
+  whitespace = nowarn
+
+[fetch]
+  prune = true
+
+[credential]
+	helper = osxkeychain
+
+[pager]
+  branch = false
+
+[gpg]
+	program = gpg
+
+[init]
+	defaultBranch = main
