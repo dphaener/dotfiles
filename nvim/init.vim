@@ -23,6 +23,7 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'ryanoasis/vim-devicons'
 Plug 'ianks/vim-tsx'
 Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby'
 
 call plug#end()
 
