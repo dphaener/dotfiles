@@ -15,7 +15,7 @@ asdf install ruby 3.0.2
 # Add the nodejs plugin and install the latest
 asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
 bash -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring'
-asdf install nodejs lts
+asdf install nodejs 16.13.0
 
 # Add the go plugin and install the latest
 asdf plugin-add golang https://github.com/kennyp/asdf-golang.git

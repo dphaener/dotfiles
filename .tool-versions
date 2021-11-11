@@ -1,4 +1,4 @@
-nodejs lts
+nodejs 16.13.0
 ruby 3.0.2
 golang 1.17
 rust 1.54.0
