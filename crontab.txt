@@ -1,0 +1,2 @@
+# Update all git repos daily
+5 * * * * $HOME/bin/update_git_repos.sh

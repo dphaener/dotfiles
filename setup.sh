@@ -48,7 +48,7 @@ else
     gettext libz-dev libssl-dev build-essential autoconf \
     automake pkg-config libevent-dev libncurses5-dev \
     ninja-build gettext libtool libtool-bin automake cmake g++ \
-    pkg-config unzip snap ripgrep curl bison libreadline-dev
+    pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk
 
   log 'Building latest git from source'
   ~/dotfiles/build_git.sh
@@ -112,6 +112,10 @@ cargo build --release
 sudo cp ./target/release/fastmod /usr/local/bin
 cd -
 rm -rf fastmod
+
+log 'Installing crontab and custom scripts'
+cp ~/dotfiles/update_git_repos.sh ~/bin/
+cat ~/dotfiles/crontab.txt | crontab -
 
 log 'Installing Pure prompt'
 mkdir -p "$HOME/.zsh"
