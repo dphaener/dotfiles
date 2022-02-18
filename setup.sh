@@ -28,13 +28,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
-    git nvim tmux gh gpg
+    git nvim tmux gh gpg libpq postgresql@13 libsodium redis
 
   log 'Installing GUI software packages'
-  # brew install --cask brave-browser
   brew install --cask iterm2
-  # brew install --cask 1password
   brew install --cask keybase
+  brew install --cask joplin
 
   log 'Installing the Fira Code Nerd font'
   brew tap homebrew/cask-fonts
