@@ -22,16 +22,18 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   sudo echo "$(whoami) ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
 
   log 'Installing Homebrew'
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/darinhaener/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git nvim tmux gh gpg
 
   log 'Installing GUI software packages'
-  brew install --cask brave-browser
+  # brew install --cask brave-browser
   brew install --cask iterm2
-  brew install --cask 1password
+  # brew install --cask 1password
   brew install --cask keybase
 
   log 'Installing the Fira Code Nerd font'
@@ -104,6 +106,9 @@ cp ~/dotfiles/.gemrc ~/
 cp ~/dotfiles/.asdfrc ~/
 cp ~/dotfiles/.tool-versions ~/
 
+log 'Sourcing the zshrc file so asdf works properly'
+source ~/.zshrc
+
 log 'Building and installing fastmod'
 cd /tmp
 git clone https://github.com/facebookincubator/fastmod.git
@@ -114,6 +119,7 @@ cd -
 rm -rf fastmod
 
 log 'Installing crontab and custom scripts'
+mkdir -p ~/bin
 cp ~/dotfiles/update_git_repos.sh ~/bin/
 cat ~/dotfiles/crontab.txt | crontab -
 
