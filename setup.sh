@@ -28,7 +28,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
-    git nvim tmux gh gpg libpq postgresql@13 libsodium redis
+    git nvim tmux gh gpg libpq postgresql@13 libsodium redis \
+    pdftk-java
 
   log 'Installing GUI software packages'
   brew install --cask iterm2
