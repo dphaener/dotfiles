@@ -35,6 +35,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install --cask iterm2
   brew install --cask keybase
   brew install --cask joplin
+  brew install --cask skitch
 
   log 'Installing the Fira Code Nerd font'
   brew tap homebrew/cask-fonts
