@@ -24,3 +24,6 @@ map <Leader>e :NERDTreeToggle<CR>
 
 " Fix the indentation in a normal file
 map <Leader>i mzgg=G`z
+
+" Add a frozen string literal to the top of the file
+map <Leader>fs ggO# frozen_string_literal: true<CR><Esc>x<Esc>

@@ -24,6 +24,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'ianks/vim-tsx'
 Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby'
+Plug 'AndrewRadev/splitjoin.vim'
 
 call plug#end()
 
@@ -38,3 +39,4 @@ call s:SourceFile("fugitive.vim")
 call s:SourceFile("nerdtree.vim")
 call s:SourceFile("coc.vim")
 call s:SourceFile("ctrlp.vim")
+call s:SourceFile("splitjoin.vim")
