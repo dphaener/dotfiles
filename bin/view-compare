@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+
+base_branch = ARGV.fetch(0, 'main')
+
+views = `git diff --name-only #{base_branch} db/views`.split
+
+views.each do |new_view_name|
+  new_version = new_view_name.match(/(?<v>\d+)/)[:v]
+  first_version = new_version == '01'
+  previous_version = (new_version.to_i - 1).to_s.rjust(2, '0')
+  previous_view_name = new_view_name.gsub(new_version, previous_version)
+
+  if first_version
+    puts `git diff #{new_view_name} --color`
+  else
+    puts `git diff --no-index #{previous_view_name} #{new_view_name} --color`
+  end
+end

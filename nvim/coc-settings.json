@@ -1,9 +1,0 @@
-{
-  "eslint.autoFixOnSave": true,
-  "coc.preferences.formatOnSaveFiletypes": ["ruby", "javascript"],
-  "solargraph.autoformat": true,
-  "solargraph.formatting": true,
-  "solargraph.diagnostics": true,
-  "solargraph.hover": true,
-  "solargraph.completion": true
-}

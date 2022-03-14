@@ -4,6 +4,7 @@ ZSH_THEME=""
 plugins=(
   bundler
   capistrano
+  fzf
   gem
   gitfast
   last-working-dir

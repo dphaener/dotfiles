@@ -1,7 +1,0 @@
-name: dev
-root: ~/
-
-windows:
-  - editor: vim
-  - servers:
-      layout: 9c5a,238x66,0,0{119x66,0,0,2,118x66,120,0[118x33,120,0,3,118x32,120,34,4]}
