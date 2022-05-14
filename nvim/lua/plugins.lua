@@ -45,6 +45,5 @@ return require("packer").startup(function()
   use "github/copilot.vim"
   use "tpope/vim-endwise"
   use "nvim-lua/popup.nvim"
-  use "nvim-treesitter/nvim-treesitter"
   use "AndrewRadev/splitjoin.vim"
 end)

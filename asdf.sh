@@ -11,6 +11,7 @@ fi
 # Add the Ruby plugin and install the latest
 asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
 asdf install ruby 3.1.0
+asdf install ruby 2.7.1
 
 # Add the nodejs plugin and install the latest
 asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git

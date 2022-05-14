@@ -14,6 +14,16 @@ config.cssls.setup{}
 config.eslint.setup{}
 config.html.setup{}
 config.jsonls.setup{}
-config.solargraph.setup{}
+config.solargraph.setup{
+  settings = {
+    solargraph = {
+      autoformat = true,
+      formatting = true,
+      diagnostics = true,
+      hover = true,
+      completion = true,
+    }
+  }
+}
 config.tailwindcss.setup{}
 config.tsserver.setup{}

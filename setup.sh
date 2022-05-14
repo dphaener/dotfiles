@@ -29,7 +29,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git tmux gh gpg libpq postgresql@13 libsodium redis \
-    pdftk-java
+    pdftk-java fd
   brew install --HEAD neovim
 
   log 'Installing GUI software packages'
@@ -52,7 +52,8 @@ else
     gettext libz-dev libssl-dev build-essential autoconf \
     automake pkg-config libevent-dev libncurses5-dev \
     ninja-build gettext libtool libtool-bin automake cmake g++ \
-    pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk
+    pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk \
+    fd-find
 
   log 'Building latest git from source'
   ~/dotfiles/build_git.sh
@@ -78,10 +79,10 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 # Ensure the asdf shims are available while we're in this if block
 if [[ "$OSTYPE" == "darwin"* ]]; then
   . $(brew --prefix asdf)/asdf.sh
-  nvim +PlugInstall +qa
+  nvim +PackerInstall +qa
 else
   . $HOME/.asdf/asdf.sh
-  /usr/local/bin/nvim/bin/nvim +PlugInstall +qa
+  /usr/local/bin/nvim/bin/nvim +PackerInstall +qa
 fi
 
 log 'Installing oh-my-zsh'
@@ -110,6 +111,17 @@ cp ~/dotfiles/.tool-versions ~/
 
 log 'Sourcing the zshrc file so asdf works properly'
 source ~/.zshrc
+
+log 'Installing default gems'
+asdf shell ruby 2.7.1
+gem install bundler
+gem install rails
+gem install neovim
+
+asdf shell ruby 3.1.0
+gem install bundler
+gem install rails
+gem install neovim
 
 log 'Building and installing fastmod'
 cd /tmp
