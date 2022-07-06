@@ -89,10 +89,15 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/copilot.vim",
     url = "https://github.com/github/copilot.vim"
   },
-  darcula = {
+  ["jellybeans.vim"] = {
     loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/darcula",
-    url = "https://github.com/blueshirts/darcula"
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/jellybeans.vim",
+    url = "https://github.com/nanotech/jellybeans.vim"
+  },
+  ["lsp-colors.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/lsp-colors.nvim",
+    url = "https://github.com/folke/lsp-colors.nvim"
   },
   ["lua-async-await"] = {
     loaded = true,
@@ -113,6 +118,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nerdtree-git-plugin",
     url = "https://github.com/Xuyuanp/nerdtree-git-plugin"
+  },
+  ["nightfox.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
+    url = "https://github.com/EdenEast/nightfox.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -193,6 +203,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-repeat",
     url = "https://github.com/tpope/vim-repeat"
+  },
+  ["vim-ripgrep"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-ripgrep",
+    url = "https://github.com/jremmen/vim-ripgrep"
   },
   ["vim-surround"] = {
     loaded = true,

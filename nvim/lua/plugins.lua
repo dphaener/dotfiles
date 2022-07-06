@@ -14,7 +14,15 @@ vim.cmd [[
 
 return require("packer").startup(function()
   use "wbthomason/packer.nvim"
-  use "blueshirts/darcula"
+  -- use "nanotech/jellybeans.vim"
+  -- use "EdenEast/nightfox.nvim"
+  use {
+    "rktjmp/lush.nvim",
+    requires = {
+      "adisen99/apprentice.nvim",
+      "adisen99/codeschool.nvim"
+    }
+  }
   use {
     "scrooloose/nerdtree",
     requires = {
@@ -46,4 +54,7 @@ return require("packer").startup(function()
   use "tpope/vim-endwise"
   use "nvim-lua/popup.nvim"
   use "AndrewRadev/splitjoin.vim"
+  use "jremmen/vim-ripgrep"
+  use "nvim-treesitter/nvim-treesitter"
+  use 'folke/lsp-colors.nvim'
 end)

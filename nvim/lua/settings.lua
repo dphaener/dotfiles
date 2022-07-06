@@ -16,7 +16,7 @@ vim.cmd [[
   syntax enable
   filetype plugin indent on
   set number
-  colorscheme darcula
+  set termguicolors
   autocmd BufEnter * set relativenumber
   autocmd BufWritePre * lua vim.lsp.buf.formatting()
   autocmd BufWritePre *.js EslintFixAll

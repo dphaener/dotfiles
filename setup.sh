@@ -29,7 +29,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git tmux gh gpg libpq postgresql@13 libsodium redis \
-    pdftk-java fd
+    pdftk-java fd fzf
   brew install --HEAD neovim
 
   log 'Installing GUI software packages'
@@ -53,7 +53,7 @@ else
     automake pkg-config libevent-dev libncurses5-dev \
     ninja-build gettext libtool libtool-bin automake cmake g++ \
     pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk \
-    fd-find
+    fd-find fzf
 
   log 'Building latest git from source'
   ~/dotfiles/build_git.sh
