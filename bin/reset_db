@@ -1,0 +1,5 @@
+#!/bin/bash
+
+bin/rails db:environment:set RAILS_ENV=development
+bundle exec rails db:drop db:create db:schema:load
+SEEDING=true bin/rake create_demo\["Don","brewer@example.com","Example Brewing Company","true"\]

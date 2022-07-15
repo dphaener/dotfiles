@@ -1,0 +1,114 @@
+#!/bin/bash
+
+set -eE
+
+clear
+
+source ~/.local/share/utils/logging.sh
+rm -f /tmp/release.log
+
+function logtofile() {
+  exec 3>&1 4>&2
+  trap 'exec 2>&4 1>&3' 0 1 2 3
+  exec 1>>/tmp/release.log 2>&1
+}
+function logtostdout() {
+  exec 1>&3 2>&4
+  trap 'exec 1>&3 2>&4' 0 1 2 3
+}
+function newline() {
+  logtostdout
+  echo ""
+  logtofile
+}
+
+trap 'exiterror /tmp/release.log' ERR
+
+BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+echo
+logtofile
+
+if [[ $(git diff --stat) != '' ]]
+then
+  echo
+  log "You have unstaged changes" "WARN"
+
+  logtostdout
+  echo
+  read -p "Would you like to stage and commit these changes? [y/N] " -n 1 -r
+  echo
+  echo
+  logtofile
+
+  if [[ ! $REPLY =~ ^[Yy]$ ]]
+  then
+    logerror "Aborting. Cannot continue without committing changes."
+    git checkout $BRANCH
+    exit 1
+  else
+    log "Staging and committing changes" "INFO"
+    git add . && git commit -m 'WIP - Temporary during release' --no-verify
+    newline
+  fi
+fi
+
+log "Fetching the latest changes on the remote" "INFO"
+git fetch origin main:main
+log "About to merge and release the following commits:" "CONFIRM"
+logtostdout
+echo
+git --no-pager log --graph --cherry-pick --oneline --no-decorate develop...main
+echo
+read -p "Are you sure? [y/N/e] " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[YyEe]$ ]]
+then
+  git checkout $BRANCH
+  exit 1
+elif [[ $REPLY =~ ^[Ee]$ ]]
+then
+  echo
+  logtofile
+  log "Expanded commits:" "INFO"
+  logtostdout
+  echo
+  git --no-pager log --graph --cherry-pick develop...main
+  echo
+
+  read -p "Continue? [y/N] " -n 1 -r
+  if [[ ! $REPLY =~ ^[Yy]$ ]]
+  then
+    git checkout $BRANCH
+    exit 1
+  fi
+fi
+
+echo
+logtofile
+
+log "Checking out main and pulling the latest"
+cd ~/code/fermentable
+git checkout main
+git pull
+log "Ensuring develop is up to date"
+if [[ $BRANCH == 'develop' ]]
+then
+  git pull
+else
+  git fetch origin develop:develop
+fi
+log "Merging develop into main and pushing"
+git merge develop
+git push
+
+log "Deploying to production"
+eval "bundle exec cap production deploy"
+log "Deploy was successful!" "INFO"
+eval "git checkout $BRANCH"
+if [[ $BRANCH != 'develop' ]]
+then
+  log "Checking out ${BRANCH} again and rebasing on develop"
+  eval "git rebase develop"
+fi
+log "Done!" "INFO"

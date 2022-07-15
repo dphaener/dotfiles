@@ -9,13 +9,7 @@ exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>/tmp/setup.log 2>&1
 
-# Create a function to log current steps
-#
-MYTAB='  '
-function log() {
-  echo "${MYTAB}DEBUG: $1"
-  echo "${MYTAB}"$'\e[1;33m'STEP: $'\e[0m'$'\e[1;32m'$1$'\e[0m' >&3
-}
+source ./utils/logging.sh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   log "Allowing $(whoami) sudo privileges with no password"
@@ -29,14 +23,26 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git tmux gh gpg libpq postgresql@13 libsodium redis \
-    pdftk-java fd fzf
+    pdftk-java fd fzf chromedriver
   brew install --HEAD neovim
+  brew install withgraphite/tap/graphite
+
+  # Give permission to run chromedriver
+  xattr -d com.apple.quarantine $(which chromedriver)
 
   log 'Installing GUI software packages'
   brew install --cask iterm2
   brew install --cask keybase
   brew install --cask joplin
   brew install --cask skitch
+  brew install --cask 1password
+  brew install --cask brave-browser
+  brew install --cask chromium
+  brew install --cask zoom
+  brew install --cask cleanmymac
+  brew install --cask dbeaver-community
+  brew install --cask shift
+  brew install --cask tidal
 
   log 'Installing the Fira Code Nerd font'
   brew tap homebrew/cask-fonts
@@ -65,12 +71,12 @@ else
   ~/dotfiles/build_tmux.sh
 fi
 
-log 'Installing Ruby, nodejs, Go, and Rust'
+log 'Installing Ruby and nodejs'
 ./asdf.sh
 
-log 'Copying nvim configuration files'
+log 'Linking nvim configuration files'
 mkdir -p ~/.config
-cp -r ~/dotfiles/nvim ~/.config
+ln -s ~/dotfiles/nvim ~/.config
 
 log 'Install nvim plugins'
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
@@ -97,17 +103,17 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 log 'Installing zsh-autosuggestions'
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-log 'Copying remaining configuration files'
-cp ~/dotfiles/.tmux.conf ~/
-cp -r ~/dotfiles/.tmuxinator ~/
-cp -r ~/dotfiles/.zsh ~/
-cp ~/dotfiles/.zshrc ~/
-cp ~/dotfiles/.gitconfig ~/
-cp ~/dotfiles/.gitignore_global ~/
-cp ~/dotfiles/.ssh/rc ~/.ssh
-cp ~/dotfiles/.gemrc ~/
-cp ~/dotfiles/.asdfrc ~/
-cp ~/dotfiles/.tool-versions ~/
+log 'Linking remaining configuration files'
+ln -s ~/dotfiles/.tmux.conf ~/
+ln -s ~/dotfiles/.zsh ~/
+ln -s ~/dotfiles/.zshrc ~/
+ln -s ~/dotfiles/.gitconfig ~/
+ln -s ~/dotfiles/.gitignore_global ~/
+ln -s ~/dotfiles/.ssh/rc ~/.ssh
+ln -s ~/dotfiles/.gemrc ~/
+ln -s ~/dotfiles/.asdfrc ~/
+ln -s ~/dotfiles/.tool-versions ~/
+ln -s ~/dotfiles/utils ~/.local/share
 
 log 'Sourcing the zshrc file so asdf works properly'
 source ~/.zshrc
@@ -124,17 +130,11 @@ gem install rails
 gem install neovim
 
 log 'Building and installing fastmod'
-cd /tmp
-git clone https://github.com/facebookincubator/fastmod.git
-cd fastmod
-cargo build --release
-sudo cp ./target/release/fastmod /usr/local/bin
-cd -
-rm -rf fastmod
+./fastmod.sh
 
 log 'Installing crontab and custom scripts'
 mkdir -p ~/bin
-cp ~/dotfiles/update_git_repos.sh ~/bin/
+cp ~/dotfiles/* ~/bin/
 cat ~/dotfiles/crontab.txt | crontab -
 
 log 'Installing Pure prompt'
@@ -145,4 +145,11 @@ log 'Installing the Tmux plugin manager and plugins'
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/bin/install_plugins
 
+log 'Installing Jira CLI'
+npm install -g jira-cli
+
 log 'Setup complete! Quit this shell and open a new one to ensure all changes take effect'
+log 'Todo'
+log ' - Authenticate with graphite "gt auth --token <your_cli_auth_token>"'
+log ' - Authenticate with Jira'
+log ' - Install the iTerm2 preferences - com.googlecode.iterm2.plist'

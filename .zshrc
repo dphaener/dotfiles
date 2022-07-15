@@ -11,4 +11,13 @@ bindkey '^l' autosuggest-accept
 # For autojump
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+# For some reason I need to do this for every shell. ¯\_(ツ)_/¯
+eval $(ssh-agent) > /dev/null 2>&1
+ssh-add -K ~/.ssh/fermentable_ed25519 > /dev/null 2>&1
+ssh-add -K ~/.ssh/id_ed25519 > /dev/null 2>&1
+
+# Increase the JavaScript heap size
+export NODE_OPTIONS=--max_old_space_size=4096
+
+# Setup FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

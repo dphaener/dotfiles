@@ -14,14 +14,9 @@ vim.cmd [[
 
 return require("packer").startup(function()
   use "wbthomason/packer.nvim"
-  -- use "nanotech/jellybeans.vim"
-  -- use "EdenEast/nightfox.nvim"
   use {
     "rktjmp/lush.nvim",
-    requires = {
-      "adisen99/apprentice.nvim",
-      "adisen99/codeschool.nvim"
-    }
+    requires = { "adisen99/apprentice.nvim" }
   }
   use {
     "scrooloose/nerdtree",

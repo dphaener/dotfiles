@@ -11,6 +11,10 @@ local argument_map = {
   gem = {
     test = { cmd = "gem", args = { "list" } },
     install = { cmd = "gem", args = { "install" } },
+  },
+  brew = {
+    test = { cmd = "brew", args = { "list" } },
+    install = { cmd = "brew", args = { "install" } },
   }
 }
 local server_definitions = {
@@ -21,6 +25,7 @@ local server_definitions = {
   solargraph = { cmd = "gem", library = "solargraph" },
   tailwindcss = { cmd = "npm", library = "@tailwindcss/language-server" },
   tsserver = { cmd = "npm", library = "typescript-language-server" },
+  sumneko_lua = { cmd = "brew", library = "lua-language-server" },
 }
 
 local check_for_server = function(server, _, callback)
@@ -69,7 +74,7 @@ local install_server = function(server)
 end
 
 function M.install_servers(servers)
-  return a.sync(function ()
+  return a.sync(function()
     for _, server in ipairs(servers) do
       a.wait(install_server(server))
     end

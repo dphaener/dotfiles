@@ -1,0 +1,16 @@
+#! /bin/bash
+
+PGPASSWORD=zmmnc8z171xxbcdm pg_dump -Fc \
+  -h fermentable-db-do-user-7844940-0-8114.a.db.ondigitalocean.com \
+  -p 25060 -U fermentable -d fermentable_production -n www \
+  --exclude-table-data='www.versions' \
+  --exclude-table-data='www.quickbooks_credentials' \
+  --exclude-table-data='www.keg_id_settings' \
+  --exclude-table-data='www.keg_id_data' \
+  --exclude-table-data='www.blazer*' \
+  --exclude-table-data='www.webhook_logs' \
+  --exclude-table-data='www.http_logs' \
+   > ~/code/prod.dump
+
+echo DROP SCHEMA www CASCADE\; | psql -h 127.0.0.1 -U darinhaener fermentable_development
+pg_restore -v -h 127.0.0.1 -U darinhaener -d fermentable_development ~/code/prod.dump

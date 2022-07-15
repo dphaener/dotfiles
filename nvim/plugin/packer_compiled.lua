@@ -74,6 +74,11 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["apprentice.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/apprentice.nvim",
+    url = "https://github.com/adisen99/apprentice.nvim"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -84,15 +89,20 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["codeschool.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/codeschool.nvim",
+    url = "https://github.com/adisen99/codeschool.nvim"
+  },
   ["copilot.vim"] = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/copilot.vim",
     url = "https://github.com/github/copilot.vim"
   },
-  ["jellybeans.vim"] = {
+  darcula = {
     loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/jellybeans.vim",
-    url = "https://github.com/nanotech/jellybeans.vim"
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/darcula",
+    url = "https://github.com/blueshirts/darcula"
   },
   ["lsp-colors.nvim"] = {
     loaded = true,
@@ -109,6 +119,11 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
+  ["lush.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/lush.nvim",
+    url = "https://github.com/rktjmp/lush.nvim"
+  },
   nerdtree = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nerdtree",
@@ -118,11 +133,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nerdtree-git-plugin",
     url = "https://github.com/Xuyuanp/nerdtree-git-plugin"
-  },
-  ["nightfox.nvim"] = {
-    loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nightfox.nvim",
-    url = "https://github.com/EdenEast/nightfox.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,

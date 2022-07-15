@@ -8,6 +8,7 @@ require("utils.lsp").install_servers{
   "solargraph",
   "tailwindcss",
   "tsserver",
+  "sumneko_lua",
 }
 
 config.cssls.setup{}
@@ -27,3 +28,4 @@ config.solargraph.setup{
 }
 config.tailwindcss.setup{}
 config.tsserver.setup{}
+config.sumneko_lua.setup{}
