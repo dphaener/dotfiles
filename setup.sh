@@ -41,8 +41,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install --cask zoom
   brew install --cask cleanmymac
   brew install --cask dbeaver-community
-  brew install --cask shift
   brew install --cask tidal
+  brew install --cask slack
 
   log 'Installing the Fira Code Nerd font'
   brew tap homebrew/cask-fonts
