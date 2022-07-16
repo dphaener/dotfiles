@@ -1,8 +1,6 @@
 source $HOME/.zsh/oh-my-zsh.zsh
-source $HOME/.zsh/pure.zsh
 source $HOME/.zsh/paths.zsh
 source $HOME/.zsh/env.zsh
-source $HOME/.zsh/tmux.zsh
 source $HOME/.zsh/asdf.zsh
 source $HOME/.zsh/aliases/all_aliases.zsh
 
@@ -21,3 +19,6 @@ export NODE_OPTIONS=--max_old_space_size=4096
 
 # Setup FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Setup the starship prompt
+eval "$(starship init zsh)"

@@ -23,7 +23,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git tmux gh gpg libpq postgresql@13 libsodium redis \
-    pdftk-java fd fzf chromedriver
+    pdftk-java fd fzf chromedriver starship
   brew install --HEAD neovim
   brew install withgraphite/tap/graphite
 
@@ -114,6 +114,9 @@ ln -s ~/dotfiles/.gemrc ~/
 ln -s ~/dotfiles/.asdfrc ~/
 ln -s ~/dotfiles/.tool-versions ~/
 ln -s ~/dotfiles/utils ~/.local/share
+
+# Link the starship config file
+mkdir -p ~/.config && ln -s ~/dotfiles/starship.toml ~/.config
 
 log 'Sourcing the zshrc file so asdf works properly'
 source ~/.zshrc

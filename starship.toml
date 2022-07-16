@@ -1,0 +1,58 @@
+add_newline = true
+
+format = """
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$ruby\
+$golang\
+$nodejs\
+$cmd_duration\
+$line_break\
+$character"""
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vicmd_symbol = "[❮](green)"
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
+
+[directory]
+read_only = " "
+style = "blue"
+truncate_to_repo = false
+
+[git_branch]
+symbol = " "
+format = "$symbol[$branch]($style)"
+style = "bright-black"
+
+[git_status]
+format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+style = "cyan"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\)'
+style = "bright-black"
+
+[golang]
+symbol = " "
+
+[nodejs]
+symbol = " "
+format = "[$symbol($version)]($style) "
+
+[ruby]
+symbol = " "
+format = "[$symbol($version)]($style) "
