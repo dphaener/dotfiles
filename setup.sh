@@ -137,7 +137,7 @@ log 'Building and installing fastmod'
 
 log 'Installing crontab and custom scripts'
 mkdir -p ~/bin
-cp ~/dotfiles/* ~/bin/
+cp ~/dotfiles/bin/* ~/bin/
 cat ~/dotfiles/crontab.txt | crontab -
 
 log 'Installing Pure prompt'
@@ -156,3 +156,4 @@ log 'Todo'
 log ' - Authenticate with graphite "gt auth --token <your_cli_auth_token>"'
 log ' - Authenticate with Jira'
 log ' - Install the iTerm2 preferences - com.googlecode.iterm2.plist'
+log ' - Copy over the ~/env.zsh file from some other machine'

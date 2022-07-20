@@ -21,11 +21,22 @@
   cleanup = !git remote prune origin && git gc && git clean -df && git stash clear
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   rhm = !git checkout master && git fetch && git reset --hard origin/master
-  st = status
   fix = "!f() { ${EDITOR} `git diff --name-only | uniq`; }; f"
   po = !git push -u origin "$(git rev-parse --abbrev-ref HEAD)"
   rc = !git rebase --continue
   ri = rebase -i
+  a = "!f() { git add ${1} }; f"
+  c = commit -v
+  s =  status
+  lb = branch -vv
+  db = branch -D
+  co = checkout
+  p = push
+  cw = "!f() { git add . && git commit -m 'WIP ${1}' --no-verify }; f"
+  cf = "!f() { git add . && git commit -m 'Fixup -> ${1}' --no-verify }; f"
+  pf = push --force
+  cp = cherry-pick
+  rh = reset HEAD~
 
 [color]
   diff = auto

@@ -3,6 +3,7 @@ source $HOME/.zsh/paths.zsh
 source $HOME/.zsh/env.zsh
 source $HOME/.zsh/asdf.zsh
 source $HOME/.zsh/aliases/all_aliases.zsh
+source $HOME/.zsh/graphite.zsh
 
 bindkey '^l' autosuggest-accept
 
