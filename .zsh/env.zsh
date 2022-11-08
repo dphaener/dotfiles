@@ -8,7 +8,6 @@ export FERMENTABLE_HOST=http://dev.getfermentable.com:3000
 export REACT_NATIVE_FERMENTABLE_BASE_URL=http://dev.getfermentable.com:3000
 export ANDROID_SDK=$HOME/Library/Android/sdk
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
-export ACTIVE_JOB_QUEUE_ADAPTER=sidekiq
 
 if test -f "$HOME/env.zsh"; then
   source "$HOME/env.zsh"

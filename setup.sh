@@ -23,7 +23,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git tmux gh gpg libpq postgresql@13 libsodium redis \
-    pdftk-java fd fzf chromedriver starship
+    pdftk-java fd fzf chromedriver starship raycast hey
   brew install --HEAD neovim
   brew install withgraphite/tap/graphite
 
@@ -31,7 +31,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   xattr -d com.apple.quarantine $(which chromedriver)
 
   log 'Installing GUI software packages'
-  brew install --cask iterm2
   brew install --cask keybase
   brew install --cask joplin
   brew install --cask skitch
@@ -41,7 +40,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install --cask zoom
   brew install --cask cleanmymac
   brew install --cask dbeaver-community
-  brew install --cask tidal
+  brew install --cask spotify
   brew install --cask slack
 
   log 'Installing the Fira Code Nerd font'
@@ -82,15 +81,6 @@ log 'Install nvim plugins'
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-# Ensure the asdf shims are available while we're in this if block
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  . $(brew --prefix asdf)/asdf.sh
-  nvim +PackerInstall +qa
-else
-  . $HOME/.asdf/asdf.sh
-  /usr/local/bin/nvim/bin/nvim +PackerInstall +qa
-fi
-
 log 'Installing oh-my-zsh'
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 
@@ -106,20 +96,20 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 log 'Linking remaining configuration files'
 ln -s ~/dotfiles/.tmux.conf ~/
 ln -s ~/dotfiles/.zsh ~/
-ln -s ~/dotfiles/.zshrc ~/
+rm ~/.zshrc && ln -s ~/dotfiles/.zshrc ~/
 ln -s ~/dotfiles/.gitconfig ~/
 ln -s ~/dotfiles/.gitignore_global ~/
 ln -s ~/dotfiles/.ssh/rc ~/.ssh
 ln -s ~/dotfiles/.gemrc ~/
 ln -s ~/dotfiles/.asdfrc ~/
 ln -s ~/dotfiles/.tool-versions ~/
-ln -s ~/dotfiles/utils ~/.local/share
+mkdir -p ~/.local/share && ln -s ~/dotfiles/utils ~/.local/share
 
 # Link the starship config file
 mkdir -p ~/.config && ln -s ~/dotfiles/starship.toml ~/.config
 
-log 'Sourcing the zshrc file so asdf works properly'
-source ~/.zshrc
+log 'Running the asdf script so it works properly'
+. $(brew --prefix asdf)/asdf.sh
 
 log 'Installing default gems'
 asdf shell ruby 2.7.1
@@ -140,20 +130,18 @@ mkdir -p ~/bin
 cp ~/dotfiles/bin/* ~/bin/
 cat ~/dotfiles/crontab.txt | crontab -
 
-log 'Installing Pure prompt'
-mkdir -p "$HOME/.zsh"
-git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh/pure"
-
 log 'Installing the Tmux plugin manager and plugins'
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/bin/install_plugins
 
-log 'Installing Jira CLI'
-npm install -g jira-cli
+log 'Updating the iTerm configuration file preferences'
+# Specify the preferences directory
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "/Users/darinhaener/dotfiles"
+# Tell iTerm2 to use the custom preferences in the directory
+defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 
 log 'Setup complete! Quit this shell and open a new one to ensure all changes take effect'
 log 'Todo'
+log ' - Open nvim and install the plugins ":PackerInstall"'
 log ' - Authenticate with graphite "gt auth --token <your_cli_auth_token>"'
-log ' - Authenticate with Jira'
-log ' - Install the iTerm2 preferences - com.googlecode.iterm2.plist'
 log ' - Copy over the ~/env.zsh file from some other machine'

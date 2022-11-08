@@ -21,5 +21,22 @@ export NODE_OPTIONS=--max_old_space_size=4096
 # Setup FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Setup all the AWS things
+function setawsenv {
+  export AWS_PROFILE="$1"
+  aws iam list-account-aliases > /dev/null 2>&1 || aws sso login
+	echo "AWS set to $1"
+}
+AWS_PROFILES=$(aws configure list-profiles | tr '\012' ' ');
+compctl -k "( $AWS_PROFILES )" setawsenv
+
+export AWS_REGION="us-east-2"
+
+function setawsregion {
+	export AWS_REGION="$1"
+}
+
+compctl -k "(us-east-1 us-east-2)" setawsregion
+
 # Setup the starship prompt
 eval "$(starship init zsh)"

@@ -25,3 +25,7 @@ fi
 if [ -d "/usr/bin" ]; then
   PATH="$PATH:/usr/bin"
 fi
+
+# Ensure libpq is first in the path, otherwise the pq gem will not install
+# correctly
+PATH="/usr/local/opt/libpq/bin:$PATH"

@@ -9,23 +9,26 @@ vim.api.nvim_command('packadd packer.nvim')
 
 local no_errors, error_msg = pcall(function()
 
-  local time
-  local profile_info
-  local should_profile = false
-  if should_profile then
-    local hrtime = vim.loop.hrtime
-    profile_info = {}
-    time = function(chunk, start)
-      if start then
-        profile_info[chunk] = hrtime()
-      else
-        profile_info[chunk] = (hrtime() - profile_info[chunk]) / 1e6
-      end
+_G._packer = _G._packer or {}
+_G._packer.inside_compile = true
+
+local time
+local profile_info
+local should_profile = false
+if should_profile then
+  local hrtime = vim.loop.hrtime
+  profile_info = {}
+  time = function(chunk, start)
+    if start then
+      profile_info[chunk] = hrtime()
+    else
+      profile_info[chunk] = (hrtime() - profile_info[chunk]) / 1e6
     end
-  else
-    time = function(chunk, start) end
   end
-  
+else
+  time = function(chunk, start) end
+end
+
 local function save_profiles(threshold)
   local sorted_times = {}
   for chunk_name, time_taken in pairs(profile_info) do
@@ -38,8 +41,10 @@ local function save_profiles(threshold)
       results[i] = elem[1] .. ' took ' .. elem[2] .. 'ms'
     end
   end
+  if threshold then
+    table.insert(results, '(Only showing plugins that took longer than ' .. threshold .. ' ms ' .. 'to load)')
+  end
 
-  _G._packer = _G._packer or {}
   _G._packer.profile_output = results
 end
 
@@ -74,40 +79,85 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
-  ["apprentice.nvim"] = {
+  ["auto-session"] = {
+    config = { "\27LJ\2\n­\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\31auto_session_suppress_dirs\1\5\0\0\a~/\v~/code\16~/Downloads\6/\1\0\2\14log_level\nerror auto_session_use_git_branch\2\nsetup\17auto-session\frequire\0" },
     loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/apprentice.nvim",
-    url = "https://github.com/adisen99/apprentice.nvim"
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/auto-session",
+    url = "https://github.com/rmagatti/auto-session"
+  },
+  ["cmp-buffer"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/cmp-buffer",
+    url = "https://github.com/hrsh7th/cmp-buffer"
   },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  ["cmp-nvim-lua"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/cmp-nvim-lua",
+    url = "https://github.com/hrsh7th/cmp-nvim-lua"
+  },
+  ["cmp-path"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/cmp-path",
+    url = "https://github.com/hrsh7th/cmp-path"
+  },
+  ["cmp-treesitter"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/cmp-treesitter",
+    url = "https://github.com/ray-x/cmp-treesitter"
+  },
   cmp_luasnip = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  ["codeschool.nvim"] = {
-    loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/codeschool.nvim",
-    url = "https://github.com/adisen99/codeschool.nvim"
+  ["copilot-cmp"] = {
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16copilot_cmp\frequire\0" },
+    load_after = {
+      ["copilot.lua"] = true
+    },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/opt/copilot-cmp",
+    url = "https://github.com/zbirenbaum/copilot-cmp"
   },
-  ["copilot.vim"] = {
-    loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/copilot.vim",
-    url = "https://github.com/github/copilot.vim"
+  ["copilot.lua"] = {
+    after = { "copilot-cmp" },
+    config = { "\27LJ\2\nq\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\4\0005\3\3\0=\3\5\2B\0\2\1K\0\1\0\bcmp\1\0\0\1\0\2\fenabled\2\vmethod\26getCompletionsCycling\nsetup\fcopilot\frequire-\1\0\4\0\3\0\0066\0\0\0009\0\1\0003\2\2\0)\3d\0B\0\3\1K\0\1\0\0\rdefer_fn\bvim\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = false,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/opt/copilot.lua",
+    url = "https://github.com/zbirenbaum/copilot.lua"
   },
-  darcula = {
+  ["friendly-snippets"] = {
     loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/darcula",
-    url = "https://github.com/blueshirts/darcula"
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/friendly-snippets",
+    url = "https://github.com/rafamadriz/friendly-snippets"
+  },
+  ["gitsigns.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    url = "https://github.com/lewis6991/gitsigns.nvim"
+  },
+  ["lazygit.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/lazygit.nvim",
+    url = "https://github.com/kdheepak/lazygit.nvim"
   },
   ["lsp-colors.nvim"] = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/lsp-colors.nvim",
     url = "https://github.com/folke/lsp-colors.nvim"
+  },
+  ["lsp-zero.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/lsp-zero.nvim",
+    url = "https://github.com/VonHeikemen/lsp-zero.nvim"
   },
   ["lua-async-await"] = {
     loaded = true,
@@ -119,20 +169,15 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
-  ["lush.nvim"] = {
+  ["mason-lspconfig.nvim"] = {
     loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/lush.nvim",
-    url = "https://github.com/rktjmp/lush.nvim"
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/mason-lspconfig.nvim",
+    url = "https://github.com/williamboman/mason-lspconfig.nvim"
   },
-  nerdtree = {
+  ["mason.nvim"] = {
     loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nerdtree",
-    url = "https://github.com/scrooloose/nerdtree"
-  },
-  ["nerdtree-git-plugin"] = {
-    loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nerdtree-git-plugin",
-    url = "https://github.com/Xuyuanp/nerdtree-git-plugin"
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/mason.nvim",
+    url = "https://github.com/williamboman/mason.nvim"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -143,6 +188,17 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
+  },
+  ["nvim-terminal"] = {
+    config = { "\27LJ\2\nX\0\0\3\0\6\0\n6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\3\0'\2\4\0B\0\2\0029\0\5\0B\0\1\1K\0\1\0\nsetup\18nvim-terminal\frequire\vhidden\6o\bvim\0" },
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nvim-terminal",
+    url = "https://github.com/s1n7ax/nvim-terminal"
+  },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/kyazdani42/nvim-tree.lua"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -169,6 +225,11 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ["refactoring.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
+    url = "https://github.com/ThePrimeagen/refactoring.nvim"
+  },
   ["splitjoin.vim"] = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/splitjoin.vim",
@@ -184,15 +245,20 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
+  ["tokyonight.nvim"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
+    url = "https://github.com/folke/tokyonight.nvim"
+  },
   ["vim-better-whitespace"] = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-better-whitespace",
     url = "https://github.com/ntpeters/vim-better-whitespace"
   },
-  ["vim-devicons"] = {
+  ["vim-dispatch"] = {
     loaded = true,
-    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-devicons",
-    url = "https://github.com/ryanoasis/vim-devicons"
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-dispatch",
+    url = "https://github.com/tpope/vim-dispatch"
   },
   ["vim-endwise"] = {
     loaded = true,
@@ -209,6 +275,11 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-rails",
     url = "https://github.com/tpope/vim-rails"
   },
+  ["vim-refactor"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-refactor",
+    url = "https://github.com/lkdjiin/vim-refactor"
+  },
   ["vim-repeat"] = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-repeat",
@@ -219,6 +290,11 @@ _G.packer_plugins = {
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-ripgrep",
     url = "https://github.com/jremmen/vim-ripgrep"
   },
+  ["vim-rspec"] = {
+    loaded = true,
+    path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-rspec",
+    url = "https://github.com/thoughtbot/vim-rspec"
+  },
   ["vim-surround"] = {
     loaded = true,
     path = "/Users/darinhaener/.local/share/nvim/site/pack/packer/start/vim-surround",
@@ -227,6 +303,32 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: auto-session
+time([[Config for auto-session]], true)
+try_loadstring("\27LJ\2\n­\1\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\31auto_session_suppress_dirs\1\5\0\0\a~/\v~/code\16~/Downloads\6/\1\0\2\14log_level\nerror auto_session_use_git_branch\2\nsetup\17auto-session\frequire\0", "config", "auto-session")
+time([[Config for auto-session]], false)
+-- Config for: nvim-terminal
+time([[Config for nvim-terminal]], true)
+try_loadstring("\27LJ\2\nX\0\0\3\0\6\0\n6\0\0\0009\0\1\0+\1\2\0=\1\2\0006\0\3\0'\2\4\0B\0\2\0029\0\5\0B\0\1\1K\0\1\0\nsetup\18nvim-terminal\frequire\vhidden\6o\bvim\0", "config", "nvim-terminal")
+time([[Config for nvim-terminal]], false)
+-- Load plugins in order defined by `after`
+time([[Sequenced loading]], true)
+vim.cmd [[ packadd nvim-cmp ]]
+time([[Sequenced loading]], false)
+vim.cmd [[augroup packer_load_aucmds]]
+vim.cmd [[au!]]
+  -- Event lazy-loads
+time([[Defining lazy-load event autocommands]], true)
+vim.cmd [[au VimEnter * ++once lua require("packer.load")({'copilot.lua'}, { event = "VimEnter *" }, _G.packer_plugins)]]
+time([[Defining lazy-load event autocommands]], false)
+vim.cmd("augroup END")
+
+_G._packer.inside_compile = false
+if _G._packer.needs_bufread == true then
+  vim.cmd("doautocmd BufRead")
+end
+_G._packer.needs_bufread = false
+
 if should_profile then save_profiles() end
 
 end)

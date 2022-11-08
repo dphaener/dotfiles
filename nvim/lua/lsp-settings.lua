@@ -1,31 +1,35 @@
-local config = require("lspconfig")
+local lsp = require("lsp-zero")
+local cmp = require("cmp")
+local lspkind = require("lspkind")
 
-require("utils.lsp").install_servers{
-  "cssls",
-  "eslint",
-  "html",
-  "jsonls",
-  "solargraph",
-  "tailwindcss",
-  "tsserver",
-  "sumneko_lua",
-}
-
-config.cssls.setup{}
-config.eslint.setup{}
-config.html.setup{}
-config.jsonls.setup{}
-config.solargraph.setup{
-  settings = {
-    solargraph = {
-      autoformat = true,
-      formatting = true,
-      diagnostics = true,
-      hover = true,
-      completion = true,
-    }
+lsp.preset("recommended")
+lsp.setup_nvim_cmp({
+  mapping = cmp.mapping.preset.insert({
+    ['<Tab>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = false
+    }),
+  }),
+  sources = {
+    { name = "path" },
+    { name = "nvim_lsp", keyword_length = 3 },
+    { name = "luasnip", keyword_length = 3 },
+    { name = "copilot" },
+    { name = "treesitter" },
+  },
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = "symbol",
+      max_width = 50,
+      symbol_map = { Copilot = "" }
+    })
   }
-}
-config.tailwindcss.setup{}
-config.tsserver.setup{}
-config.sumneko_lua.setup{}
+})
+lsp.ensure_installed({
+  "html",
+  "cssls",
+  "tsserver",
+  "eslint",
+  "solargraph"
+})
+lsp.setup()

@@ -3,6 +3,9 @@
   user = dphaener
   email = darin.haener@hey.com
 
+[pull]
+  rebase = true
+
 [push]
   default = simple
 

@@ -30,5 +30,5 @@ Thumbs.db
 
 # Rails
 secrets.yml.key
-config/credentials/
 config/master.key
+config/credentials/*.key
