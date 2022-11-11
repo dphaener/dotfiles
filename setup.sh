@@ -23,7 +23,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git tmux gh gpg libpq postgresql@13 libsodium redis \
-    pdftk-java fd fzf chromedriver starship raycast hey
+    pdftk-java fd fzf chromedriver starship raycast hey \
+    awscli aws-iam-authenticator lazygit
   brew install --HEAD neovim
   brew install withgraphite/tap/graphite
 
@@ -45,7 +46,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
   log 'Installing the Fira Code Nerd font'
   brew tap homebrew/cask-fonts
-  brew install --cask font-fira-code-nerd-font
+  brew install --cask font-jetbrains-mono-nerd-font
 
   log 'Updating finder to always show hidden files'
   defaults write com.apple.finder AppleShowAllFiles -boolean true
@@ -94,19 +95,19 @@ log 'Installing zsh-autosuggestions'
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 log 'Linking remaining configuration files'
-ln -s ~/dotfiles/.tmux.conf ~/
-ln -s ~/dotfiles/.zsh ~/
-rm ~/.zshrc && ln -s ~/dotfiles/.zshrc ~/
-ln -s ~/dotfiles/.gitconfig ~/
-ln -s ~/dotfiles/.gitignore_global ~/
-ln -s ~/dotfiles/.ssh/rc ~/.ssh
-ln -s ~/dotfiles/.gemrc ~/
-ln -s ~/dotfiles/.asdfrc ~/
-ln -s ~/dotfiles/.tool-versions ~/
-mkdir -p ~/.local/share && ln -s ~/dotfiles/utils ~/.local/share
+ln -sf ~/dotfiles/.tmux.conf ~/
+ln -sf ~/dotfiles/.zsh/*/ ~/
+rm ~/.zshrc && ln -sf ~/dotfiles/.zshrc ~/
+ln -sf ~/dotfiles/.gitconfig ~/
+ln -sf ~/dotfiles/.gitignore_global ~/
+ln -sf ~/dotfiles/.ssh/rc ~/.ssh
+ln -sf ~/dotfiles/.gemrc ~/
+ln -sf ~/dotfiles/.asdfrc ~/
+ln -sf ~/dotfiles/.tool-versions ~/
+mkdir -p ~/.local/share && ln -sf ~/dotfiles/utils ~/.local/share
 
 # Link the starship config file
-mkdir -p ~/.config && ln -s ~/dotfiles/starship.toml ~/.config
+mkdir -p ~/.config && ln -sf ~/dotfiles/starship.toml ~/.config
 
 log 'Running the asdf script so it works properly'
 . $(brew --prefix asdf)/asdf.sh

@@ -38,5 +38,8 @@ function setawsregion {
 
 compctl -k "(us-east-1 us-east-2)" setawsregion
 
+# libpq needs to be first in the path
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
 # Setup the starship prompt
 eval "$(starship init zsh)"

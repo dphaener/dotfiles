@@ -30,6 +30,16 @@ lsp.ensure_installed({
   "cssls",
   "tsserver",
   "eslint",
-  "solargraph"
+  "solargraph",
+  "sumneko_lua",
+})
+lsp.configure("sumneko_lua", {
+  settings = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim", "use" }
+      }
+    }
+  }
 })
 lsp.setup()

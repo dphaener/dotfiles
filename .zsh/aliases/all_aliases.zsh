@@ -7,3 +7,5 @@ alias vim='nvim'
 
 # Ruby/Rails
 alias be='bundle exec'
+
+alias ls='lsd'

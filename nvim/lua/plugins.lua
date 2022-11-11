@@ -18,8 +18,8 @@ return require("packer").startup(function()
     "kyazdani42/nvim-tree.lua",
     requires = { "kyazdani42/nvim-web-devicons" }
   }
-  use "nvim-lualine/lualine.nvim"
-  use { "folke/tokyonight.nvim" }
+  use { "nvim-lualine/lualine.nvim" }
+  use { "EdenEast/nightfox.nvim" }
   use {
     "nvim-telescope/telescope.nvim",
     requires = { "nvim-lua/plenary.nvim" }
@@ -113,4 +113,6 @@ return require("packer").startup(function()
   }
   use { "lkdjiin/vim-refactor" }
   use { "onsails/lspkind.nvim" }
+  use { "mfussenegger/nvim-dap" }
+  use { "suketa/nvim-dap-ruby" }
 end)
