@@ -23,7 +23,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   log 'Installing CLI software packages'
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git tmux gh gpg libpq postgresql@13 libsodium redis \
-    pdftk-java fd fzf chromedriver starship raycast hey \
+    pdftk-java fd fzf chromedriver starship raycast \
     awscli aws-iam-authenticator lazygit lsd
   brew install --HEAD neovim
   brew install withgraphite/tap/graphite
@@ -44,6 +44,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install --cask spotify
   brew install --cask slack
   brew install --cask hammerspoon
+  brew install --cask hey
 
   log 'Installing the Fira Code Nerd font'
   brew tap homebrew/cask-fonts
