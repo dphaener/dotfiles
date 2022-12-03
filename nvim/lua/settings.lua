@@ -8,9 +8,13 @@ vim.api.nvim_create_autocmd({ "CursorHold", "FileChangedShell", "FocusGained" },
   command = "checktime",
   pattern = { "*" },
 })
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  command = "silent! lua vim.lsp.buf.format({ async = true })",
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  command = "silent! lua vim.lsp.buf.format({ async = false })",
   pattern = { "*" },
+})
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  command = "silent! EslintFixAll",
+  pattern = { "*.js" },
 })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
   command = "set relativenumber",

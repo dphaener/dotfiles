@@ -24,7 +24,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install bash gawk wget coreutils curl asdf ripgrep \
     git tmux gh gpg libpq postgresql@13 libsodium redis \
     pdftk-java fd fzf chromedriver starship raycast hey \
-    awscli aws-iam-authenticator lazygit
+    awscli aws-iam-authenticator lazygit lsd
   brew install --HEAD neovim
   brew install withgraphite/tap/graphite
 
@@ -43,6 +43,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install --cask dbeaver-community
   brew install --cask spotify
   brew install --cask slack
+  brew install --cask hammerspoon
 
   log 'Installing the Fira Code Nerd font'
   brew tap homebrew/cask-fonts
@@ -105,6 +106,8 @@ ln -sf ~/dotfiles/.gemrc ~/
 ln -sf ~/dotfiles/.asdfrc ~/
 ln -sf ~/dotfiles/.tool-versions ~/
 mkdir -p ~/.local/share && ln -sf ~/dotfiles/utils ~/.local/share
+mkdir -p ~/.hammerspoon
+cp ~/dotfiles/hammerspoon_init.lua ~/.hammerspoon/init.lua
 
 # Link the starship config file
 mkdir -p ~/.config && ln -sf ~/dotfiles/starship.toml ~/.config
@@ -113,7 +116,7 @@ log 'Running the asdf script so it works properly'
 . $(brew --prefix asdf)/asdf.sh
 
 log 'Installing default gems'
-asdf shell ruby 2.7.1
+asdf shell ruby 2.7.4
 gem install bundler
 gem install rails
 gem install neovim
