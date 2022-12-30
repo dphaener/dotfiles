@@ -12,7 +12,7 @@ vim.cmd [[
   augroup end
 ]]
 
-return require("packer").startup(function()
+return require("packer").startup({ function()
   use "wbthomason/packer.nvim"
   use {
     "kyazdani42/nvim-tree.lua",
@@ -25,11 +25,17 @@ return require("packer").startup(function()
     requires = { "nvim-lua/plenary.nvim" }
   }
   use "nvim-telescope/telescope-fzy-native.nvim"
-  use "tpope/vim-fugitive"
+  use "nvim-telescope/telescope-dap.nvim"
+  use {
+    "pwntester/octo.nvim",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "kyazdani42/nvim-web-devicons",
+    },
+  }
   use "tpope/vim-surround"
   use "tpope/vim-repeat"
-  use "tpope/vim-dispatch"
-  use "thoughtbot/vim-rspec"
   use "ntpeters/vim-better-whitespace"
   use "tpope/vim-rails"
   use {
@@ -83,6 +89,7 @@ return require("packer").startup(function()
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate"
   }
+  use "lewis6991/nvim-treesitter-context"
   use "folke/lsp-colors.nvim"
   use "lewis6991/gitsigns.nvim"
   use "kdheepak/lazygit.nvim"
@@ -104,15 +111,46 @@ return require("packer").startup(function()
       { "nvim-treesitter/nvim-treesitter" }
     }
   }
-  use {
-    "s1n7ax/nvim-terminal",
-    config = function()
-      vim.o.hidden = true
-      require("nvim-terminal").setup()
-    end,
-  }
+  use { "numToStr/FTerm.nvim" }
   use { "lkdjiin/vim-refactor" }
   use { "onsails/lspkind.nvim" }
   use { "mfussenegger/nvim-dap" }
   use { "suketa/nvim-dap-ruby" }
-end)
+  use { "NvChad/nvim-colorizer.lua" }
+  use {
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup()
+    end
+  }
+  use { "folke/trouble.nvim" }
+  use {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
+    end
+  }
+  use { "lukas-reineke/indent-blankline.nvim" }
+  use {
+    "weilbith/nvim-code-action-menu",
+    cmd = "CodeActionMenu",
+  }
+  use { "kosayoda/nvim-lightbulb" }
+  use { "stevearc/dressing.nvim" }
+  use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "olimorris/neotest-rspec",
+    }
+  }
+end,
+  config = {
+    display = {
+      open_fn = function()
+        return require('packer.util').float({ border = 'single' })
+      end
+    }
+  }
+})
