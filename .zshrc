@@ -41,7 +41,6 @@ compctl -k "(us-east-1 us-east-2)" setawsregion
 # libpq needs to be first in the path
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
-export OPENAI_API_KEY='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'
 export RUN_FEATURE_SPECS=true
 
 # Setup the starship prompt
