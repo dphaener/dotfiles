@@ -12,8 +12,8 @@ lsp.setup_nvim_cmp({
   }),
   sources = {
     { name = "path" },
-    { name = "nvim_lsp", keyword_length = 3 },
-    { name = "luasnip", keyword_length = 3 },
+    { name = "nvim_lsp",  keyword_length = 3 },
+    { name = "luasnip",   keyword_length = 3 },
     { name = "copilot" },
     { name = "treesitter" },
   },
@@ -31,9 +31,9 @@ lsp.ensure_installed({
   "tsserver",
   "eslint",
   "solargraph",
-  "sumneko_lua",
+  "lua_ls",
 })
-lsp.configure("sumneko_lua", {
+lsp.configure("lua_ls", {
   settings = {
     Lua = {
       diagnostics = {

@@ -5,27 +5,30 @@ local settings = { noremap = true, silent = true }
 vim.g.mapleader = " "
 
 -- Refresh file
-map("n", "<Leader>f", ":edit<CR>", { noremap = true, silent = true })
+map("n", "<Leader>f", ":edit<CR>", settings)
 
 -- Easily open the config file in a vertical split
-map("n", "<Leader>v", ":vsplit ~/.config/nvim/init.lua<CR>", { noremap = true, silent = true })
+map("n", "<Leader>v", ":vsplit ~/.config/nvim/init.lua<CR>", settings)
 
 -- Remove all trailing whitespace from the file
-map("n", "<Leader>rts", ":%s/\\s\\+$//<CR>", { noremap = true, silent = true })
+map("n", "<Leader>rts", ":%s/\\s\\+$//<CR>", settings)
 
 -- Fix the indentation in a normal file
-map("n", "<Leader>i", "mzgg=G`z", { noremap = true, silent = true })
+map("n", "<Leader>i", "mzgg=G`z", settings)
 
-map("n", "<Leader>ru", ":Dispatch bundle exec rubocop<CR>", { noremap = true, silent = true })
+map("n", "<Leader>ru", ":Dispatch bundle exec rubocop<CR>", settings)
 
 -- Delete all buffers
-map("n", "<Leader>bd", ":%bd!<CR>", { noremap = true, silent = true })
+map("n", "<Leader>bd", ":%bd!<CR>", settings)
 
 -- Remove the search highlight
-map("n", "<Leader>nh", ":noh<CR>", { noremap = true, silent = true })
+map("n", "<Leader>nh", ":noh<CR>", settings)
 
--- Extract variable declaration to a method
-map("n", "<Leader>r", ":ExtractMethod<CR>", { noremap = true, silent = true })
+-- Open the linter diagnostic float
+vim.keymap.set("n", "<space>gl", vim.diagnostic.open_float, settings)
 
-map("n", "<Leader>;", ":lua require('FTerm').toggle()<CR>", { noremap = true, silent = true })
-map("t", "<Leader>;", "<C-\\><C-n>:lua require('FTerm').toggle()<CR>", { noremap = true, silent = true })
+map("n", "<Leader>;", ":lua require('FTerm').toggle()<CR>", settings)
+map("t", "<Leader>;", "<C-\\><C-n>:lua require('FTerm').toggle()<CR>", settings)
+map("n", "<Leader>bp", "obinding.pry<ESC>", settings)
+map("n", "<Leader>bP", "Obinding.pry<ESC>", settings)
+map("n", "<Leader>p", "maggo rubocop:disable Rails/Output<ESC>`azz", settings)

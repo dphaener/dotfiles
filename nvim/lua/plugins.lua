@@ -112,7 +112,6 @@ return require("packer").startup({ function()
     }
   }
   use { "numToStr/FTerm.nvim" }
-  use { "lkdjiin/vim-refactor" }
   use { "onsails/lspkind.nvim" }
   use { "mfussenegger/nvim-dap" }
   use { "suketa/nvim-dap-ruby" }
@@ -145,11 +144,12 @@ return require("packer").startup({ function()
       "olimorris/neotest-rspec",
     }
   }
+  use { "f-person/git-blame.nvim" }
 end,
   config = {
     display = {
       open_fn = function()
-        return require('packer.util').float({ border = 'single' })
+        return require("packer.util").float({ border = "single" })
       end
     }
   }

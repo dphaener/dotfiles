@@ -42,6 +42,7 @@ compctl -k "(us-east-1 us-east-2)" setawsregion
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 export RUN_FEATURE_SPECS=true
+export PGPASSWORD=password
 
 # Setup the starship prompt
 eval "$(starship init zsh)"
