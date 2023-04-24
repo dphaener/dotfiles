@@ -1,0 +1,22 @@
+{
+  "name": "darins-snippets",
+  "engines": {
+    "vscode": "^1.11.0"
+  },
+  "contributes": {
+    "snippets": [
+      {
+        "language": "ruby",
+        "path": "./rspec.json"
+      },
+      {
+        "language": "ruby",
+        "path": "./rails.json"
+      },
+      {
+        "language": "ruby",
+        "path": "./ruby.json"
+      }
+    ]
+  }
+}

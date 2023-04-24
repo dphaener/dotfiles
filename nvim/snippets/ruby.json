@@ -1,0 +1,16 @@
+{
+  "Frozen string literal": {
+    "prefix": "fs",
+    "body": [
+      "# frozen_string_literal: true\n\n"
+    ]
+  },
+  "Call method": {
+    "prefix": "call",
+    "body": [
+      "def call",
+      "  # TODO: Implement",
+      "end"
+    ]
+  }
+}

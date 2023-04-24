@@ -22,27 +22,24 @@ export NODE_OPTIONS=--max_old_space_size=4096
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Setup all the AWS things
-function setawsenv {
+function setawsprofile {
   export AWS_PROFILE="$1"
   aws iam list-account-aliases > /dev/null 2>&1 || aws sso login
 	echo "AWS set to $1"
 }
 AWS_PROFILES=$(aws configure list-profiles | tr '\012' ' ');
-compctl -k "( $AWS_PROFILES )" setawsenv
-
-export AWS_REGION="us-east-2"
+compctl -k "( $AWS_PROFILES )" setawsprofile
 
 function setawsregion {
 	export AWS_REGION="$1"
 }
-
-compctl -k "(us-east-1 us-east-2)" setawsregion
 
 # libpq needs to be first in the path
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 export RUN_FEATURE_SPECS=true
 export PGPASSWORD=password
+export OPENAI_API_KEY=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
 
 # Setup the starship prompt
 eval "$(starship init zsh)"

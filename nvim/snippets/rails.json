@@ -1,0 +1,9 @@
+{
+  "Method object": {
+    "prefix": "mo",
+    "body": [
+      "method_object %i[${1:arguments}]"
+    ],
+    "description": "method object"
+  }
+}

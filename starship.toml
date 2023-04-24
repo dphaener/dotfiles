@@ -5,6 +5,7 @@ $directory\
 $git_branch\
 $git_state\
 $git_status\
+$kubernetes\
 $ruby\
 $golang\
 $nodejs\
@@ -56,3 +57,6 @@ format = "[$symbol($version)]($style) "
 [ruby]
 symbol = " "
 format = "[$symbol($version)]($style) "
+
+[kubernetes]
+disabled = true

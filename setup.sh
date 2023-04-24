@@ -61,7 +61,7 @@ else
     automake pkg-config libevent-dev libncurses5-dev \
     ninja-build gettext libtool libtool-bin automake cmake g++ \
     pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk \
-    fd-find fzf
+    fd-find fzf xclip
 
   log 'Building latest git from source'
   ~/dotfiles/build_git.sh

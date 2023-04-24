@@ -1,0 +1,55 @@
+{
+  "Rails test helper": {
+    "prefix": "rh",
+    "body": [
+      "require \"rails_helper\""
+    ],
+    "description": "before_action"
+  },
+  "Rails feature spec helper": {
+    "prefix": "fh",
+    "body": [
+      "require \"feature_helper\""
+    ]
+  },
+  "Rspec global describe": {
+    "prefix": "rd",
+    "body": [
+      "describe ${1:ClassName} do",
+      "  pending \"add some examples\"\nend"
+    ],
+    "description": "describe"
+  },
+  "Rspec feature spec describe": {
+    "prefix": "fd",
+    "body": [
+      "describe \"${1:feature}\", js: true do",
+      "  include_context \"activated_brewery\"\n",
+      "  pending \"add some examples\"\nend"
+    ]
+  },
+  "Rspec describe": {
+    "prefix": "desc",
+    "body": [
+      "describe ${1:what} do",
+      "  pending \"add some examples\"\nend"
+    ]
+  },
+  "Rspec context": {
+    "prefix": "con",
+    "body": [
+      "context \"${1:what,with,when}\" do",
+      "  it \"${2:does something}\" do",
+      "    pending \"add some examples\"",
+      "  end",
+      "end"
+    ]
+  },
+  "Rspec it": {
+    "prefix": "it",
+    "body": [
+      "it \"${1:does something}\" do",
+      "  pending \"add some examples\"\nend"
+    ]
+  }
+}
