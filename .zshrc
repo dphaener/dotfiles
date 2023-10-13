@@ -39,7 +39,6 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 export RUN_FEATURE_SPECS=true
 export PGPASSWORD=password
-export OPENAI_API_KEY=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
 
 # Setup the starship prompt
 eval "$(starship init zsh)"
