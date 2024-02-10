@@ -9,6 +9,34 @@ return {
   { "olimorris/neotest-rspec" },
   {
     "nvim-neotest/neotest",
+    keys = {
+      {
+        "<leader>tp",
+        "<cmd>lua require('neotest').jump.prev({ status = 'failed' })<CR>",
+        desc = "Jump to the previous failed test",
+      },
+      {
+        "<leader>tn",
+        "<cmd>lua require('neotest').jump.next({ status = 'failed' })<CR>",
+        desc = "Jump to the next failed test",
+      },
+      {
+        "<leader>to",
+        "<cmd>lua require('neotest').output.open({ enter = true })<CR>",
+        desc = "View the test output",
+      },
+      {
+        "<leader>ta",
+        "<cmd>lua require('neotest').run.attach()<CR>",
+        desc = "Attach to the currently running test",
+      },
+      {
+        "<leader>td",
+        "<C-\\><C-n>:q<CR>",
+        desc = "Detach from the current test terminal",
+        mode = { "t" },
+      },
+    },
     opts = {
       adapters = {
         "neotest-rspec",

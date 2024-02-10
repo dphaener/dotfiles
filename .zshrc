@@ -37,7 +37,6 @@ function setawsregion {
 # libpq needs to be first in the path
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
-export RUN_FEATURE_SPECS=true
 export PGPASSWORD=password
 
 # Setup the starship prompt

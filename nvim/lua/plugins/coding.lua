@@ -14,6 +14,7 @@ return {
       filetypes = {
         ["*"] = true,
       },
+      copilot_node_command = "/Users/darinhaener/.asdf/installs/nodejs/20.9.0/bin/node",
     },
   },
 }

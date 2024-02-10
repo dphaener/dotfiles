@@ -12,65 +12,66 @@ exec 1>/tmp/setup.log 2>&1
 source ./utils/logging.sh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  log "Allowing $(whoami) sudo privileges with no password"
-  sudo echo "$(whoami) ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
+	log "Allowing $(whoami) sudo privileges with no password"
+	sudo echo "$(whoami) ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
 
-  log 'Installing Homebrew'
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/darinhaener/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
+	log 'Installing Homebrew'
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
+	echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>/Users/darinhaener/.zprofile
+	eval "$(/opt/homebrew/bin/brew shellenv)"
 
-  log 'Installing CLI software packages'
-  brew install bash gawk wget coreutils curl asdf ripgrep \
-    git tmux gh gpg libpq postgresql@13 libsodium redis \
-    pdftk-java fd fzf chromedriver starship raycast \
-    awscli aws-iam-authenticator lazygit lsd
-  brew install --HEAD neovim
-  brew install withgraphite/tap/graphite
+	log 'Installing CLI software packages'
+	brew install bash gawk wget coreutils curl asdf ripgrep \
+		git tmux gh gpg libpq postgresql@13 libsodium redis \
+		pdftk-java fd fzf chromedriver starship raycast \
+		awscli aws-iam-authenticator lazygit lsd
+	brew install --HEAD neovim
+	brew install withgraphite/tap/graphite
 
-  # Give permission to run chromedriver
-  xattr -d com.apple.quarantine $(which chromedriver)
+	# Give permission to run chromedriver
+	xattr -d com.apple.quarantine $(which chromedriver)
 
-  log 'Installing GUI software packages'
-  brew install --cask keybase
-  brew install --cask joplin
-  brew install --cask skitch
-  brew install --cask 1password
-  brew install --cask brave-browser
-  brew install --cask chromium
-  brew install --cask zoom
-  brew install --cask cleanmymac
-  brew install --cask dbeaver-community
-  brew install --cask spotify
-  brew install --cask slack
-  brew install --cask hammerspoon
-  brew install --cask hey
+	log 'Installing GUI software packages'
+	brew install --cask keybase
+	brew install --cask joplin
+	brew install --cask skitch
+	brew install --cask 1password
+	brew install --cask brave-browser
+	brew install --cask chromium
+	brew install --cask zoom
+	brew install --cask cleanmymac
+	brew install --cask dbeaver-community
+	brew install --cask spotify
+	brew install --cask slack
+	brew install --cask hammerspoon
+	brew install --cask hey
 
-  log 'Installing the Fira Code Nerd font'
-  brew tap homebrew/cask-fonts
-  brew install --cask font-jetbrains-mono-nerd-font
+	log 'Installing the Fira Code Nerd font'
+	brew tap homebrew/cask-fonts
+	brew install --cask font-jetbrains-mono-nerd-font
 
-  log 'Updating finder to always show hidden files'
-  defaults write com.apple.finder AppleShowAllFiles -boolean true
-  killall Finder
+	log 'Updating finder to always show hidden files'
+	defaults write com.apple.finder AppleShowAllFiles -boolean true
+	killall Finder
+
 else
-  log 'Installing software packages'
-  sudo apt update -y
-  sudo apt install -y libcurl4-openssl-dev libexpat1-dev \
-    gettext libz-dev libssl-dev build-essential autoconf \
-    automake pkg-config libevent-dev libncurses5-dev \
-    ninja-build gettext libtool libtool-bin automake cmake g++ \
-    pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk \
-    fd-find fzf xclip
+	log 'Installing software packages'
+	sudo apt update -y
+	sudo apt install -y libcurl4-openssl-dev libexpat1-dev \
+		gettext libz-dev libssl-dev build-essential autoconf \
+		automake pkg-config libevent-dev libncurses5-dev \
+		ninja-build gettext libtool libtool-bin automake cmake g++ \
+		pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk \
+		fd-find fzf xclip
 
-  log 'Building latest git from source'
-  ~/dotfiles/build_git.sh
+	log 'Building latest git from source'
+	~/dotfiles/build_git.sh
 
-  log 'Building latest nvim from source'
-  ~/dotfiles/build_nvim.sh
+	log 'Building latest nvim from source'
+	~/dotfiles/build_nvim.sh
 
-  log 'Building latest tmux from source'
-  ~/dotfiles/build_tmux.sh
+	log 'Building latest tmux from source'
+	~/dotfiles/build_tmux.sh
 fi
 
 log 'Installing Ruby and nodejs'
