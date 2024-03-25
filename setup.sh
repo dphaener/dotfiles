@@ -20,35 +20,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>/Users/darinhaener/.zprofile
 	eval "$(/opt/homebrew/bin/brew shellenv)"
 
-	log 'Installing CLI software packages'
-	brew install bash gawk wget coreutils curl asdf ripgrep \
-		git tmux gh gpg libpq postgresql@13 libsodium redis \
-		pdftk-java fd fzf chromedriver starship raycast \
-		awscli aws-iam-authenticator lazygit lsd
-	brew install --HEAD neovim
-	brew install withgraphite/tap/graphite
+	log 'Homebrew packages'
+	brew bundle
 
-	# Give permission to run chromedriver
 	xattr -d com.apple.quarantine $(which chromedriver)
-
-	log 'Installing GUI software packages'
-	brew install --cask keybase
-	brew install --cask joplin
-	brew install --cask skitch
-	brew install --cask 1password
-	brew install --cask brave-browser
-	brew install --cask chromium
-	brew install --cask zoom
-	brew install --cask cleanmymac
-	brew install --cask dbeaver-community
-	brew install --cask spotify
-	brew install --cask slack
-	brew install --cask hammerspoon
-	brew install --cask hey
-
-	log 'Installing the Fira Code Nerd font'
-	brew tap homebrew/cask-fonts
-	brew install --cask font-jetbrains-mono-nerd-font
 
 	log 'Updating finder to always show hidden files'
 	defaults write com.apple.finder AppleShowAllFiles -boolean true
@@ -79,13 +54,14 @@ log 'Installing Ruby and nodejs'
 
 log 'Linking nvim configuration files'
 mkdir -p ~/.config
-ln -s ~/dotfiles/nvim ~/.config
+ln -sf ~/dotfiles/nvim ~/.config
 
 log 'Install nvim plugins'
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 log 'Installing oh-my-zsh'
+rm -rf ~/.oh-my-zsh
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 
 log 'Installing zsh-completions'
@@ -99,7 +75,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 
 log 'Linking remaining configuration files'
 ln -sf ~/dotfiles/.tmux.conf ~/
-ln -sf ~/dotfiles/.zsh/*/ ~/
+ln -sf ~/dotfiles/.zsh/ ~/
 rm ~/.zshrc && ln -sf ~/dotfiles/.zshrc ~/
 ln -sf ~/dotfiles/.gitconfig ~/
 ln -sf ~/dotfiles/.gitignore_global ~/
@@ -115,15 +91,10 @@ cp ~/dotfiles/hammerspoon_init.lua ~/.hammerspoon/init.lua
 mkdir -p ~/.config && ln -sf ~/dotfiles/starship.toml ~/.config
 
 log 'Running the asdf script so it works properly'
-. $(brew --prefix asdf)/asdf.sh
+. $(brew --prefix asdf)/libexec/asdf.sh
 
 log 'Installing default gems'
-asdf shell ruby 2.7.4
-gem install bundler
-gem install rails
-gem install neovim
-
-asdf shell ruby 3.1.0
+asdf shell ruby 3.2.2
 gem install bundler
 gem install rails
 gem install neovim
