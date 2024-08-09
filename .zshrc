@@ -12,11 +12,7 @@ bindkey '^l' autosuggest-accept
 
 # For some reason I need to do this for every shell. ¯\_(ツ)_/¯
 eval $(ssh-agent) > /dev/null 2>&1
-ssh-add -K ~/.ssh/fermentable_ed25519 > /dev/null 2>&1
 ssh-add -K ~/.ssh/id_ed25519 > /dev/null 2>&1
-
-# Increase the JavaScript heap size
-export NODE_OPTIONS=--max_old_space_size=4096
 
 # Setup FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -34,10 +30,16 @@ function setawsregion {
 	export AWS_REGION="$1"
 }
 
+unsetopt nomatch
+
 # libpq needs to be first in the path
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 export PGPASSWORD=password
+export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 
 # Setup the starship prompt
 eval "$(starship init zsh)"
+
+# Generated for envman. Do not edit.
+[ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"

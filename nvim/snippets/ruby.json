@@ -2,7 +2,7 @@
   "Frozen string literal": {
     "prefix": "fs",
     "body": [
-      "# frozen_string_literal: true\n\n"
+      "# frozen_string_literal: true\n"
     ]
   },
   "Call method": {

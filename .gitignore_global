@@ -32,3 +32,8 @@ Thumbs.db
 secrets.yml.key
 config/master.key
 config/credentials/*.key
+
+# Solargraph
+.solargraph.yml
+
+darin_todo.md

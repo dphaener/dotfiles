@@ -9,6 +9,8 @@ local opt = vim.opt
 opt.mouse = ""
 opt.textwidth = 120
 opt.colorcolumn = "+1"
+opt.pumblend = 0
+opt.list = false
 
 vim.diagnostic.config({
   virtual_text = false,

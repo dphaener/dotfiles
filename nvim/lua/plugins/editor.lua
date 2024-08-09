@@ -15,6 +15,10 @@ return {
           require("dir-telescope").setup()
         end,
       },
+      { "nvim-telescope/telescope-file-browser.nvim" },
+    },
+    keys = {
+      { "<leader>fl", "<cmd>Telescope file_browser<cr>", desc = "File Browser" },
     },
     opts = {
       defaults = {
@@ -38,13 +42,12 @@ return {
   {
     "folke/which-key.nvim",
     opts = {
-      defaults = {
-        ["<leader>i"] = { name = "+insert" },
-        ["<leader>cs"] = { name = "+split" },
-        ["<leader>gh"] = { name = "+hunks" },
-        ["<leader>ch"] = { name = "+highlight" },
-        ["<leader>r"] = { name = "+rails" },
-        ["<leader>z"] = { name = "+zettelkasten" },
+      spec = {
+        { "<leader>ch", group = "highlight" },
+        { "<leader>gh", group = "hunks" },
+        { "<leader>i", group = "insert" },
+        { "<leader>r", group = "rails", icon = { icon = "󰫏", color = "red" } },
+        { "<leader>z", group = "zettelkasten" },
       },
     },
   },
@@ -117,4 +120,5 @@ return {
       })
     end,
   },
+  { "mustache/vim-mustache-handlebars" },
 }

@@ -7,23 +7,9 @@ return {
         "erb-lint",
         "eslint-lsp",
         "eslint_d",
-        "gitlint",
         "html-lsp",
-        "jq",
-        "json-lsp",
-        "jsonlint",
-        "lemminx",
         "lua-language-server",
-        "markdownlint",
         "prettier",
-        "shellcheck",
-        "shfmt",
-        "solargraph",
-        "sql-formatter",
-        "sqlls",
-        "stylua",
-        "tailwindcss-language-server",
-        "yaml-language-server",
       },
     },
   },
@@ -46,5 +32,15 @@ return {
       })
       opts.experimental.ghost_text = false
     end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        ruby_lsp = {
+          cmd = { "/Users/darinhaener/.asdf/shims/ruby-lsp" },
+        },
+      },
+    },
   },
 }

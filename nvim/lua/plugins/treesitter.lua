@@ -15,6 +15,7 @@ return {
         "python",
         "query",
         "regex",
+        "ruby",
         "tsx",
         "vim",
         "yaml",

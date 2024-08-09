@@ -56,10 +56,6 @@ log 'Linking nvim configuration files'
 mkdir -p ~/.config
 ln -sf ~/dotfiles/nvim ~/.config
 
-log 'Install nvim plugins'
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
 log 'Installing oh-my-zsh'
 rm -rf ~/.oh-my-zsh
 wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
@@ -119,6 +115,4 @@ defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 
 log 'Setup complete! Quit this shell and open a new one to ensure all changes take effect'
 log 'Todo'
-log ' - Open nvim and install the plugins ":PackerInstall"'
 log ' - Authenticate with graphite "gt auth --token <your_cli_auth_token>"'
-log ' - Copy over the ~/env.zsh file from some other machine'
