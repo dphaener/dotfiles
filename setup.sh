@@ -52,9 +52,11 @@ fi
 log 'Installing Ruby and nodejs'
 ./asdf.sh
 
-log 'Linking nvim configuration files'
+log 'Linking configuration files'
 mkdir -p ~/.config
 ln -sf ~/dotfiles/nvim ~/.config
+ln -sf ~/dotfiles/.markdownlint-cli2.yaml ~/
+ln -sf ~/dotfiles/.shellcheckrc ~/
 
 log 'Installing oh-my-zsh'
 rm -rf ~/.oh-my-zsh

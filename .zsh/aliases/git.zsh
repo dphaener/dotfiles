@@ -1,6 +1,6 @@
 alias ga="git add $1"
 alias gc='git commit -v'
-alias gs='git status'
+# alias gs='git status'
 alias gri="git ri $1"
 alias gpo="git po"
 alias glb="git branch -vv"
