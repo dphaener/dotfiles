@@ -23,7 +23,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	log 'Homebrew packages'
 	brew bundle
 
-	xattr -d com.apple.quarantine $(which chromedriver)
+	xattr -d com.apple.quarantine "$(which chromedriver)"
 
 	log 'Updating finder to always show hidden files'
 	defaults write com.apple.finder AppleShowAllFiles -boolean true
@@ -52,11 +52,9 @@ fi
 log 'Installing Ruby and nodejs'
 ./asdf.sh
 
-log 'Linking configuration files'
+log 'Linking nvim configuration files'
 mkdir -p ~/.config
 ln -sf ~/dotfiles/nvim ~/.config
-ln -sf ~/dotfiles/.markdownlint-cli2.yaml ~/
-ln -sf ~/dotfiles/.shellcheckrc ~/
 
 log 'Installing oh-my-zsh'
 rm -rf ~/.oh-my-zsh
@@ -72,15 +70,9 @@ log 'Installing zsh-autosuggestions'
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 log 'Linking remaining configuration files'
-ln -sf ~/dotfiles/.tmux.conf ~/
-ln -sf ~/dotfiles/.zsh/ ~/
-rm ~/.zshrc && ln -sf ~/dotfiles/.zshrc ~/
-ln -sf ~/dotfiles/.gitconfig ~/
-ln -sf ~/dotfiles/.gitignore_global ~/
-ln -sf ~/dotfiles/.ssh/rc ~/.ssh
-ln -sf ~/dotfiles/.gemrc ~/
-ln -sf ~/dotfiles/.asdfrc ~/
-ln -sf ~/dotfiles/.tool-versions ~/
+./link_configs.sh
+
+log 'Setting up HammerSpoon'
 mkdir -p ~/.local/share && ln -sf ~/dotfiles/utils ~/.local/share
 mkdir -p ~/.hammerspoon
 cp ~/dotfiles/hammerspoon_init.lua ~/.hammerspoon/init.lua
@@ -89,10 +81,10 @@ cp ~/dotfiles/hammerspoon_init.lua ~/.hammerspoon/init.lua
 mkdir -p ~/.config && ln -sf ~/dotfiles/starship.toml ~/.config
 
 log 'Running the asdf script so it works properly'
-. $(brew --prefix asdf)/libexec/asdf.sh
+. "$HOME/.asdf/asdf.sh"
 
 log 'Installing default gems'
-asdf shell ruby 3.2.2
+asdf shell ruby 3.2.4
 gem install bundler
 gem install rails
 gem install neovim
