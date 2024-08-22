@@ -1,3 +1,5 @@
+local util = require("lspconfig").util
+
 return {
   {
     "williamboman/mason.nvim",
@@ -39,6 +41,10 @@ return {
       servers = {
         ruby_lsp = {
           cmd = { "/Users/darinhaener/.asdf/shims/ruby-lsp" },
+        },
+        rubocop = {
+          cmd = { "bundle", "exec", "rubocop", "--lsp" },
+          root_dir = util.root_pattern("Gemfile", ".git"),
         },
       },
     },
