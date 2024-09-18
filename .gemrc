@@ -3,7 +3,6 @@
 :bulk_threshold: 1000
 :sources:
 - https://rubygems.org/
-- https://gitlab.com/incloudcounsel/eng/architecture/ruby/ontra-common-dev
 :update_sources: true
 :verbose: true
 gem: "--no-rdoc --no-ri --document=yri"

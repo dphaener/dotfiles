@@ -44,4 +44,15 @@ eval "$(starship init zsh)"
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"
+eval "$(git machete completion zsh)"
+
+# Gum settings
+export GUM_CONFIRM_PROMPT_FOREGROUND=""
+export GUM_CONFIRM_SELECTED_FOREGROUND="15"
+export GUM_CONFIRM_UNSELECTED_FOREGROUND="254"
+export GUM_CONFIRM_SELECTED_BACKGROUND="69"
+export GUM_CHOOSE_CURSOR_FOREGROUND="69"
+export GUM_CHOOSE_HEADER_FOREGROUND="69"
+export GUM_CHOOSE_ITEM_FOREGROUND=""
+export GUM_CHOOSE_SELECTED_FOREGROUND="69"

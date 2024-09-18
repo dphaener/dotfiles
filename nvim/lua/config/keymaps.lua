@@ -5,6 +5,8 @@ local map = vim.api.nvim_set_keymap
 
 map("n", "<Leader>ip", "obinding.pry<ESC>", { noremap = true, silent = true, desc = "Insert binding.pry below" })
 map("n", "<Leader>iP", "Obinding.pry<ESC>", { noremap = true, silent = true, desc = "Insert binding.pry above" })
+map("n", "<Leader>ib", "obinding.irb<ESC>", { noremap = true, silent = true, desc = "Insert binding.irb below" })
+map("n", "<Leader>iB", "Obinding.irb<ESC>", { noremap = true, silent = true, desc = "Insert binding.irb above" })
 map(
   "n",
   "<Leader>p",
