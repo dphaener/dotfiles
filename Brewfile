@@ -27,6 +27,7 @@ brew "lsd"
 brew "neovim", args: ["HEAD"]
 brew "withgraphite/tap/graphite"
 brew "gnu-sed"
+brew "git-machete"
 
 cask "chromedriver"
 cask "joplin"
