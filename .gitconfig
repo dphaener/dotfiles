@@ -71,3 +71,9 @@
 
 [advice]
   skippedCherryPicks = false
+
+[spice "branchCheckout"]
+  showUntracked = true
+
+[spice "branchCreate"]
+	commit = false

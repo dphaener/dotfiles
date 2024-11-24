@@ -6,9 +6,12 @@ local max_column_width = math.floor(width * max_width_percentage)
 local max_row_height = math.floor(height * max_height_percentage)
 
 return {
-  { "olimorris/neotest-rspec" },
   {
     "nvim-neotest/neotest",
+    dependencies = {
+      "marilari88/neotest-vitest",
+      "olimorris/neotest-rspec",
+    },
     keys = {
       {
         "<leader>tp",
@@ -40,6 +43,7 @@ return {
     opts = {
       adapters = {
         "neotest-rspec",
+        ["neotest-vitest"] = {},
       },
       floating = {
         max_width = max_width_percentage,
