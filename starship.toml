@@ -16,7 +16,7 @@ $character"""
 [character]
 success_symbol = "[❯](purple)"
 error_symbol = "[❯](red)"
-vicmd_symbol = "[❮](green)"
+vimcmd_symbol = "[❮](green)"
 
 [cmd_duration]
 format = "[$duration]($style) "
@@ -35,13 +35,17 @@ style = "bright-black"
 [git_status]
 format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed )]($style)"
 style = "cyan"
-conflicted = "​"
-untracked = "​"
-modified = "​"
-staged = "​"
-renamed = "​"
-deleted = "​"
+conflicted = "="
+untracked = "?"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
 stashed = "≡"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+up_to_date = ""
 
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\)'
