@@ -1,45 +1,5 @@
 return {
   {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {
-      {
-        "nvim-telescope/telescope-fzf-native.nvim",
-        build = "make",
-        config = function()
-          require("telescope").load_extension("fzf")
-        end,
-      },
-      {
-        "princejoogie/dir-telescope.nvim",
-        config = function()
-          require("dir-telescope").setup()
-        end,
-      },
-      { "nvim-telescope/telescope-file-browser.nvim" },
-    },
-    keys = {
-      { "<leader>fl", "<cmd>Telescope file_browser<cr>", desc = "File Browser" },
-    },
-    opts = {
-      defaults = {
-        layout_strategy = "horizontal",
-        layout_config = { prompt_position = "top" },
-        sorting_strategy = "ascending",
-        winblend = 0,
-        mappings = {
-          i = {
-            ["<CR>"] = function(prompt_bufnr)
-              require("telescope_extensions").multi_open(prompt_bufnr, "default")
-            end,
-            ["<C-V>"] = function(prompt_bufnr)
-              require("telescope_extensions").multi_open(prompt_bufnr, "vertical")
-            end,
-          },
-        },
-      },
-    },
-  },
-  {
     "folke/which-key.nvim",
     opts = {
       spec = {
@@ -47,18 +7,11 @@ return {
         { "<leader>gh", group = "hunks" },
         { "<leader>i", group = "insert" },
         { "<leader>r", group = "rails", icon = { icon = "󰫏", color = "red" } },
-        { "<leader>z", group = "zettelkasten" },
+        { "<leader>ct", group = "treesj" },
       },
     },
   },
   { "tpope/vim-rails" },
-  { "folke/lsp-colors.nvim" },
-  {
-    "kdheepak/lazygit.nvim",
-    keys = {
-      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-    },
-  },
   { "NvChad/nvim-colorizer.lua" },
   {
     "Wansmer/treesj",
@@ -68,17 +21,17 @@ return {
     end,
     keys = {
       {
-        "<leader>cst",
+        "<leader>ctt",
         "<cmd>lua require('treesj').toggle()<cr>",
         desc = "Toggle the current split",
       },
       {
-        "<leader>css",
+        "<leader>cts",
         "<cmd>lua require('treesj').split()<cr>",
         desc = "Split the current code block",
       },
       {
-        "<leader>csj",
+        "<leader>ctj",
         "<cmd>lua require('treesj').join()<cr>",
         desc = "Join the current code block",
       },
@@ -120,5 +73,4 @@ return {
       })
     end,
   },
-  { "mustache/vim-mustache-handlebars" },
 }
