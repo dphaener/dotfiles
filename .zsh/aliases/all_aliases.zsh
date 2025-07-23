@@ -1,5 +1,4 @@
 source $HOME/.zsh/aliases/git.zsh
-source $HOME/.zsh/aliases/tmux.zsh
 source $HOME/.zsh/aliases/zellij.zsh
 
 # Vim
