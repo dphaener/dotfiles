@@ -1,23 +1,24 @@
 #!/usr/bin/env bash
 
-# Zellij Session Manager aliases
+# Zellijinator (Zellij Session Manager) aliases
 
-# Short alias for zellij-manager
-alias zm='zellij-manager'
+# Short aliases for zellijinator
+alias zel='zellijinator'
+alias zm='zellijinator'
 
 # Quick start aliases for common sessions
-alias zrails='zellij-manager start rails-dev'
-alias znode='zellij-manager start node-dev'
-alias zdev='zellij-manager start simple-dev'
+alias zrails='zellijinator start rails-dev'
+alias znode='zellijinator start node-dev'
+alias zdev='zellijinator start simple-dev'
 
 # List available layouts
-alias zlist='zellij-manager list'
+alias zlist='zellijinator list'
 
 # List active sessions
-alias zsessions='zellij-manager sessions'
+alias zsessions='zellijinator sessions'
 
 # Quick edit layout
-alias zedit='zellij-manager edit'
+alias zedit='zellijinator edit'
 
 # Direct Zellij layout commands
 alias zl='zellij --layout'
@@ -29,7 +30,7 @@ zhere() {
     
     if [[ ! -f "$layout_file" ]]; then
         echo "Layout '${layout}' not found. Available layouts:"
-        zellij-manager list
+        zellijinator list
         return 1
     fi
     
@@ -57,30 +58,3 @@ zproject() {
         fi
     fi
 }
-
-# Proxy management aliases
-
-# Monitor proxy in Zellij
-alias zproxy='zellij-manager start proxy-monitor'
-
-# Start proxy service
-alias proxy-start='launchctl load ~/Library/LaunchAgents/com.user.on-proxy.plist'
-
-# Stop proxy service
-alias proxy-stop='launchctl unload ~/Library/LaunchAgents/com.user.on-proxy.plist'
-
-# Restart proxy service
-alias proxy-restart='proxy-stop && sleep 2 && proxy-start'
-
-# Check proxy status
-alias proxy-status='launchctl list | grep com.user.on-proxy'
-
-# View proxy logs
-alias proxy-logs='tail -f ~/.local/log/on-proxy.log'
-alias proxy-errors='tail -f ~/.local/log/on-proxy.error.log'
-
-# Enable daily restart
-alias proxy-enable-restart='launchctl load ~/Library/LaunchAgents/com.user.on-proxy-restart.plist'
-
-# Disable daily restart
-alias proxy-disable-restart='launchctl unload ~/Library/LaunchAgents/com.user.on-proxy-restart.plist'

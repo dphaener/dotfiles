@@ -1,0 +1,63 @@
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
+    }
+
+    tab name="editor" focus=true {
+        pane {
+            command "nvim"
+        }
+    }
+
+    tab name="server" {
+        pane split_direction="vertical" {
+            pane size="70%" {
+                name "rails-server"
+                command "bin/rails"
+                args "server"
+            }
+            pane size="30%" {
+                name "rails-logs"
+                command "tail"
+                args "-f" "log/development.log"
+            }
+        }
+    }
+
+    tab name="console" {
+        pane split_direction="horizontal" {
+            pane {
+                name "rails-console"
+                command "bin/rails"
+                args "console"
+            }
+            pane {
+                name "terminal"
+            }
+        }
+    }
+
+    tab name="tests" {
+        pane split_direction="vertical" {
+            pane size="50%" {
+                name "test-runner"
+            }
+            pane size="50%" split_direction="horizontal" {
+                pane {
+                    name "guard"
+                    command "bundle"
+                    args "exec" "guard"
+                }
+                pane {
+                    name "terminal"
+                }
+            }
+        }
+    }
+}

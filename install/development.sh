@@ -139,6 +139,67 @@ install_ruby_gems() {
     success "Ruby gems installed"
 }
 
+install_zellijinator() {
+    info "Installing zellijinator..."
+    
+    if command_exists zellijinator; then
+        info "zellijinator already installed"
+        return 0
+    fi
+    
+    # Determine the architecture
+    local arch=""
+    case "$(uname -m)" in
+        x86_64)
+            arch="amd64"
+            ;;
+        arm64|aarch64)
+            arch="arm64"
+            ;;
+        *)
+            error "Unsupported architecture: $(uname -m)"
+            return 1
+            ;;
+    esac
+    
+    # Determine the OS
+    local os=""
+    if is_macos; then
+        os="darwin"
+    elif is_linux; then
+        os="linux"
+    else
+        error "Unsupported operating system"
+        return 1
+    fi
+    
+    # Get latest release URL
+    local download_url
+    download_url=$(curl -s https://api.github.com/repos/dphaener/zellijinator/releases/latest | \
+        grep "browser_download_url.*${os}.*${arch}" | \
+        cut -d '"' -f 4)
+    
+    if [[ -z "$download_url" ]]; then
+        error "Could not find download URL for zellijinator"
+        return 1
+    fi
+    
+    # Download and install
+    local temp_file
+    temp_file=$(mktemp)
+    
+    info "Downloading zellijinator from $download_url..."
+    if curl -L "$download_url" -o "$temp_file"; then
+        chmod +x "$temp_file"
+        sudo mv "$temp_file" /usr/local/bin/zellijinator
+        success "zellijinator installed to /usr/local/bin/zellijinator"
+    else
+        error "Failed to download zellijinator"
+        rm -f "$temp_file"
+        return 1
+    fi
+}
+
 
 install_linux_packages() {
     if ! is_linux; then
@@ -204,10 +265,6 @@ build_from_source() {
         run_step "build_nvim" "Building Neovim from source" "$DOTFILES_DIR/build_nvim.sh"
     fi
     
-    # Build Tmux from source
-    if [[ -x "$DOTFILES_DIR/build_tmux.sh" ]]; then
-        run_step "build_tmux" "Building Tmux from source" "$DOTFILES_DIR/build_tmux.sh"
-    fi
     
     success "Source builds complete"
 }
@@ -226,6 +283,9 @@ main() {
     run_step "asdf_plugins" "Configuring ASDF plugins" configure_asdf_plugins
     run_step "tool_versions" "Installing tool versions" install_tool_versions
     run_step "ruby_gems" "Installing Ruby gems" install_ruby_gems
+    
+    # Install zellijinator
+    run_step "zellijinator" "Installing zellijinator" install_zellijinator
     
     success "Development tools setup complete"
 }

@@ -19,8 +19,11 @@ create_config_symlinks() {
     safe_link "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
     safe_link "$DOTFILES_DIR/.gitignore_global" "$HOME/.gitignore_global"
     
-    # Tmux configuration
-    safe_link "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
+    # Zellij configuration
+    ensure_dir "$HOME/.config/zellij"
+    safe_link "$DOTFILES_DIR/.config/zellij/config.kdl" "$HOME/.config/zellij/config.kdl"
+    ensure_dir "$HOME/.config/zellij/layouts"
+    safe_link "$DOTFILES_DIR/.config/zellij/layouts" "$HOME/.config/zellij/layouts"
     
     # ASDF configuration
     safe_link "$DOTFILES_DIR/.asdfrc" "$HOME/.asdfrc"
@@ -52,6 +55,10 @@ create_config_directory_symlinks() {
     
     # Starship configuration
     safe_link "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
+    
+    # Ghostty configuration
+    ensure_dir "$HOME/.config/ghostty"
+    safe_link "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
     
     # Claude configuration
     safe_link "$DOTFILES_DIR/CLAUDE.md" "$HOME/.config/CLAUDE.md"
