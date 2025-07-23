@@ -1,0 +1,20 @@
+[
+  {
+    "content": "Examine current zellij configuration",
+    "status": "completed",
+    "priority": "high",
+    "id": "1"
+  },
+  {
+    "content": "Remove pane labels from config",
+    "status": "completed",
+    "priority": "high",
+    "id": "2"
+  },
+  {
+    "content": "Fix color scheme issues",
+    "status": "completed",
+    "priority": "high",
+    "id": "3"
+  }
+]
