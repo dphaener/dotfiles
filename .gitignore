@@ -1,1 +1,7 @@
 nvim/lazy-lock.json
+
+# Claude Code temporary files (keep settings and slashcommands)
+.claude/projects/
+.claude/shell-snapshots/
+.claude/statsig/
+.claude/todos/
