@@ -169,10 +169,9 @@ show_post_install_message() {
     if [[ "$SYNC_ONLY" != "true" ]]; then
         echo -e "${YELLOW}Next steps:${NC}"
         echo "  1. Restart your terminal or run: source ~/.zshrc"
-        echo "  2. Authenticate with Graphite: gt auth --token <your_cli_auth_token>"
         
         if is_macos; then
-            echo "  3. Open HammerSpoon and enable accessibility permissions"
+            echo "  2. Open HammerSpoon and enable accessibility permissions"
         fi
         
         echo
