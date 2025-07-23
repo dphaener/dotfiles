@@ -47,7 +47,7 @@ install_brewfile_packages() {
     info "Installing packages from Brewfile..."
     (
         cd "$DOTFILES_DIR"
-        brew bundle --no-lock
+        brew bundle
     )
     
     # Fix chromedriver quarantine if it exists

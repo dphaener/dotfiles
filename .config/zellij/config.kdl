@@ -61,7 +61,7 @@ options {
     scrollback_editor "/usr/local/bin/nvim"
     mouse_mode true
     simplified_ui false
-    pane_frames true
+    pane_frames false
 }
 
 themes {
