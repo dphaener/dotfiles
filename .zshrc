@@ -3,7 +3,6 @@ source $HOME/.zsh/paths.zsh
 source $HOME/.zsh/env.zsh
 source $HOME/.zsh/asdf.zsh
 source $HOME/.zsh/aliases/all_aliases.zsh
-source $HOME/.zsh/graphite.zsh
 
 bindkey '^l' autosuggest-accept
 
@@ -34,9 +33,13 @@ unsetopt nomatch
 
 # libpq needs to be first in the path
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 export PGPASSWORD=password
 export ASDF_GOLANG_MOD_VERSION_ENABLED=true
+
+# Disable Spring
+export DISABLE_SPRING=true
 
 # Setup the starship prompt
 eval "$(starship init zsh)"
@@ -44,7 +47,6 @@ eval "$(starship init zsh)"
 # Generated for envman. Do not edit.
 [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
 
-eval "$(git machete completion zsh)"
 eval "$(zoxide init zsh)"
 
 # Gum settings
@@ -56,3 +58,7 @@ export GUM_CHOOSE_CURSOR_FOREGROUND="69"
 export GUM_CHOOSE_HEADER_FOREGROUND="69"
 export GUM_CHOOSE_ITEM_FOREGROUND=""
 export GUM_CHOOSE_SELECTED_FOREGROUND="69"
+
+# Git Spice Completion
+autoload -U +X bashcompinit && bashcompinit
+complete -C /opt/homebrew/bin/gs gs

@@ -1,5 +1,6 @@
 source $HOME/.zsh/aliases/git.zsh
 source $HOME/.zsh/aliases/tmux.zsh
+source $HOME/.zsh/aliases/zellij.zsh
 
 # Vim
 alias vi='nvim'
@@ -9,3 +10,5 @@ alias vim='nvim'
 alias be='bundle exec'
 
 alias ls='lsd'
+
+alias zel='zellijinator'

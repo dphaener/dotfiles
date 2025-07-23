@@ -7,8 +7,6 @@ return {
       ensure_installed = {
         "css-lsp",
         "erb-lint",
-        "eslint-lsp",
-        "eslint_d",
         "html-lsp",
         "lua-language-server",
         "prettier",

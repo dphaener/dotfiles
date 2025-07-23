@@ -12,41 +12,41 @@ exec 1>/tmp/setup.log 2>&1
 source ./utils/logging.sh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	log "Allowing $(whoami) sudo privileges with no password"
-	sudo echo "$(whoami) ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
+  log "Allowing $(whoami) sudo privileges with no password"
+  sudo echo "$(whoami) ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
 
-	log 'Installing Homebrew'
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
-	echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>/Users/darinhaener/.zprofile
-	eval "$(/opt/homebrew/bin/brew shellenv)"
+  log 'Installing Homebrew'
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" </dev/null
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>/Users/darinhaener/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 
-	log 'Homebrew packages'
-	brew bundle
+  log 'Homebrew packages'
+  brew bundle
 
-	xattr -d com.apple.quarantine "$(which chromedriver)"
+  xattr -d com.apple.quarantine "$(which chromedriver)"
 
-	log 'Updating finder to always show hidden files'
-	defaults write com.apple.finder AppleShowAllFiles -boolean true
-	killall Finder
+  log 'Updating finder to always show hidden files'
+  defaults write com.apple.finder AppleShowAllFiles -boolean true
+  killall Finder
 
 else
-	log 'Installing software packages'
-	sudo apt update -y
-	sudo apt install -y libcurl4-openssl-dev libexpat1-dev \
-		gettext libz-dev libssl-dev build-essential autoconf \
-		automake pkg-config libevent-dev libncurses5-dev \
-		ninja-build gettext libtool libtool-bin automake cmake g++ \
-		pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk \
-		fd-find fzf xclip
+  log 'Installing software packages'
+  sudo apt update -y
+  sudo apt install -y libcurl4-openssl-dev libexpat1-dev \
+    gettext libz-dev libssl-dev build-essential autoconf \
+    automake pkg-config libevent-dev libncurses5-dev \
+    ninja-build gettext libtool libtool-bin automake cmake g++ \
+    pkg-config unzip snapd ripgrep curl bison libreadline-dev pdftk \
+    fd-find fzf xclip
 
-	log 'Building latest git from source'
-	~/dotfiles/build_git.sh
+  log 'Building latest git from source'
+  ~/dotfiles/build_git.sh
 
-	log 'Building latest nvim from source'
-	~/dotfiles/build_nvim.sh
+  log 'Building latest nvim from source'
+  ~/dotfiles/build_nvim.sh
 
-	log 'Building latest tmux from source'
-	~/dotfiles/build_tmux.sh
+  log 'Building latest tmux from source'
+  ~/dotfiles/build_tmux.sh
 fi
 
 log 'Installing Ruby and nodejs'
@@ -80,6 +80,10 @@ cp ~/dotfiles/hammerspoon_init.lua ~/.hammerspoon/init.lua
 # Link the starship config file
 mkdir -p ~/.config && ln -sf ~/dotfiles/starship.toml ~/.config
 
+# Link CLAUDE.md and .claude directory
+ln -sf ~/dotfiles/CLAUDE.md ~/.config/CLAUDE.md
+ln -sf ~/dotfiles/.claude ~/.claude
+
 log 'Running the asdf script so it works properly'
 . "$HOME/.asdf/asdf.sh"
 
@@ -95,17 +99,6 @@ log 'Building and installing fastmod'
 log 'Installing crontab and custom scripts'
 mkdir -p ~/bin
 cp ~/dotfiles/bin/* ~/bin/
-cat ~/dotfiles/crontab.txt | crontab -
-
-log 'Installing the Tmux plugin manager and plugins'
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-~/.tmux/plugins/tpm/bin/install_plugins
-
-log 'Updating the iTerm configuration file preferences'
-# Specify the preferences directory
-defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "/Users/darinhaener/dotfiles"
-# Tell iTerm2 to use the custom preferences in the directory
-defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 
 log 'Setup complete! Quit this shell and open a new one to ensure all changes take effect'
 log 'Todo'
