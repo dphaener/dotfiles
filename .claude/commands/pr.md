@@ -1,3 +1,8 @@
+---
+description: Create and submit a pull request using git-spice
+allowed-tools: Bash(git:*), Bash(gs:*)
+---
+
 # Submit PR with git-spice
 
 Please help me create and submit a pull request for my current branch using git-spice. Follow these steps:
@@ -8,14 +13,14 @@ Please help me create and submit a pull request for my current branch using git-
 4. Run `gs repo sync` to synchronize with remote
 5. Submit the PR using `gs branch submit --fill --no-draft`
 6. Open the created PR URL in the browser
-7. Generate a Slack message with a proper hyperlink:
-   - Format: ":github-pr: PR #XXX for <description> is ready for review" 
+7. Generate a Slack message with a markdown hyperlink:
+   - Format: ":github-pr: [PR #XXX](URL) for <description> is ready for review" 
    - Use the PR number and URL from the created PR
    - Extract the description from the commit message (first line after the type prefix)
-8. Copy the Slack message to clipboard as rich text HTML:
-   - Create HTML with `<a href="URL">PR #XXX</a>` for the link
-   - Use hexdump and osascript to copy as rich text that preserves formatting in Slack
-   - Example: `html=':github-pr: <a href="URL">PR #XXX</a> for description is ready for review'`
+8. Copy the Slack message to clipboard as markdown:
+   - Use markdown link format `[PR #XXX](URL)` for the link
+   - Copy to clipboard with pbcopy
+   - Example: `:github-pr: [PR #XXX](URL) for description is ready for review`
 
 Make sure to:
 - Review the commit message with me before committing
