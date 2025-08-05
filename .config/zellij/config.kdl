@@ -4,6 +4,13 @@ keybinds {
     normal {
         // Custom keybindings
         bind "Ctrl a" { SwitchToMode "tmux"; }
+        // Remap lock mode toggle from Ctrl-g to Ctrl-Shift-g
+        unbind "Ctrl g"  // Disable default Ctrl-g
+        bind "Ctrl Shift g" { SwitchToMode "locked"; }
+    }
+    locked {
+        // Allow exiting locked mode with the same key combination
+        bind "Ctrl Shift g" { SwitchToMode "normal"; }
     }
     tmux {
         // Tmux-like keybindings for easier transition
