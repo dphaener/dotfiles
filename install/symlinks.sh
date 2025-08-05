@@ -60,6 +60,11 @@ create_config_directory_symlinks() {
     ensure_dir "$HOME/.config/ghostty"
     safe_link "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
     
+    # Crush configuration
+    ensure_dir "$HOME/.config/crush"
+    safe_link "$DOTFILES_DIR/.config/crush/crush.json" "$HOME/.config/crush/crush.json"
+    safe_link "$DOTFILES_DIR/.config/crush/commands" "$HOME/.config/crush/commands"
+    
     # Claude configuration
     safe_link "$DOTFILES_DIR/CLAUDE.md" "$HOME/.config/CLAUDE.md"
     safe_link "$DOTFILES_DIR/.claude" "$HOME/.claude"

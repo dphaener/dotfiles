@@ -5,3 +5,6 @@ nvim/lazy-lock.json
 .claude/shell-snapshots/
 .claude/statsig/
 .claude/todos/
+
+# Crush temporary files
+.crush/

@@ -22,6 +22,7 @@ brew "neovim", args: ["HEAD"]
 brew "git-spice"
 brew "gnu-sed"
 brew "ghostty"
+brew "crush"
 
 cask "chromedriver"
 cask "joplin"
