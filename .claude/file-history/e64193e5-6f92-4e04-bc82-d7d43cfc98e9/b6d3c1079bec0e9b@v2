@@ -1,0 +1,36 @@
+import { validatePositiveInteger } from './validations.util';
+
+describe('validatePositiveInteger', () => {
+  it('returns undefined for positive integers', () => {
+    expect(validatePositiveInteger(1)).toBeUndefined();
+    expect(validatePositiveInteger(10)).toBeUndefined();
+    expect(validatePositiveInteger(100)).toBeUndefined();
+    expect(validatePositiveInteger(999999)).toBeUndefined();
+    expect(validatePositiveInteger('5')).toBeUndefined();
+    expect(validatePositiveInteger('42')).toBeUndefined();
+  });
+
+  it('returns error message for negative numbers', () => {
+    expect(validatePositiveInteger(-1)).toBe('Must be a positive integer');
+    expect(validatePositiveInteger(-10)).toBe('Must be a positive integer');
+    expect(validatePositiveInteger('-5')).toBe('Must be a positive integer');
+  });
+
+  it('returns error message for zero', () => {
+    expect(validatePositiveInteger(0)).toBe('Must be a positive integer');
+    expect(validatePositiveInteger('0')).toBe('Must be a positive integer');
+  });
+
+  it('returns error message for decimal numbers', () => {
+    expect(validatePositiveInteger(1.5)).toBe('Must be a positive integer');
+    expect(validatePositiveInteger(10.01)).toBe('Must be a positive integer');
+    expect(validatePositiveInteger('3.14')).toBe('Must be a positive integer');
+    expect(validatePositiveInteger('10.12')).toBe('Must be a positive integer');
+  });
+
+  it('returns error message for non-numeric values', () => {
+    expect(validatePositiveInteger('abc')).toBe('Must be a positive integer');
+    expect(validatePositiveInteger('')).toBe('Must be a positive integer');
+    expect(validatePositiveInteger(undefined)).toBe('Must be a positive integer');
+  });
+});

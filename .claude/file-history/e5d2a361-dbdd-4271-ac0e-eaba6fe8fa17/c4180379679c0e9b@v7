@@ -1,0 +1,52 @@
+# frozen_string_literal: true
+
+module Atlas
+  module Entities
+    class CreateBillableEvent
+      extend AttrExtras.mixin
+
+      method_object %i[atlas_entity]
+
+      def call
+        existing_event = find_existing_event
+        return Result.success(value: existing_event) if existing_event
+
+        BillableEvents::Create.call(event: build_cloud_event_payload)
+      end
+
+      private
+
+      def find_existing_event
+        BillableEvent
+          .where(event_type: 'entity_created')
+          .where("payload->'data'->>'entity_id' = ?", atlas_entity.id.to_s)
+          .first
+      end
+
+      def build_cloud_event_payload
+        {
+          specversion: '1.0',
+          type: 'entity_created',
+          source: '/atlas/entities',
+          id: SecureRandom.uuid,
+          time: atlas_entity.created_at.iso8601,
+          data: {
+            entity_id: atlas_entity.id,
+            account_id: atlas_entity.account_id,
+            entity_type: atlas_entity.entity_type,
+            created_at: atlas_entity.created_at.iso8601,
+            metadata: build_metadata
+          }
+        }
+      end
+
+      def build_metadata
+        {
+          created_by: atlas_entity.try(:created_by_id) || 'system',
+          source_system: 'atlas',
+          version: '1.0'
+        }
+      end
+    end
+  end
+end

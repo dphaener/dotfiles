@@ -1,0 +1,79 @@
+inherit_gem:
+  ontra-common-dev:
+    - rubocop/rails.rubocop.yml
+
+inherit_mode:
+  merge:
+    - Exclude
+
+plugins:
+  - rubocop-performance
+  - rubocop-rails
+
+require:
+  - rubocop-rspec
+
+AllCops:
+  SuggestExtensions: false
+
+Metrics/AbcSize:
+  Exclude:
+    - "db/migrate/*.rb"
+    - "db/data/*.rb"
+
+Metrics/BlockLength:
+  Exclude:
+    - "config/environments/*.rb"
+    - "lib/tasks/*.rake"
+
+Metrics/ClassLength:
+  Exclude:
+    - "app/lib/billing_platform/api.rb"
+    - "app/services/billing_platform/contracts/delete.rb"
+
+Metrics/MethodLength:
+  Exclude:
+    - "db/migrate/*.rb"
+
+Ontra/OnlyIndexWithDisabledTransactions:
+  Exclude:
+    - "db/migrate/20250603234952_add_deleted_at_index_to_models.rb"
+    - "db/migrate/20250624211731_backfill_change_amount_cents_type.rb"
+    - "db/migrate/20250624212441_finalize_amount_cents_type_change.rb"
+    - "db/migrate/20250624213023_cleanup_amount_cents_column_type_change.rb"
+
+Ontra/UnsafeEnvStubbing:
+  Exclude:
+    - "spec/lib/billing_platform/api_spec.rb"
+
+Rails/ApplicationController:
+  Exclude:
+    - "app/controllers/frontend_controller.rb"
+
+Rails/BulkChangeTable:
+  Exclude:
+    - "db/migrate/20250910221353_allow_null_in_billing_addresses.rb"
+
+Rails/NotNullColumn:
+  Exclude:
+    - "db/migrate/20250307160226_add_start_and_end_dates_to_subscription.rb"
+
+Rails/Output:
+  Exclude:
+    - "db/seeds.rb"
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - "app/lib/billing_platform/client.rb"
+    - "spec/lib/billing_platform/client_spec.rb"
+    - "spec/lib/billing_platform/api_spec.rb"
+
+RSpec/DescribeClass:
+  Exclude:
+    - "spec/db/schema_spec.rb"
+
+RSpec/ExampleLength:
+  Enabled: false
+
+Style/DisableCopsWithinSourceCodeDirective:
+  Enabled: true

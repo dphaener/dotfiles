@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+class BillableEvent < ApplicationRecord
+  enum :status, {
+    received: 'received',
+    processing: 'processing',
+    processed: 'processed',
+    processing_failed: 'processing_failed'
+  }
+
+  scope :for_atlas_entity, lambda { |entity_id|
+    where(event_type: 'entity_created')
+      .where("payload->'data'->>'entity_id' = ?", entity_id.to_s)
+  }
+
+  validates :event_type, presence: true
+  validates :payload, presence: true
+  validates :status, presence: true
+end

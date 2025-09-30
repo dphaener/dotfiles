@@ -1,0 +1,44 @@
+# frozen_string_literal: true
+
+module Atlas
+  module Entities
+    class BackfillAll
+      extend AttrExtras.mixin
+
+      method_object
+
+      def call
+        @backfill_failures = []
+        @current_page = 1
+        @total_entities_backfilled = 0
+
+        until backfill_complete?
+          @current_batch = Atlas::Entity.fetch_page(page: current_page, per_page: 50)
+          process_batch
+        end
+
+        Result.success(value: { total_entities_backfilled:, backfill_failures: })
+      rescue StandardError => e
+        Result.failure(errors: "Failed to backfill Atlas entities: #{e.message}")
+      end
+
+      private
+
+      attr_accessor :total_entities_backfilled, :current_batch, :current_page, :backfill_failures
+
+      def backfill_complete?
+        current_batch.blank? && current_page > 1
+      end
+
+      def process_batch
+        current_batch.each do |atlas_entity|
+          result = CreateBillableEvent.call(atlas_entity:)
+          backfill_failures << { result:, atlas_entity: } if result.failure?
+        end
+
+        @total_entities_backfilled += @current_batch.length
+        @current_page += 1
+      end
+    end
+  end
+end

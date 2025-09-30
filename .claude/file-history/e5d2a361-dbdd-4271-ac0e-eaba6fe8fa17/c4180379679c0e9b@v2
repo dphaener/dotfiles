@@ -1,0 +1,68 @@
+# frozen_string_literal: true
+
+module Atlas
+  module Entities
+    # Create a BillableEvent from an Atlas entity
+    # Formats the payload to match CloudEvent structure exactly
+    class CreateBillableEvent
+      extend AttrExtras.mixin
+
+      method_object :atlas_entity
+
+      def call
+        # Check if event already exists to ensure idempotency
+        existing_event = find_existing_event
+        return Result.success(value: existing_event) if existing_event
+
+        billable_event = BillableEvent.create!(
+          event_type: 'entity_created',
+          status: 'processed',
+          processed_at: atlas_entity.created_at,
+          payload: build_cloud_event_payload,
+          created_at: atlas_entity.created_at,
+          updated_at: atlas_entity.created_at
+        )
+
+        Result.success(value: billable_event)
+      rescue ActiveRecord::RecordInvalid => e
+        Result.failure(error_messages: "Failed to create BillableEvent: #{e.message}")
+      rescue StandardError => e
+        Result.failure(error_messages: "Unexpected error creating BillableEvent: #{e.message}")
+      end
+
+      private
+
+      def find_existing_event
+        # Find by matching entity_id in the payload to prevent duplicates
+        BillableEvent.where(event_type: 'entity_created')
+                     .where("payload->'data'->>'entity_id' = ?", atlas_entity.id.to_s)
+                     .first
+      end
+
+      def build_cloud_event_payload
+        {
+          specversion: '1.0',
+          type: 'entity_created',
+          source: '/atlas/entities',
+          id: SecureRandom.uuid,
+          time: atlas_entity.created_at.iso8601,
+          data: {
+            entity_id: atlas_entity.id,
+            account_id: atlas_entity.account_id,
+            entity_type: atlas_entity.entity_type,
+            created_at: atlas_entity.created_at.iso8601,
+            metadata: build_metadata
+          }
+        }
+      end
+
+      def build_metadata
+        {
+          created_by: atlas_entity.try(:created_by_id) || 'system',
+          source_system: 'atlas',
+          version: '1.0'
+        }
+      end
+    end
+  end
+end

@@ -1,0 +1,22 @@
+As a ontra admin I can add a contract with a subscription, and that subscription can have multiple subscription terms.
+
+- A subscription term consists of a start date, end date, and a base license fee
+- The AddMore component currently is labeled as line items, but we will change this to be “Subscription Term”.
+  - Users will ONLY be able to add more subscription terms.
+  - Each term should have inputs for start date, end date, and a base license fee
+  - A minimum of ONE subscription term is required
+  - Each subscription term has the following validation rules
+    - start date must be before end date
+    - base license fee must be greater than 0
+- A subscription CANNOT have subscription terms that overlap
+- For a subscription, we want to add a checkbox that indicates if the subscription should have overages.
+  - If the checkbox is checked, we will show the Overage Charge form
+  - The overage charge section already exists on the create page, so we will re-use that existing section.
+  - A subscription may only have ONE overage charge so do not use the addmore component
+- Subscription terms, and overage charges are still considered line items in the API, so the contract service should be updated to ensure they are formatted properly for the API.
+  - subscription terms should have the type: “SubscriptionTerm”
+  - overages should have the type: “OverageCharge”
+  - base license fee is now a deprecated line item and should no longer be sent to the API.
+- We will not initially support having multiple subscriptions, but the API supports it. subscriptions_attrtibutes is a field that is allowed and should be an array of all subscriptions being submitted     with the contract. Please put the subscription card in an AddMore component, but only allow a single subscription to be created.
+- We need to add a new create function to the contracts service that is similar to the subscriptions create, but submits to the contracts endpoint and ensures the data is formatted properly for the API. You can find an example of this in the spec/requests/v2/contracts_spec.rb test.
+- This is FRONTEND work only, the backend work is complete

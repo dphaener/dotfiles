@@ -62,3 +62,6 @@ export GUM_CHOOSE_SELECTED_FOREGROUND="69"
 # Git Spice Completion
 autoload -U +X bashcompinit && bashcompinit
 complete -C /opt/homebrew/bin/gs gs
+
+# Node
+export NODE_OPTIONS="--max-old-space-size=65536"

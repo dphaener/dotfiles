@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+module Atlas
+  class Entity < Base
+    DEFAULT_INCLUDES = %i[account entity_type].freeze
+
+    def self.all_in_batches(batch_size: 50, includes: DEFAULT_INCLUDES)
+      page = 1
+
+      loop do
+        entities = fetch_page(page:, per_page: batch_size, includes:)
+
+        break if entities.empty?
+
+        yield entities if block_given?
+        page += 1
+      end
+    end
+
+    def self.fetch_page(page: 1, per_page: 50, includes: DEFAULT_INCLUDES)
+      with_server_login do
+        query = all.order(create_time: :asc)
+        query = query.includes(*includes) if includes.present?
+        query.paginate(page:, per_page:).to_a
+      end
+    end
+  end
+end

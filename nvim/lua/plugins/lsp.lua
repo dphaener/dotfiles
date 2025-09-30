@@ -2,7 +2,7 @@ local util = require("lspconfig").util
 
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "css-lsp",
@@ -35,5 +35,11 @@ return {
         },
       },
     },
+  },
+  {
+    "dmmulroy/ts-error-translator.nvim",
+    config = function()
+      require("ts-error-translator").setup()
+    end,
   },
 }

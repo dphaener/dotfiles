@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+
+module Atlas
+  class Entity < Base
+  end
+end

@@ -1,0 +1,272 @@
+import {
+  Button,
+  Card,
+  Checkbox,
+  Combobox,
+  CurrencyField,
+  DatePicker,
+  FieldGroup,
+  TextField,
+  WorkflowLayoutNew,
+} from '@ontra/common-react';
+import {
+  FormattedError,
+  showToast,
+  showToastAfterNavigate,
+} from '@ontra/common-react/helpers';
+import { AddMore, Form, FormField } from '@ontra/common-react/rff';
+import { useMutation } from '@tanstack/react-query';
+import { OnChange } from 'react-final-form-listeners';
+import { useNavigate } from 'react-router-dom';
+import { isNullish } from 'remeda';
+
+import { OverageCharge, SubscriptionTerm } from '@/models';
+import {
+  createAccountComboboxProps,
+  createContract,
+  createInvoiceGroupComboboxProps,
+  createProductComboboxProps,
+} from '@/services';
+import { formatRecordErrors, RecordErrors } from '@/utils/errors.util';
+import { validatePositiveInteger } from '@/utils/validation.util';
+
+export type FormValues = {
+  accountId: string | undefined;
+  subscriptions: {
+    productId: string | undefined;
+    invoiceGroupUuid: string | undefined;
+    lineItems: Omit<SubscriptionTerm, 'type' | 'id'>[];
+    overageCharge?: OverageCharge;
+    hasOverages: boolean;
+  }[];
+};
+
+const initialValues: FormValues = {
+  accountId: undefined,
+  subscriptions: [
+    {
+      productId: undefined,
+      invoiceGroupUuid: undefined,
+      lineItems: [
+        {
+          lineItemType: 'SubscriptionTerm',
+          startDate: undefined,
+          endDate: undefined,
+          baseLicenseFeeDollars: undefined,
+        },
+      ],
+      hasOverages: false,
+    },
+  ],
+};
+
+export default function CreateContract() {
+  const navigate = useNavigate();
+
+  const { mutateAsync: addContract, isPending: isCreatingContract } =
+    useMutation({
+      mutationFn: createContract,
+      onSuccess: () => {
+        showToastAfterNavigate({
+          title: 'Contract created successfully',
+          subtitle: 'The contract has been queued to sync to Billing Platform',
+          type: 'success',
+        });
+        navigate('/contracts');
+      },
+      onError: (error: FormattedError) => {
+        const { recordErrors } = error;
+        const errorMessages = formatRecordErrors(recordErrors as RecordErrors);
+        showToast({
+          title: 'Error saving contract',
+          subtitle: errorMessages,
+          type: 'error',
+        });
+      },
+    });
+
+  return (
+    <Form<FormValues>
+      initialValues={initialValues}
+      onSubmit={(values) => addContract(values)}
+    >
+      {({ form, values }) => (
+        <WorkflowLayoutNew
+          halfWidth
+          headerProps={{
+            title: 'Add Contract',
+          }}
+          navButtonProps={{
+            onClick: () => navigate('/contracts'),
+          }}
+          footerProps={{
+            children: (
+              <>
+                <Button
+                  label="Cancel"
+                  variant="secondary"
+                  onClick={() => navigate('/contracts')}
+                />
+                <Button
+                  label="Add"
+                  type="submit"
+                  loading={isCreatingContract}
+                />
+              </>
+            ),
+          }}
+        >
+          <div className="tw-space-y-6">
+            <Card title="Account Information">
+              <FormField
+                as={Combobox}
+                name="accountId"
+                label="Account"
+                {...createAccountComboboxProps()}
+                required
+              />
+              <OnChange name="accountId">
+                {() => {
+                  const updatedSubscriptions = values.subscriptions.map(
+                    (subscription) => ({
+                      ...subscription,
+                      invoiceGroupUuid: undefined,
+                    }),
+                  );
+                  form.change('subscriptions', updatedSubscriptions);
+                  return null;
+                }}
+              </OnChange>
+            </Card>
+
+            <AddMore
+              text="" // We are passing empty text here so the 'Add Subscription' link is not rendered at all.
+              name="subscriptions"
+              maxItems={{
+                count: 1,
+                tooltip: 'Only one subscription is currently supported',
+              }}
+            >
+              {({ index: subscriptionIndex }) => {
+                return (
+                  <Card title="Subscription">
+                    <div className="tw-space-y-2">
+                      <FormField
+                        as={Combobox}
+                        name="invoiceGroupUuid"
+                        label="Invoice Group"
+                        {...createInvoiceGroupComboboxProps({
+                          filter: { account: values.accountId! },
+                        })}
+                        queryKey={() => [values.accountId]}
+                        isDisabled={isNullish(values.accountId)}
+                        required
+                      />
+                      <FormField
+                        as={Combobox}
+                        name="productId"
+                        label="Product"
+                        {...createProductComboboxProps()}
+                        required
+                      />
+                      <AddMore
+                        text="Add Another Subscription Term"
+                        name="lineItems"
+                      >
+                        {({ index: termIndex }) => {
+                          return (
+                            <div className="[&>div>div]:tw-w-full">
+                              <FieldGroup label="Subscription Term">
+                                <FormField
+                                  as={DatePicker}
+                                  name="startDate"
+                                  label="Start Date"
+                                  validate={(value, allValues) => {
+                                    const values = allValues as FormValues;
+                                    const term =
+                                      values.subscriptions[subscriptionIndex]
+                                        .lineItems[termIndex];
+                                    if (!value || !term.endDate)
+                                      return undefined;
+
+                                    return new Date(value) >=
+                                      new Date(term.endDate)
+                                      ? 'Start date must be before end date'
+                                      : undefined;
+                                  }}
+                                  required
+                                />
+                                <FormField
+                                  as={DatePicker}
+                                  name="endDate"
+                                  label="End Date"
+                                  required
+                                />
+                                <FormField
+                                  as={CurrencyField}
+                                  name="baseLicenseFeeDollars"
+                                  label="Annual Base License Fee"
+                                  validate={(value) => {
+                                    const amount = Number(value);
+                                    if (
+                                      amount <= 0 ||
+                                      !Number.isInteger(amount)
+                                    ) {
+                                      return 'Must be a positive integer';
+                                    }
+                                    return undefined;
+                                  }}
+                                  required
+                                />
+                              </FieldGroup>
+                            </div>
+                          );
+                        }}
+                      </AddMore>
+
+                      <FormField as={Checkbox} name="hasOverages">
+                        Subscription has overages
+                      </FormField>
+
+                      {values.subscriptions[subscriptionIndex]?.hasOverages && (
+                        <div className="tw-space-y-2">
+                          <FormField
+                            as={CurrencyField}
+                            name="overageCharge.amountDollars"
+                            label="Overage Charge per Unit"
+                            validate={(value) => {
+                              const amount = Number(value);
+                              if (amount <= 0 || !Number.isInteger(amount)) {
+                                return 'Must be a positive integer';
+                              }
+                              return undefined;
+                            }}
+                            required
+                          />
+                          <FormField
+                            as={TextField}
+                            name="overageCharge.maximumUnits"
+                            label="Max Units Before Overage Charges"
+                            type="number"
+                            validate={(value) => {
+                              const units = Number(value);
+                              if (units <= 0 || !Number.isInteger(units)) {
+                                return 'Must be a positive integer';
+                              }
+                              return undefined;
+                            }}
+                            required
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                );
+              }}
+            </AddMore>
+          </div>
+        </WorkflowLayoutNew>
+      )}
+    </Form>
+  );
+}

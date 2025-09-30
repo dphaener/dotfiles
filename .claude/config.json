@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allowed_tools": [
+      "bash",
+      "edit",
+      "multiedit",
+      "view",
+      "write",
+      "ls",
+      "glob",
+      "grep",
+      "agent",
+      "download",
+      "fetch",
+      "sourcegraph",
+      "webfetch"
+    ]
+  }
+}

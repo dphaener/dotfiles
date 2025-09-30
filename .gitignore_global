@@ -37,3 +37,6 @@ config/credentials/*.key
 .solargraph.yml
 
 darin_todo.md
+PLAN.md
+
+.serena

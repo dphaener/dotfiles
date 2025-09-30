@@ -1,0 +1,152 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+describe BillableEvent do
+  subject(:billable_event) { build(:billable_event) }
+
+  describe 'validations' do
+    it { should validate_presence_of(:event_type) }
+    it { should validate_presence_of(:payload) }
+    it { should validate_presence_of(:status) }
+  end
+
+  describe 'enums' do
+    it {
+      expect(billable_event).to define_enum_for(:status).with_values(
+        received: 'received',
+        processing: 'processing',
+        processed: 'processed',
+        processing_failed: 'processing_failed'
+      ).backed_by_column_of_type(:string)
+    }
+  end
+
+  describe 'factory' do
+    it 'creates a valid billable_event' do
+      expect(billable_event).to be_valid
+    end
+
+    it 'defaults to received status' do
+      expect(billable_event.status).to be == 'received'
+    end
+  end
+
+  describe 'status scopes' do
+    let!(:received_event) { create(:billable_event, :received) }
+    let!(:processing_event) { create(:billable_event, :processing) }
+    let!(:processed_event) { create(:billable_event, :processed) }
+    let!(:failed_event) { create(:billable_event, :processing_failed) }
+
+    it 'filters by received status' do
+      expect(described_class.received).to contain_exactly(received_event)
+    end
+
+    it 'filters by processing status' do
+      expect(described_class.processing).to contain_exactly(processing_event)
+    end
+
+    it 'filters by processed status' do
+      expect(described_class.processed).to contain_exactly(processed_event)
+    end
+
+    it 'filters by processing_failed status' do
+      expect(described_class.processing_failed).to contain_exactly(failed_event)
+    end
+  end
+
+  describe '.for_atlas_entity' do
+    let(:entity_id) { '123e4567-e89b-12d3-a456-426614174000' }
+
+    let!(:matching_event) do
+      create(:billable_event, :with_atlas_payload,
+             event_type: 'entity_created',
+             payload: {
+               data: {
+                 entity_id:,
+                 account_id: '1',
+                 entity_type: 'Company'
+               }
+             })
+    end
+
+    it 'returns first event with matching entity_id' do
+      expect(described_class.for_atlas_entity(entity_id)).to be == (matching_event)
+    end
+
+    it 'returns nil when no match found' do
+      expect(described_class.for_atlas_entity('non-existent')).to be_nil
+    end
+  end
+
+  describe '.for_atlas_entity_id' do
+    let(:entity_id) { '123e4567-e89b-12d3-a456-426614174000' }
+    let(:other_entity_id) { '987f6543-e21c-34d5-b678-426614174001' }
+
+    let!(:matching_event) do
+      create(:billable_event, :with_atlas_payload,
+             event_type: 'entity_created',
+             payload: {
+               data: {
+                 entity_id:,
+                 account_id: '1',
+                 entity_type: 'Company'
+               }
+             })
+    end
+
+    let!(:different_entity_event) do
+      create(:billable_event, :with_atlas_payload,
+             event_type: 'entity_created',
+             payload: {
+               data: {
+                 entity_id: other_entity_id,
+                 account_id: '2',
+                 entity_type: 'Company'
+               }
+             })
+    end
+
+    let!(:different_event_type) do
+      create(:billable_event, :with_atlas_payload,
+             event_type: 'entity_updated',
+             payload: {
+               data: {
+                 entity_id:,
+                 account_id: '1',
+                 entity_type: 'Company'
+               }
+             })
+    end
+
+    it 'returns events with matching entity_id and entity_created type' do
+      expect(described_class.for_atlas_entity_id(entity_id)).to contain_exactly(matching_event)
+    end
+
+    it 'does not return events with different entity_id' do
+      expect(described_class.for_atlas_entity_id(entity_id)).not_to include(different_entity_event)
+    end
+
+    it 'does not return events with different event_type' do
+      expect(described_class.for_atlas_entity_id(entity_id)).not_to include(different_event_type)
+    end
+  end
+
+  describe '#processed?' do
+    context 'when status is processed' do
+      subject(:billable_event) { build(:billable_event, :processed) }
+
+      it 'returns true' do
+        expect(billable_event).to be_processed
+      end
+    end
+
+    context 'when status is not processed' do
+      subject(:billable_event) { build(:billable_event, :received) }
+
+      it 'returns false' do
+        expect(billable_event).not_to be_processed
+      end
+    end
+  end
+end

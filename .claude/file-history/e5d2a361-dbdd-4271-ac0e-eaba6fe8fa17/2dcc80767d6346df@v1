@@ -1,0 +1,288 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+describe Atlas::Entities::CreateBillableEvent do
+  subject(:service) { described_class.new(atlas_entity:) }
+
+  let(:entity_id) { SecureRandom.uuid }
+  let(:account_id) { SecureRandom.uuid }
+  let(:created_at) { 2.days.ago }
+  let(:created_by_id) { 'user-123' }
+
+  let(:atlas_entity) do
+    Atlas::Entity.new(
+      id: entity_id,
+      account_id:,
+      entity_type: 'contract',
+      created_at:,
+      created_by_id:
+    )
+  end
+
+  describe '#call' do
+    context 'when BillableEvent does not exist' do
+      it 'returns success result' do
+        result = service.call
+
+        expect(result).to be_success
+      end
+
+      it 'creates a new BillableEvent' do
+        expect { service.call }.to change(BillableEvent, :count).by(1)
+      end
+
+      it 'creates BillableEvent with correct attributes' do
+        result = service.call
+        billable_event = result.value
+
+        expect(billable_event.event_type).to be == 'entity_created'
+        expect(billable_event.status).to be == 'received'
+        expect(billable_event.processed_at).to be_nil
+        expect(billable_event.created_at).to be_present
+        expect(billable_event.updated_at).to be_present
+      end
+
+      it 'creates CloudEvent payload with correct structure' do
+        result = service.call
+        payload = result.value.payload
+
+        expect(payload['specversion']).to be == '1.0'
+        expect(payload['type']).to be == 'entity_created'
+        expect(payload['source']).to be == '/atlas/entities'
+        expect(payload['id']).to be_present
+        expect(payload['time']).to be == created_at.iso8601
+      end
+
+      it 'includes entity data in CloudEvent payload' do
+        result = service.call
+        data = result.value.payload['data']
+
+        expect(data['entity_id']).to be == entity_id
+        expect(data['account_id']).to be == account_id
+        expect(data['entity_type']).to be == 'contract'
+        expect(data['created_at']).to be == created_at.iso8601
+      end
+
+      it 'includes metadata in CloudEvent payload' do
+        result = service.call
+        metadata = result.value.payload['data']['metadata']
+
+        expect(metadata['created_by']).to be == created_by_id
+        expect(metadata['source_system']).to be == 'atlas'
+        expect(metadata['version']).to be == '1.0'
+      end
+
+      it 'returns the created BillableEvent' do
+        result = service.call
+
+        expect(result.value).to be_a(BillableEvent)
+        expect(result.value).to be_persisted
+      end
+    end
+
+    context 'when entity does not have created_by_id' do
+      let(:atlas_entity) do
+        Atlas::Entity.new(
+          id: entity_id,
+          account_id:,
+          entity_type: 'matter',
+          created_at:
+        )
+      end
+
+      it 'uses "system" as default created_by' do
+        result = service.call
+        metadata = result.value.payload['data']['metadata']
+
+        expect(metadata['created_by']).to be == 'system'
+      end
+    end
+
+    context 'when BillableEvent already exists (idempotency)' do
+      let!(:existing_event) do
+        create(
+          :billable_event,
+          event_type: 'entity_created',
+          payload: {
+            'specversion' => '1.0',
+            'type' => 'entity_created',
+            'data' => {
+              'entity_id' => entity_id
+            }
+          }
+        )
+      end
+
+      it 'returns success result' do
+        result = service.call
+
+        expect(result).to be_success
+      end
+
+      it 'does not create a duplicate BillableEvent' do
+        expect { service.call }.not_to change(BillableEvent, :count)
+      end
+
+      it 'returns the existing BillableEvent' do
+        result = service.call
+
+        expect(result.value).to be == existing_event
+      end
+    end
+
+    context 'when multiple entities have similar payloads' do
+      let(:other_entity_id) { SecureRandom.uuid }
+
+      before do
+        create(
+          :billable_event,
+          event_type: 'entity_created',
+          payload: {
+            'specversion' => '1.0',
+            'data' => {
+              'entity_id' => other_entity_id,
+              'account_id' => account_id
+            }
+          }
+        )
+      end
+
+      it 'creates new event for different entity_id' do
+        expect { service.call }.to change(BillableEvent, :count).by(1)
+      end
+    end
+
+    context 'when BillableEvent creation fails validation' do
+      before do
+        allow(BillableEvents::Create).to receive(:call).and_return(
+          Result.failure(errors: ['Validation failed'])
+        )
+      end
+
+      it 'returns failure result' do
+        result = service.call
+
+        expect(result).to be_failure
+      end
+
+      it 'includes validation error message' do
+        result = service.call
+
+        expect(result.error_messages).to include('Validation failed')
+      end
+
+      it 'does not create BillableEvent' do
+        expect { service.call }.not_to change(BillableEvent, :count)
+      end
+    end
+
+    context 'when an unexpected error occurs' do
+      before do
+        allow(BillableEvents::Create).to receive(:call).and_raise(
+          InternalToolsTransactionInterruptError, 'Database connection lost'
+        )
+      end
+
+      it 'returns failure result' do
+        result = service.call
+
+        expect(result).to be_failure
+      end
+
+      it 'includes error message' do
+        result = service.call
+
+        expect(result.error_messages).to include('Database connection lost')
+      end
+    end
+
+    context 'with different entity types' do
+      %w[contract matter document workflow].each do |entity_type|
+        context "when entity_type is #{entity_type}" do
+          let(:atlas_entity) do
+            Atlas::Entity.new(
+              id: entity_id,
+              account_id:,
+              entity_type:,
+              created_at:
+            )
+          end
+
+          it 'creates BillableEvent with correct entity_type' do
+            result = service.call
+
+            expect(result).to be_success
+            expect(result.value.payload['data']['entity_type']).to be == entity_type
+          end
+        end
+      end
+    end
+
+    context 'with timestamp precision' do
+      let(:precise_time) { Time.zone.parse('2024-01-15T10:30:45.123456Z') }
+      let(:created_at) { precise_time }
+
+      it 'preserves Atlas entity timestamps in CloudEvent payload' do
+        result = service.call
+        payload = result.value.payload
+
+        expect(payload['time']).to be == precise_time.iso8601
+        expect(payload['data']['created_at']).to be == precise_time.iso8601
+      end
+
+      it 'allows Rails to set BillableEvent timestamps automatically' do
+        result = service.call
+
+        expect(result.value.created_at).to be_present
+        expect(result.value.updated_at).to be_present
+        expect(result.value.processed_at).to be_nil
+      end
+    end
+
+    context 'CloudEvent payload structure validation' do
+      let(:expected_keys) do
+        %w[specversion type source id time data]
+      end
+
+      it 'includes all required CloudEvent fields' do
+        result = service.call
+        payload = result.value.payload
+
+        expect(payload.keys).to match_array(expected_keys)
+      end
+
+      it 'uses CloudEvent v1.0 specification' do
+        result = service.call
+
+        expect(result.value.payload['specversion']).to be == '1.0'
+      end
+
+      it 'generates unique CloudEvent id for each call' do
+        result1 = service.call
+        id1 = result1.value.payload['id']
+        BillableEvent.delete_all
+
+        entity2 = Atlas::Entity.new(
+          id: SecureRandom.uuid,
+          account_id:,
+          entity_type: 'contract',
+          created_at:
+        )
+        service2 = described_class.new(atlas_entity: entity2)
+        result2 = service2.call
+        id2 = result2.value.payload['id']
+
+        expect(id1).not_to be == id2
+      end
+
+      it 'includes metadata with source_system atlas' do
+        result = service.call
+        metadata = result.value.payload['data']['metadata']
+
+        expect(metadata['source_system']).to be == 'atlas'
+        expect(metadata['version']).to be == '1.0'
+      end
+    end
+  end
+end

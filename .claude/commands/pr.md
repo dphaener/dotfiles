@@ -1,6 +1,6 @@
 ---
 description: Create and submit a pull request using git-spice
-allowed-tools: Bash(git:*), Bash(gs:*)
+allowed-tools: Bash(git:*), Bash(gs:*), Bash(open:*), Bash(echo:*), Bash(pbcopy:*)
 ---
 
 # Submit PR with git-spice
@@ -14,37 +14,55 @@ Please help me create and submit a pull request for my current branch using git-
 ## Workflow
 
 ### For NEW PRs (default behavior):
-1. First, check git status to see current state
-2. Stage ALL modified files using `git add -A`
-3. **Squash all commits into one**: 
-   - Check commit history with `git log --oneline main..HEAD`
-   - If there are multiple commits, use `git reset --soft main` to combine all commits
-   - This ensures a single, clean commit for the PR
-4. Create a commit with a well-formed conventional commit message following the guidelines in CLAUDE.md
-5. Run `gs repo sync` to synchronize with remote
-6. Submit the PR using `gs branch submit --fill` with draft flag based on user input:
-   - If user provides "draft" argument: use `--draft`
-   - Otherwise: use `--no-draft` (default behavior)
-7. Open the created PR URL in the browser
-8. Generate a Slack message with a markdown hyperlink:
+1. **Check git-spice stack status**: Use `gs log short` to understand the current branch's position in the stack
+2. **Verify single commit architecture**:
+   - Use `gs log long` to show commits for this branch and understand the stack structure
+   - Check that the current branch has exactly one commit or needs a commit created
+   - If multiple commits exist on current branch, use `gs branch squash` to squash them into one
+3. **Stage and commit changes**:
+   - Check git status to see current state
+   - Stage ALL modified files using `git add -A`
+   - If no commit exists yet, create a commit with a well-formed conventional commit message following ~/CLAUDE.md guidelines
+   - If commit exists and needs updating, use `git commit --amend`
+4. **Synchronize with remote**: Run `gs repo sync` to synchronize the entire stack with remote
+5. **Submit the PR**: Use `gs branch submit` with `--fill` flag and draft flag based on user input:
+   - If user provides "draft" argument: use `--fill --draft`
+   - Otherwise: use `--fill --no-draft` (default behavior)
+6. **Open and share**:
+   - Open the created PR URL in the browser
+   - Generate a Slack message with markdown hyperlink
    - For draft PRs: ":github-pr: [DRAFT PR #XXX](URL) for <description> is ready for initial feedback"
    - For regular PRs: ":github-pr: [PR #XXX](URL) for <description> is ready for review"
-   - Use the PR number and URL from the created PR
-   - Extract the description from the commit message (first line after the type prefix)
-9. Copy the Slack message to clipboard as markdown:
-   - Use markdown link format `[PR #XXX](URL)` or `[DRAFT PR #XXX](URL)` for the link
    - Copy to clipboard with pbcopy
-   - Example: `:github-pr: [DRAFT PR #XXX](URL) for description is ready for initial feedback`
 
 ### For UPDATING PRs (when "update" argument provided):
-1. First, check git status to see current state
-2. Stage ALL modified files using `git add -A`
-3. **Create fixup commits and squash**:
-   - Check recent commit history with `git log --oneline -5`
-   - Create fixup commit(s) for any changes: `git commit --fixup HEAD`
-   - Squash fixup commits: `git rebase -i --autosquash HEAD~[number of commits]`
-4. Resubmit the PR using `gs bs` (git spice branch submit)
-5. Inform the user that the PR has been updated
+1. **Check git-spice stack status**: Use `gs log short` to understand current state
+2. **Stage changes and amend**:
+   - Check git status to see current state
+   - Stage ALL modified files using `git add -A`
+   - Amend the existing commit: `git commit --amend` (preserve single commit architecture)
+3. **Synchronize and resubmit**:
+   - Run `gs repo sync` to synchronize the stack
+   - Resubmit the PR using `gs branch submit --fill` (shorthand: `gs bs --fill`)
+4. Inform the user that the PR has been updated
+
+## Key Principles:
+
+### Git-Spice Stack Awareness
+- **Always use `gs log short` first** to understand branch relationships and avoid confusion about stacked branches
+- **Use `gs log long`** to see commits and understand the stack structure
+- **Leverage git-spice commands** for stack operations rather than raw git commands when possible
+
+### Single Commit Architecture
+- **Each branch should have exactly one commit** - this is the git-spice way
+- **Use `gs log long` to verify** the current branch commit status
+- **If multiple commits exist**, use `gs branch squash` to squash them into one
+- **For updates, use `git commit --amend`** to maintain single commit per branch
+
+### Error Prevention
+- **Never use `git reset --soft main`** when working with stacked branches - this will include parent branch commits
+- **Always check `gs log short`** before making assumptions about branch content
+- **Use git-spice sync operations** (`gs repo sync`) to handle stack synchronization properly
 
 Make sure to:
 - Review the commit message with me before committing (for new PRs)

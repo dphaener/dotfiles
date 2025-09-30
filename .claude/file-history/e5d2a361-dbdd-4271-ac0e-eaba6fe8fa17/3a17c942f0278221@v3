@@ -1,0 +1,29 @@
+# frozen_string_literal: true
+
+module Atlas
+  class Entity < Base
+    # Fetch all entities with pagination support
+    # Similar to how ICC::Account handles pagination
+    def self.all_in_batches(batch_size: 50)
+      page = 1
+
+      loop do
+        entities = with_server_login do
+          order(created_at: :asc).paginate(page:, per_page: batch_size).to_a
+        end
+
+        break if entities.empty?
+
+        yield entities if block_given?
+        page += 1
+      end
+    end
+
+    # Fetch a single page of entities
+    def self.fetch_page(page: 1, per_page: 50)
+      with_server_login do
+        order(created_at: :asc).paginate(page:, per_page:).to_a
+      end
+    end
+  end
+end

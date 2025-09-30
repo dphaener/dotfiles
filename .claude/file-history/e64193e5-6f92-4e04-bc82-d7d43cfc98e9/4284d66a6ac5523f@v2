@@ -1,0 +1,16 @@
+/**
+ * Validates that a value is a positive integer
+ * @param value - The value to validate
+ * @returns Error message if validation fails, undefined if valid
+ */
+export function validatePositiveInteger(
+  value: string | number | undefined,
+): string | undefined {
+  const numericValue = Number(value);
+
+  if (numericValue <= 0 || !Number.isInteger(numericValue)) {
+    return 'Must be a positive integer';
+  }
+
+  return undefined;
+}

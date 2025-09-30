@@ -1,0 +1,38 @@
+# frozen_string_literal: true
+
+FactoryBot.define do
+  factory :billable_event do
+    event_type { 'entity_created' }
+    status { :received }
+    payload { { 'entity_id' => SecureRandom.uuid, 'created_at' => Time.current.iso8601 } }
+    processed_at { nil }
+
+    trait :processing do
+      status { :processing }
+    end
+
+    trait :processed do
+      status { :processed }
+      processed_at { Time.current }
+    end
+
+    trait :processing_failed do
+      status { :processing_failed }
+    end
+
+    trait :with_atlas_payload do
+      payload do
+        {
+          'id' => SecureRandom.uuid,
+          'type' => 'entity_created',
+          'source' => 'ontra://atlas',
+          'data' => {
+            'entity_id' => SecureRandom.uuid,
+            'account_id' => SecureRandom.uuid,
+            'created_at' => Time.current.iso8601
+          }
+        }
+      end
+    end
+  end
+end

@@ -1,44 +1,7 @@
 # Ghostty Configuration
-
-# Theme
-theme = brogrammer
-
-# Font settings
-font-family = "JetBrains Mono"
+theme = Brogrammer
+font-family = FiraCode Nerd Font Mono
 font-size = 14
-
-# Window settings
-window-padding-x = 10
-window-padding-y = 10
-window-decoration = true
-
-# Shell
-shell = /bin/zsh
-
-# Scrollback
-scrollback-limit = 10000
-
-# Cursor
-cursor-style = block
-cursor-style-blink = false
-
-# Mouse
-mouse-hide-while-typing = true
-
-# macOS specific
-macos-option-as-alt = true
-macos-titlebar-style = tabs
-
-# Window opacity
-background-opacity = 0.95
-
-# Selection
-selection-clipboard = clipboard
-
-# Bell
-audible-bell = false
-visual-bell = false
-
-# Keybindings
-keybind = cmd+k=clear
-keybind = cmd+shift+enter=toggle_fullscreen
+link-url = true
+window-decoration = auto
+keybind = shift+enter=text:\n

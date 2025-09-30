@@ -1,0 +1,51 @@
+{"display":"/statusline ","pastedContents":{},"timestamp":1759172476276,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/statusline ","pastedContents":{},"timestamp":1759172476278,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/","pastedContents":{},"timestamp":1759172631365,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/pr ","pastedContents":{},"timestamp":1759173668991,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/pr ","pastedContents":{},"timestamp":1759173668999,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Yes!","pastedContents":{},"timestamp":1759173712490,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Can you please update the PR and commit descriptions to include the TURT-174 ticket as well? This fixes an issue where the invoice group select was not reloading when the account changed.","pastedContents":{},"timestamp":1759173846246,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Please add the fix to the PR and commit description as well. You'll probably have to use the gh cli to do this.","pastedContents":{},"timestamp":1759173909489,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/model ","pastedContents":{},"timestamp":1759174249803,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/model ","pastedContents":{},"timestamp":1759174249810,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/model ","pastedContents":{},"timestamp":1759174249812,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"work on TURT-133","pastedContents":{},"timestamp":1759174275552,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"No that's not right, please clear out TURT-133, and use the atlassian MCP to fetch the ticket description","pastedContents":{},"timestamp":1759174314441,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/mvp","pastedContents":{},"timestamp":1759174335855,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/mvp","pastedContents":{},"timestamp":1759174335861,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/mcp ","pastedContents":{},"timestamp":1759174341130,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/mcp ","pastedContents":{},"timestamp":1759174341138,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/mcp ","pastedContents":{},"timestamp":1759174341140,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Ok please try again, I've reconnected.","pastedContents":{},"timestamp":1759174348019,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"You should be using the available agents to do this work.","pastedContents":{},"timestamp":1759174713897,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Did you run rubocop to ensure there are no violations? I feel like there will be in some of the specs. ABCSize complexity is fine for a data migration, yes, but we need to add that to the exclude list in the rubocop.yml file. Let's ignore the entire data migration directory, since we don't care about ABCSize for any data migration.","pastedContents":{},"timestamp":1759175758590,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Ok please run rubocop again and fix all of the violations, those are not acceptable for our teams standards, that is why there are violations.","pastedContents":{},"timestamp":1759176060203,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Because we are creating a record in the create billable event service, we should be using the transactable module, and we should use the BillableEvents::Create service as well.","pastedContents":{},"timestamp":1759176746378,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"You missed something. When creating the billable event, we want to use the BillableEvents::Create service","pastedContents":{},"timestamp":1759176906899,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"The event has NOT been processed. These will all be received.","pastedContents":{},"timestamp":1759176991715,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"We should NEVER manually set created at and updated at timestamps, please remove that.","pastedContents":{},"timestamp":1759177106039,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Let's add a scope to the billable event model that searches for the event rather than manually doing it in the create billable event service","pastedContents":{},"timestamp":1759178661448,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"I think the scope should use the 'first' method as well, the name of the scope implies a single event is being retrieved.","pastedContents":{},"timestamp":1759178789981,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"On the contracts create page we have several positive integer validations that are essentially identical. Let's refactor that out into a utility function that can be reused.","pastedContents":{},"timestamp":1759183212806,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"We actually want to remove the utils index barrel file for now, we'll be adding that and updating imports in a follow up PR.","pastedContents":{},"timestamp":1759183264566,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Nevermind please continue","pastedContents":{},"timestamp":1759183322290,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Let's rename that to validations.","pastedContents":{},"timestamp":1759183350988,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"If you had been delegating to the frontend agent like you were supposed to it would know exactly how to run the tests.","pastedContents":{},"timestamp":1759183430386,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Can you take a look at the ontra common gem and tell me what ENV variable I need to set for the atlas API url so the api resources will work?","pastedContents":{},"timestamp":1759183910438,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"You need to look at the gem. ../ontra-common","pastedContents":{},"timestamp":1759183939794,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Please add that to the config, I'll add the ENV variable. Check ../atlas to see how the API is namespaced.","pastedContents":{},"timestamp":1759184028301,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"The populate subscription ids data migration didn't make it into the database schema migration, so it think is hasn't been done, can you manually add that one?","pastedContents":{},"timestamp":1759184297255,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"I had to make some updates to the atlas entity backfill. Please use the test agent to identify any failing tests and fix them.","pastedContents":{},"timestamp":1759186098344,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Let's run rubocop as well on the whole project.","pastedContents":{},"timestamp":1759186457080,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"I have started the process of making the includes configurable in the atlas entity class. Can you finish the implementation?","pastedContents":{},"timestamp":1759186746038,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"I want the default includes to be empty, the caller should specify what they want.","pastedContents":{},"timestamp":1759187040746,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"We've got some rubocop violations that need to be addressed.","pastedContents":{},"timestamp":1759187411464,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"But you have to use a verifying double, we need to find out (by searching the json api client source code) what is returned from a query and use that as an instance double.","pastedContents":{},"timestamp":1759187684742,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"We need to add tests for the scope and new method added to the billable event model.","pastedContents":{},"timestamp":1759188117462,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Let's use the with_atlas_payload trait in that spec to create the billable event with an atlas payload.","pastedContents":{},"timestamp":1759188370215,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"An integer entity id is worthless, they're uuids.","pastedContents":{},"timestamp":1759188429101,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"You should also be able to JUST use the trait, without passing all the atlas payload params.","pastedContents":{},"timestamp":1759188463375,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"You should be able to pass an argument when building traits, check the factory bot documentation.","pastedContents":{},"timestamp":1759188500157,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/pr ","pastedContents":{},"timestamp":1759191748012,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"/pr ","pastedContents":{},"timestamp":1759191748015,"project":"/Users/darinhaener/ontra/internal-tools"}
+{"display":"Commit and push the changes","pastedContents":{},"timestamp":1759192012495,"project":"/Users/darinhaener/dotfiles"}

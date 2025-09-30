@@ -1,0 +1,86 @@
+# TURT-133: Backfill Atlas Entities Implementation Plan
+
+## Overview
+Backfill existing Atlas entities to the internal tools app by creating BillableEvents that match the CloudEvent format from Atlas.
+
+## Requirements Summary
+1. Create new API resource namespace: `Atlas`
+2. Add new API resource: `Atlas::Entity`
+3. Create data migration to:
+   - Fetch all Atlas entities from the Atlas API
+   - Create BillableEvent for each entity with CloudEvent-formatted payload
+   - Set CloudEvent timestamp to match entity's created_at timestamp
+
+## Implementation Tasks
+
+### Phase 1: Create Atlas API Resources
+- [ ] Create `app/api_resources/atlas/entity.rb`
+  - Inherit from `Atlas::Base`
+  - Add methods to fetch entities with pagination support
+  - Follow pattern similar to `ICC::Account` for server login and data retrieval
+
+### Phase 2: Create Backfill Service
+- [ ] Create `app/services/atlas/entities/backfill_all.rb`
+  - Follow pattern from `ICC::Accounts::SyncAll` service
+  - Implement pagination for fetching Atlas entities
+  - Process entities in batches (e.g., 50 per page)
+  - Track successes and failures
+  - Return Result object with summary
+
+### Phase 3: Create BillableEvent Creation Service
+- [ ] Create `app/services/atlas/entities/create_billable_event.rb`
+  - Format entity data as CloudEvent payload
+  - Match exact CloudEvent structure from `spec/fixtures/atlas_usage_event_message.json`
+  - Set proper event_type (e.g., "entity_created")
+  - Set status as "processed" (since these are historical)
+  - Set processed_at timestamp
+
+### Phase 4: Create Data Migration
+- [ ] Generate data migration: `rails generate data_migration backfill_atlas_entities`
+- [ ] Implement migration to invoke `Atlas::Entities::BackfillAll` service
+- [ ] Set `ISLANDS_TO_RUN_ON = %w[us].freeze`
+- [ ] Make migration irreversible (no down method)
+
+### Phase 5: Testing
+- [ ] Write specs for `Atlas::Entity` API resource
+- [ ] Write specs for `Atlas::Entities::BackfillAll` service
+- [ ] Write specs for `Atlas::Entities::CreateBillableEvent` service
+- [ ] Test data migration in development environment
+- [ ] Verify CloudEvent payload format matches expected structure
+
+## CloudEvent Payload Structure
+Based on the fixture, the payload should be formatted as:
+```json
+{
+  "specversion": "1.0",
+  "type": "entity_created",
+  "source": "/atlas/entities",
+  "id": "[unique-uuid]",
+  "time": "[entity-created-at-timestamp]",
+  "data": {
+    "entity_id": "[entity-uuid]",
+    "account_id": "[account-uuid]",
+    "entity_type": "[type]",
+    "created_at": "[timestamp]",
+    "metadata": {
+      "created_by": "[user-id]",
+      "source_system": "atlas",
+      "version": "1.0"
+    }
+  }
+}
+```
+
+## Success Criteria
+- ✅ All Atlas entities successfully backfilled as BillableEvents
+- ✅ CloudEvent payload format matches exactly what Atlas sends
+- ✅ Timestamps preserved from original entity creation
+- ✅ Service handles pagination and large datasets efficiently
+- ✅ Comprehensive test coverage
+- ✅ Data migration runs successfully in production
+
+## Notes
+- The BillableEvent model already exists with appropriate fields
+- Use "processed" status since these are historical records
+- Follow existing patterns from ICC::Accounts::SyncAll for reliability
+- Ensure idempotency - migration can be run multiple times safely

@@ -1,0 +1,26 @@
+# frozen_string_literal: true
+
+Ontra::Common.configure do |config|
+  config.app_name = 'internal_ops'
+  config.domain = ENV.fetch('DOMAIN')
+  config.icc_env = ENV.fetch('ICC_ENV')
+  config.island = ENV.fetch('ISLAND')
+  config.time_zone = Rails.application.config.time_zone
+  config.icc_client_id = ENV.fetch('ICC_CLIENT_ID')
+  config.icc_client_secret = ENV.fetch('ICC_CLIENT_SECRET')
+  config.icc_api_url = "#{ENV.fetch('ICC_APP_URL')}/v2"
+  config.airbrake_project_key = ENV.fetch('AIRBRAKE_PROJECT_KEY')
+  config.airbrake_project_id = ENV.fetch('AIRBRAKE_PROJECT_ID')
+  config.authentication = {
+    url: ENV.fetch('AUTH0_URL')
+  }
+  config.mode = if ENV.fetch('CI', nil)
+                  Ontra::Common::Configuration::CI
+                elsif Rails.env.production?
+                  Ontra::Common::Configuration::PRODUCTION
+                elsif Rails.env.test?
+                  Ontra::Common::Configuration::TEST
+                else
+                  Ontra::Common::Configuration::LOCAL
+                end
+end
