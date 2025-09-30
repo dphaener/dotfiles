@@ -5,6 +5,9 @@ nvim/lazy-lock.json
 .claude/shell-snapshots/
 .claude/statsig/
 .claude/todos/
+.claude/file-history
+.claude/history.jsonl
+.claude/commands/plan-from-jira.md
 
 # Crush temporary files
 .crush/
