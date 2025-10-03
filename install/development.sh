@@ -7,7 +7,7 @@ source "$(dirname "$0")/helpers.sh"
 
 # Helper function to set up ASDF PATH
 setup_asdf_path() {
-    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 }
 
 install_asdf() {
