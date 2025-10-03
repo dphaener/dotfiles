@@ -1,11 +1,12 @@
 ---
-description: Create a comprehensive work ticket from high-level input, automatically generating detailed context, acceptance criteria, and technical specifications using a core team of three specialist agents.
-argument-hint: "<high-level description of work needed>"
+description: Update an existing ticket with new information
+argument-hint: "<ticket-number>: <high-level description of ticket updates>"
 ---
 
 ## Mission
 
-Transform high-level user input into a well-structured work ticket in markdown format with comprehensive details. This command uses a core team of three agents (`product-manager`, `ux-designer`, `senior-software-engineer`) to handle all feature planning and specification in parallel. It focuses on **pragmatic startup estimation** to ensure tickets are scoped for rapid, iterative delivery.
+Find the existing ticket and use the update description to incorporate the new information into the ticket.
+This command uses a core team of three agents (`product-manager`, `ux-designer`, `senior-software-engineer`) to handle all feature planning and specification in parallel. It focuses on **pragmatic startup estimation** to ensure tickets are scoped for rapid, iterative delivery.
 
 **Pragmatic Startup Philosophy**:
 
@@ -21,8 +22,7 @@ Transform high-level user input into a well-structured work ticket in markdown f
 
 For any feature request that isn't trivial (i.e., not LIGHT), this command follows a strict parallel execution rule using the core agent trio.
 
-If the Linear MCP is available, create the ticket in Linear, otherwise create it in an existing tickets folder in the
-repo.
+If the Linear MCP is available, please update the linear ticket, otherwise update it in the filesystem.
 
 ### The Core Trio (Always Run in Parallel)
 
@@ -43,7 +43,7 @@ repo.
 
 --
 
-## Ticket Generation Process
+## Ticket Update Process
 
 ### 1) Smart Research Depth Analysis
 
@@ -73,9 +73,9 @@ STANDARD / DEEP Complexity → CORE TRIO OF AGENTS
 
 NO AGENTS NEEDED.
 
-1. Generate ticket title and description directly from the request.
-2. Set pragmatic estimate (e.g., 1 hour).
-3. Create ticket and finish.
+1. Update ticket title and description directly from the request.
+2. Update pragmatic estimate (e.g., 1 hour).
+3. Update ticket and finish.
 
 #### STANDARD Research Pattern (Default for Features)
 
@@ -93,9 +93,9 @@ The Core Trio is dispatched with a deeper scope:
 - **`ux-designer`**: Create a detailed design brief, including edge cases and state machines.
 - **`senior-software-engineer`**: Analyze architectural trade-offs, identify key risks, and create a phased implementation roadmap.
 
-### 3\) Generate Ticket Content
+### 3\) Update Ticket Content
 
-Findings from the three agents are synthesized into a comprehensive ticket.
+Findings from the three agents are applied to the existing ticket.
 
 #### Description Structure
 
@@ -146,12 +146,12 @@ Findings from the three agents are synthesized into a comprehensive ticket.
 - **Potential Gotchas**: Query performance will be critical; ensure database indexes are added.
 ```
 
-### 4\) Smart Ticket Creation
+### 4\) Smart Ticket Updating
 
-- **If total estimated effort is ≤ 2 days**: A single, comprehensive ticket is created.
-- **If total estimated effort is \> 2 days**: The work is automatically broken down into 2-3 smaller, interconnected tickets (e.g., "Part 1: Backend API," "Part 2: Frontend UI"), each with its own scope and estimate.
+- **If total estimated effort is ≤ 2 days**: Update the existing ticket.
+- **If total estimated effort is \> 2 days**: Remove the old ticket, and break the work down into 2-3 smaller, interconnected tickets (e.g., "Part 1: Backend API," "Part 2: Frontend UI"), each with its own scope and estimate.
 
 ### 5\) Output & Confirmation
 
-The command finishes by creating the work ticket and returning the filepath for
+The command finishes by creating the work ticket in the tickets directory and returning the filepath for
 the newly created ticket.

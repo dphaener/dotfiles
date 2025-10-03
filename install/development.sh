@@ -5,15 +5,9 @@
 set -e
 source "$(dirname "$0")/helpers.sh"
 
-# Helper function to source ASDF based on installation method
-source_asdf() {
-    if is_macos && command_exists brew; then
-        local brew_prefix
-        brew_prefix=$(brew --prefix)
-        . "$brew_prefix/opt/asdf/libexec/asdf.sh"
-    else
-        . "$HOME/.asdf/asdf.sh"
-    fi
+# Helper function to set up ASDF PATH
+setup_asdf_path() {
+    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 }
 
 install_asdf() {
@@ -39,13 +33,8 @@ install_asdf() {
         # Install ASDF
         brew_install "asdf"
         
-        # Add to shell config if not already there
-        local brew_prefix
-        brew_prefix=$(brew --prefix)
-        append_if_missing ". $brew_prefix/opt/asdf/libexec/asdf.sh" "$HOME/.zshrc"
-        
-        # Source for current session
-        . "$brew_prefix/opt/asdf/libexec/asdf.sh"
+        # Set up PATH for current session
+        setup_asdf_path
         
     elif is_linux; then
         # For Linux, we'll use the official download method
@@ -54,26 +43,40 @@ install_asdf() {
         package_install "git"
         package_install "bash"
         
-        # Download and install ASDF
+        # Download pre-compiled binary
         local asdf_version="0.18.0"
+        local arch=""
+        case "$(uname -m)" in
+            x86_64)
+                arch="amd64"
+                ;;
+            arm64|aarch64)
+                arch="arm64"
+                ;;
+            *)
+                error "Unsupported architecture: $(uname -m)"
+                return 1
+                ;;
+        esac
+
         local temp_dir
         temp_dir=$(mktemp -d)
-        
+
         info "Downloading ASDF v$asdf_version..."
-        curl -L "https://github.com/asdf-vm/asdf/archive/v${asdf_version}.tar.gz" -o "$temp_dir/asdf.tar.gz"
-        
+        curl -L "https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf_${asdf_version}_linux_${arch}.tar.gz" -o "$temp_dir/asdf.tar.gz"
+
         # Extract to home directory
-        mkdir -p "$HOME/.asdf"
-        tar -xzf "$temp_dir/asdf.tar.gz" -C "$HOME/.asdf" --strip-components=1
-        
+        mkdir -p "$HOME/.asdf/bin"
+        tar -xzf "$temp_dir/asdf.tar.gz" -C "$HOME/.asdf/bin"
+
         rm -rf "$temp_dir"
-        
-        # Add to shell config if not already there
-        append_if_missing ". $HOME/.asdf/asdf.sh" "$HOME/.zshrc"
-        append_if_missing ". $HOME/.asdf/completions/asdf.bash" "$HOME/.zshrc"
-        
-        # Source for current session
-        . "$HOME/.asdf/asdf.sh"
+
+        # Set up completions
+        mkdir -p "$HOME/.asdf/completions"
+        "$HOME/.asdf/bin/asdf" completion zsh > "$HOME/.asdf/completions/_asdf"
+
+        # Set up PATH for current session
+        setup_asdf_path
     else
         error "Unsupported operating system for ASDF installation"
         return 1
@@ -84,9 +87,9 @@ install_asdf() {
 
 configure_asdf_plugins() {
     info "Configuring ASDF plugins..."
-    
-    # Source ASDF
-    source_asdf
+
+    # Set up ASDF PATH
+    setup_asdf_path
     
     # Add Ruby plugin
     asdf_plugin_add "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
@@ -106,9 +109,9 @@ configure_asdf_plugins() {
 
 install_tool_versions() {
     info "Installing tool versions from .tool-versions..."
-    
-    # Source ASDF
-    source_asdf
+
+    # Set up ASDF PATH
+    setup_asdf_path
     
     # Change to dotfiles directory to use .tool-versions
     (
@@ -127,9 +130,9 @@ install_tool_versions() {
 
 install_ruby_gems() {
     info "Installing essential Ruby gems..."
-    
-    # Source ASDF
-    source_asdf
+
+    # Set up ASDF PATH
+    setup_asdf_path
     
     # Install gems
     gem_install "bundler"

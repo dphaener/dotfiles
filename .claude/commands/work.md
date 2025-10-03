@@ -1,7 +1,7 @@
 ---
-
 description: Work on the specified ticket by delegating work to the senior-software-engineer.
 argument-hint: "<ticket-id>"
+---
 
 ## Mission
 

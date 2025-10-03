@@ -1,0 +1,84 @@
+---
+project:
+  name: takumi_test
+  path: "/Users/darinhaener/code/takumi_test"
+  rails_version: 8.0.3
+  generated_at: '2025-10-02T16:04:38Z'
+components:
+  models:
+    count: 1
+    files: 1
+  controllers:
+    count: 1
+    files: 1
+  views:
+    count: 4
+    files: 4
+  tests:
+    count: 0
+    files: 0
+  mailers:
+    count: 1
+    files: 1
+  jobs:
+    count: 1
+    files: 1
+  routes:
+    count: 1
+    files: 1
+recommendations:
+- tool_name: Route Generator
+  score: '0.496'
+  frequency: 1
+  component_types:
+  - controllers
+- tool_name: Query Optimizer
+  score: '0.495'
+  frequency: 2
+  component_types:
+  - models
+  - controllers
+- tool_name: Association Builder
+  score: '0.494'
+  frequency: 1
+  component_types:
+  - models
+- tool_name: Partial Generator
+  score: '0.493'
+  frequency: 4
+  component_types:
+  - views
+- tool_name: Action Generator
+  score: '0.491'
+  frequency: 1
+  component_types:
+  - controllers
+- tool_name: Validation Generator
+  score: '0.490'
+  frequency: 1
+  component_types:
+  - models
+- tool_name: Scope Generator
+  score: '0.487'
+  frequency: 1
+  component_types:
+  - models
+- tool_name: Before Action Generator
+  score: '0.486'
+  frequency: 1
+  component_types:
+  - controllers
+- tool_name: API Route Generator
+  score: '0.486'
+  frequency: 1
+  component_types:
+  - controllers
+- tool_name: Helper Generator
+  score: '0.486'
+  frequency: 4
+  component_types:
+  - views
+metadata:
+  total_files: 9
+  total_gems: 134
+  takumi_rails_version: 0.1.0

@@ -1,11 +1,11 @@
 ---
-description: Create a comprehensive work ticket from high-level input, automatically generating detailed context, acceptance criteria, and technical specifications using a core team of three specialist agents.
-argument-hint: "<high-level description of work needed>"
+description: Through user feedback, conversation, and planning, create a comprehensive project ticket from high-level input, automatically generating detailed context, acceptance criteria, and technical specifications using a core team of three specialist agents.
+argument-hint: "<high-level description of project definition and scope>"
 ---
 
 ## Mission
 
-Transform high-level user input into a well-structured work ticket in markdown format with comprehensive details. This command uses a core team of three agents (`product-manager`, `ux-designer`, `senior-software-engineer`) to handle all feature planning and specification in parallel. It focuses on **pragmatic startup estimation** to ensure tickets are scoped for rapid, iterative delivery.
+Transform high-level user input into a well-structured project ticket in markdown format with comprehensive details. This command uses a core team of three agents (`product-manager`, `ux-designer`, `senior-software-engineer`) to handle all feature planning and specification in parallel. It focuses on **pragmatic startup estimation** to ensure tickets are scoped for rapid, iterative delivery.
 
 **Pragmatic Startup Philosophy**:
 
@@ -19,7 +19,7 @@ Transform high-level user input into a well-structured work ticket in markdown f
 
 ## Core Agent Workflow
 
-For any feature request that isn't trivial (i.e., not LIGHT), this command follows a strict parallel execution rule using the core agent trio.
+This command follows a strict parallel execution rule using the core agent trio and a conversation based planning cycle.
 
 If the Linear MCP is available, create the ticket in Linear, otherwise create it in an existing tickets folder in the
 repo.
@@ -45,45 +45,9 @@ repo.
 
 ## Ticket Generation Process
 
-### 1) Smart Research Depth Analysis
-
-The command first analyzes the request to determine if agents are needed at all.
-
-LIGHT Complexity → NO AGENTS
-
-- For typos, simple copy changes, minor style tweaks.
-- Create the ticket immediately.
-- Estimate: <2 hours.
-
-STANDARD / DEEP Complexity → CORE TRIO OF AGENTS
-
-- For new features, bug fixes, and architectural work.
-- The Core Trio is dispatched in parallel.
-- The depth (Standard vs. Deep) determines the scope of their investigation.
-
-**Override Flags (optional)**:
-
-- `--light`: Force minimal research (no agents).
-- `--standard` / `--deep`: Force investigation using the Core Trio.
-- `--single` / `--multi`: Control ticket splitting.
+This will ALWAYS be a DEEP complexity workflow.
 
 ### 2\) Scaled Investigation Strategy
-
-#### LIGHT Research Pattern (Trivial Tickets)
-
-NO AGENTS NEEDED.
-
-1. Generate ticket title and description directly from the request.
-2. Set pragmatic estimate (e.g., 1 hour).
-3. Create ticket and finish.
-
-#### STANDARD Research Pattern (Default for Features)
-
-The Core Trio is dispatched with a standard scope:
-
-- **`product-manager`**: Define user stories and success criteria for the MVP.
-- **`ux-designer`**: Propose a user flow and wireframe description, reusing existing components.
-- **`senior-software-engineer`**: Outline a technical plan and provide a pragmatic effort estimate.
 
 #### DEEP Spike Pattern (Complex or Vague Tickets)
 
@@ -93,9 +57,9 @@ The Core Trio is dispatched with a deeper scope:
 - **`ux-designer`**: Create a detailed design brief, including edge cases and state machines.
 - **`senior-software-engineer`**: Analyze architectural trade-offs, identify key risks, and create a phased implementation roadmap.
 
-### 3\) Generate Ticket Content
+### 3\) Generate Project Content
 
-Findings from the three agents are synthesized into a comprehensive ticket.
+Findings from the three agents are synthesized into a comprehensive project.
 
 #### Description Structure
 
@@ -146,12 +110,6 @@ Findings from the three agents are synthesized into a comprehensive ticket.
 - **Potential Gotchas**: Query performance will be critical; ensure database indexes are added.
 ```
 
-### 4\) Smart Ticket Creation
+### 4\) Output & Confirmation
 
-- **If total estimated effort is ≤ 2 days**: A single, comprehensive ticket is created.
-- **If total estimated effort is \> 2 days**: The work is automatically broken down into 2-3 smaller, interconnected tickets (e.g., "Part 1: Backend API," "Part 2: Frontend UI"), each with its own scope and estimate.
-
-### 5\) Output & Confirmation
-
-The command finishes by creating the work ticket and returning the filepath for
-the newly created ticket.
+The command finishes by creating the project and returning the filepath for the newly created project.
