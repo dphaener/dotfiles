@@ -5,9 +5,10 @@
 set -e
 source "$(dirname "$0")/helpers.sh"
 
-# Helper function to set up ASDF PATH
+# Helper function to set up ASDF PATH and environment
 setup_asdf_path() {
-    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+    export ASDF_DATA_DIR="${ASDF_DATA_DIR:-$HOME/.asdf}"
+    export PATH="$ASDF_DATA_DIR/shims:$PATH"
 }
 
 install_asdf() {
@@ -37,13 +38,12 @@ install_asdf() {
         setup_asdf_path
         
     elif is_linux; then
-        # For Linux, we'll use the official download method
+        # For Linux, download pre-compiled binary
         # First ensure dependencies are installed
         package_install "curl"
         package_install "git"
         package_install "bash"
-        
-        # Download pre-compiled binary
+
         local asdf_version="0.18.0"
         local arch=""
         case "$(uname -m)" in
@@ -65,22 +65,18 @@ install_asdf() {
         info "Downloading ASDF v$asdf_version..."
         curl -L "https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf_${asdf_version}_linux_${arch}.tar.gz" -o "$temp_dir/asdf.tar.gz"
 
-        # Extract to temporary directory first
+        # Extract to temporary directory
         tar -xzf "$temp_dir/asdf.tar.gz" -C "$temp_dir"
 
-        # Create directory structure and move binary
-        mkdir -p "$HOME/.asdf/bin"
-        mv "$temp_dir/asdf" "$HOME/.asdf/bin/asdf"
-        chmod +x "$HOME/.asdf/bin/asdf"
+        # Create shims directory and move binary there
+        mkdir -p "$HOME/.asdf/shims"
+        mv "$temp_dir/asdf" "$HOME/.asdf/shims/asdf"
+        chmod +x "$HOME/.asdf/shims/asdf"
 
         rm -rf "$temp_dir"
 
-        # Set up completions
-        mkdir -p "$HOME/.asdf/completions"
-        "$HOME/.asdf/bin/asdf" completion zsh > "$HOME/.asdf/completions/_asdf"
-
         # Set up PATH for current session
-        export PATH="$HOME/.asdf/bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+        setup_asdf_path
     else
         error "Unsupported operating system for ASDF installation"
         return 1
