@@ -7,7 +7,7 @@ source "$(dirname "$0")/helpers.sh"
 
 # Helper function to set up ASDF PATH
 setup_asdf_path() {
-    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+    export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 }
 
 install_asdf() {
@@ -65,18 +65,22 @@ install_asdf() {
         info "Downloading ASDF v$asdf_version..."
         curl -L "https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf_${asdf_version}_linux_${arch}.tar.gz" -o "$temp_dir/asdf.tar.gz"
 
-        # Extract to home directory
-        mkdir -p "$HOME/.asdf"
-        tar -xzf "$temp_dir/asdf.tar.gz" -C "$HOME/.asdf"
+        # Extract to temporary directory first
+        tar -xzf "$temp_dir/asdf.tar.gz" -C "$temp_dir"
+
+        # Create directory structure and move binary
+        mkdir -p "$HOME/.asdf/bin"
+        mv "$temp_dir/asdf" "$HOME/.asdf/bin/asdf"
+        chmod +x "$HOME/.asdf/bin/asdf"
 
         rm -rf "$temp_dir"
 
         # Set up completions
         mkdir -p "$HOME/.asdf/completions"
-        "$HOME/.asdf/asdf" completion zsh > "$HOME/.asdf/completions/_asdf"
+        "$HOME/.asdf/bin/asdf" completion zsh > "$HOME/.asdf/completions/_asdf"
 
         # Set up PATH for current session
-        export PATH="$HOME/.asdf:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+        export PATH="$HOME/.asdf/bin:${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
     else
         error "Unsupported operating system for ASDF installation"
         return 1
