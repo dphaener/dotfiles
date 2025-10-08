@@ -41,8 +41,6 @@ repo.
 
 ---
 
---
-
 ## Ticket Generation Process
 
 ### 1) Smart Research Depth Analysis

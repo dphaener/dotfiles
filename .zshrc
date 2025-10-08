@@ -62,5 +62,3 @@ export GUM_CHOOSE_SELECTED_FOREGROUND="69"
 # Git Spice Completion
 autoload -U +X bashcompinit && bashcompinit
 complete -C /opt/homebrew/bin/gs gs
-
-. "$HOME/.local/bin/env"

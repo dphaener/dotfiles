@@ -7,7 +7,8 @@ argument-hint: "<ticket-id>"
 
 Use the senior-software-engineer to work on the specified ticket. Ensure the senior-software-engineer understands the conservative implementation requirements and only implements what is requested.
 
-Instruct the senior-software-engineer to leverage parallel sub agent execution when possible.
+Instruct the senior-software-engineer to leverage parallel sub agent execution when possible. Use any specialized
+agents that are available. The specialized agents are always defined in the projects claude settings.
 
 ## Workflow
 
