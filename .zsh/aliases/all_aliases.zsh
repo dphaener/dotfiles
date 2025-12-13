@@ -11,3 +11,5 @@ alias be='bundle exec'
 alias ls='lsd'
 
 alias zel='zellijinator'
+
+alias mux='tmuxinator'
