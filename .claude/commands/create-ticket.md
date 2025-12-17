@@ -56,6 +56,8 @@ LIGHT Complexity → NO AGENTS
 STANDARD / DEEP Complexity → CORE TRIO OF AGENTS
 
 - For new features, bug fixes, and architectural work.
+- Do in depth discovery work BEFORE dispatching the core trio, leveraging any MCP tools/resources available to you.
+- Leverage the AskUserQuestion tool when needed to clarify requirements.
 - The Core Trio is dispatched in parallel.
 - The depth (Standard vs. Deep) determines the scope of their investigation.
 

@@ -6,6 +6,9 @@ nvim/lazy-lock.json
 .claude/statsig/
 .claude/todos/
 .claude/file-history
+.claude/debug
+.claude/plans
+.claude/stats-cache.json
 .claude/history.jsonl
 .claude/commands/plan-from-jira.md
 

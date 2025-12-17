@@ -1,6 +1,7 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.ai.supermaven",
+    "lazyvim.plugins.extras.ai.claudecode",
+    "lazyvim.plugins.extras.ai.copilot-native",
     "lazyvim.plugins.extras.coding.mini-surround",
     "lazyvim.plugins.extras.coding.neogen",
     "lazyvim.plugins.extras.coding.yanky",

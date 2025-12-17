@@ -52,18 +52,4 @@ return {
       },
     },
   },
-  {
-    "saghen/blink.cmp",
-    dependencies = {
-      {
-        "hrsh7th/cmp-emoji",
-      },
-    },
-    opts_extend = { "sources.compat" },
-    opts = {
-      sources = {
-        compat = { "emoji" },
-      },
-    },
-  },
 }
