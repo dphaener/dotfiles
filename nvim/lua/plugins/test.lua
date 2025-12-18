@@ -40,26 +40,32 @@ return {
         mode = { "t" },
       },
     },
-    opts = {
-      adapters = {
-        "neotest-rspec",
-        ["neotest-vitest"] = {},
-      },
-      floating = {
-        max_width = max_width_percentage,
-        max_height = max_height_percentage,
-      },
-      strategies = {
-        integrated = {
-          height = max_row_height,
-          width = max_column_width,
+    opts = function()
+      return {
+        adapters = {
+          require("neotest-rspec")({
+            engine_support = false,
+            root_files = { "Gemfile" },
+            filter_dirs = { "node_modules", ".git", "tmp" },
+          }),
+          ["neotest-vitest"] = {},
         },
-      },
-      status = { virtual_text = false },
-      quickfix = {
-        enabled = false,
-        open = false,
-      },
-    },
+        floating = {
+          max_width = max_width_percentage,
+          max_height = max_height_percentage,
+        },
+        strategies = {
+          integrated = {
+            height = max_row_height,
+            width = max_column_width,
+          },
+        },
+        status = { virtual_text = false },
+        quickfix = {
+          enabled = false,
+          open = false,
+        },
+      }
+    end,
   },
 }
