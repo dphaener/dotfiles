@@ -1,0 +1,385 @@
+{
+  "version": 1,
+  "lastComputedDate": "2025-12-16",
+  "dailyActivity": [
+    {
+      "date": "2025-11-15",
+      "messageCount": 10669,
+      "sessionCount": 91,
+      "toolCallCount": 3742
+    },
+    {
+      "date": "2025-11-16",
+      "messageCount": 1657,
+      "sessionCount": 14,
+      "toolCallCount": 569
+    },
+    {
+      "date": "2025-11-17",
+      "messageCount": 2235,
+      "sessionCount": 15,
+      "toolCallCount": 829
+    },
+    {
+      "date": "2025-11-18",
+      "messageCount": 1275,
+      "sessionCount": 11,
+      "toolCallCount": 435
+    },
+    {
+      "date": "2025-11-19",
+      "messageCount": 2780,
+      "sessionCount": 30,
+      "toolCallCount": 1001
+    },
+    {
+      "date": "2025-11-20",
+      "messageCount": 1112,
+      "sessionCount": 12,
+      "toolCallCount": 400
+    },
+    {
+      "date": "2025-11-21",
+      "messageCount": 2504,
+      "sessionCount": 15,
+      "toolCallCount": 881
+    },
+    {
+      "date": "2025-11-22",
+      "messageCount": 497,
+      "sessionCount": 6,
+      "toolCallCount": 169
+    },
+    {
+      "date": "2025-11-23",
+      "messageCount": 8592,
+      "sessionCount": 191,
+      "toolCallCount": 3117
+    },
+    {
+      "date": "2025-11-24",
+      "messageCount": 8296,
+      "sessionCount": 227,
+      "toolCallCount": 2388
+    },
+    {
+      "date": "2025-11-25",
+      "messageCount": 791,
+      "sessionCount": 17,
+      "toolCallCount": 213
+    },
+    {
+      "date": "2025-11-26",
+      "messageCount": 7147,
+      "sessionCount": 188,
+      "toolCallCount": 2058
+    },
+    {
+      "date": "2025-11-27",
+      "messageCount": 3700,
+      "sessionCount": 104,
+      "toolCallCount": 1147
+    },
+    {
+      "date": "2025-11-28",
+      "messageCount": 1582,
+      "sessionCount": 16,
+      "toolCallCount": 547
+    },
+    {
+      "date": "2025-11-29",
+      "messageCount": 1806,
+      "sessionCount": 34,
+      "toolCallCount": 520
+    },
+    {
+      "date": "2025-11-30",
+      "messageCount": 2649,
+      "sessionCount": 43,
+      "toolCallCount": 919
+    },
+    {
+      "date": "2025-12-01",
+      "messageCount": 628,
+      "sessionCount": 8,
+      "toolCallCount": 218
+    },
+    {
+      "date": "2025-12-02",
+      "messageCount": 1217,
+      "sessionCount": 70,
+      "toolCallCount": 307
+    },
+    {
+      "date": "2025-12-03",
+      "messageCount": 1488,
+      "sessionCount": 24,
+      "toolCallCount": 498
+    },
+    {
+      "date": "2025-12-04",
+      "messageCount": 888,
+      "sessionCount": 4,
+      "toolCallCount": 319
+    },
+    {
+      "date": "2025-12-05",
+      "messageCount": 3669,
+      "sessionCount": 97,
+      "toolCallCount": 1152
+    },
+    {
+      "date": "2025-12-06",
+      "messageCount": 1971,
+      "sessionCount": 44,
+      "toolCallCount": 639
+    },
+    {
+      "date": "2025-12-08",
+      "messageCount": 1185,
+      "sessionCount": 64,
+      "toolCallCount": 318
+    },
+    {
+      "date": "2025-12-14",
+      "messageCount": 192,
+      "sessionCount": 6,
+      "toolCallCount": 42
+    },
+    {
+      "date": "2025-12-15",
+      "messageCount": 67,
+      "sessionCount": 1,
+      "toolCallCount": 15
+    },
+    {
+      "date": "2025-12-16",
+      "messageCount": 98,
+      "sessionCount": 2,
+      "toolCallCount": 24
+    }
+  ],
+  "dailyModelTokens": [
+    {
+      "date": "2025-11-15",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 3556142
+      }
+    },
+    {
+      "date": "2025-11-16",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 565527
+      }
+    },
+    {
+      "date": "2025-11-17",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 562138
+      }
+    },
+    {
+      "date": "2025-11-18",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 1029794
+      }
+    },
+    {
+      "date": "2025-11-19",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 1166665
+      }
+    },
+    {
+      "date": "2025-11-20",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 403837
+      }
+    },
+    {
+      "date": "2025-11-21",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 482063
+      }
+    },
+    {
+      "date": "2025-11-22",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 141004
+      }
+    },
+    {
+      "date": "2025-11-23",
+      "tokensByModel": {
+        "claude-sonnet-4-5-20250929": 1900784
+      }
+    },
+    {
+      "date": "2025-11-24",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 246842,
+        "claude-sonnet-4-5-20250929": 565604
+      }
+    },
+    {
+      "date": "2025-11-25",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 10620,
+        "claude-opus-4-5-20251101": 90630
+      }
+    },
+    {
+      "date": "2025-11-26",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 372512,
+        "claude-opus-4-5-20251101": 592124
+      }
+    },
+    {
+      "date": "2025-11-27",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 259392,
+        "claude-opus-4-5-20251101": 104945
+      }
+    },
+    {
+      "date": "2025-11-28",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 143076,
+        "claude-opus-4-5-20251101": 41599
+      }
+    },
+    {
+      "date": "2025-11-29",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 52575,
+        "claude-opus-4-5-20251101": 178381
+      }
+    },
+    {
+      "date": "2025-11-30",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 373013
+      }
+    },
+    {
+      "date": "2025-12-01",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 83832
+      }
+    },
+    {
+      "date": "2025-12-02",
+      "tokensByModel": {
+        "claude-opus-4-5-20251101": 52551,
+        "claude-sonnet-4-20250514": 46069
+      }
+    },
+    {
+      "date": "2025-12-03",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 167030
+      }
+    },
+    {
+      "date": "2025-12-04",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 98755
+      }
+    },
+    {
+      "date": "2025-12-05",
+      "tokensByModel": {
+        "claude-sonnet-4-20250514": 391186
+      }
+    },
+    {
+      "date": "2025-12-06",
+      "tokensByModel": {
+        "claude-opus-4-5-20251101": 7449,
+        "claude-sonnet-4-20250514": 197289
+      }
+    },
+    {
+      "date": "2025-12-08",
+      "tokensByModel": {
+        "claude-opus-4-5-20251101": 1208,
+        "claude-sonnet-4-20250514": 109898
+      }
+    },
+    {
+      "date": "2025-12-14",
+      "tokensByModel": {
+        "claude-opus-4-5-20251101": 30184
+      }
+    },
+    {
+      "date": "2025-12-15",
+      "tokensByModel": {
+        "claude-opus-4-5-20251101": 8620
+      }
+    },
+    {
+      "date": "2025-12-16",
+      "tokensByModel": {
+        "claude-opus-4-5-20251101": 10278
+      }
+    }
+  ],
+  "modelUsage": {
+    "claude-sonnet-4-20250514": {
+      "inputTokens": 49403,
+      "outputTokens": 2502686,
+      "cacheReadInputTokens": 708145208,
+      "cacheCreationInputTokens": 37567208,
+      "webSearchRequests": 0,
+      "costUSD": 0,
+      "contextWindow": 0
+    },
+    "claude-sonnet-4-5-20250929": {
+      "inputTokens": 1989610,
+      "outputTokens": 8383948,
+      "cacheReadInputTokens": 1195803121,
+      "cacheCreationInputTokens": 61832057,
+      "webSearchRequests": 0,
+      "costUSD": 0,
+      "contextWindow": 0
+    },
+    "claude-opus-4-5-20251101": {
+      "inputTokens": 128155,
+      "outputTokens": 989814,
+      "cacheReadInputTokens": 407286246,
+      "cacheCreationInputTokens": 24107284,
+      "webSearchRequests": 0,
+      "costUSD": 0,
+      "contextWindow": 0
+    }
+  },
+  "totalSessions": 1334,
+  "totalMessages": 68695,
+  "longestSession": {
+    "sessionId": "d53b83ed-0b13-496d-9265-ac9e3b1d868f",
+    "duration": 133457609,
+    "messageCount": 170,
+    "timestamp": "2025-12-01T03:05:07.136Z"
+  },
+  "firstSessionDate": "2025-11-15T01:27:13.466Z",
+  "hourCounts": {
+    "6": 3,
+    "7": 32,
+    "8": 173,
+    "9": 144,
+    "10": 93,
+    "11": 81,
+    "12": 47,
+    "13": 48,
+    "14": 67,
+    "15": 80,
+    "16": 91,
+    "17": 159,
+    "18": 124,
+    "19": 140,
+    "20": 44,
+    "21": 8
+  }
+}

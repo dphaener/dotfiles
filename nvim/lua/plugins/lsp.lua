@@ -67,6 +67,15 @@ return {
               .. vim.env.PATH:gsub(vim.fn.expand("~") .. "/.asdf/shims:", ""),
           },
         },
+        cssls = {
+          settings = {
+            css = {
+              lint = {
+                unknownAtRules = "ignore",
+              },
+            },
+          },
+        },
       },
     },
   },
