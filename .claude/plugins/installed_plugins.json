@@ -1,4 +1,114 @@
 {
   "version": 2,
-  "plugins": {}
+  "plugins": {
+    "shipit@flow": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/flow/shipit/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-02T02:58:58.234Z",
+        "lastUpdated": "2026-04-02T02:58:58.234Z"
+      }
+    ],
+    "frontend-design@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/frontend-design/unknown",
+        "version": "unknown",
+        "installedAt": "2026-04-02T03:04:01.605Z",
+        "lastUpdated": "2026-04-02T03:04:01.605Z"
+      }
+    ],
+    "context7@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/context7/unknown",
+        "version": "unknown",
+        "installedAt": "2026-04-02T03:04:01.620Z",
+        "lastUpdated": "2026-04-02T03:04:01.620Z"
+      }
+    ],
+    "playwright@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/playwright/unknown",
+        "version": "unknown",
+        "installedAt": "2026-04-02T03:04:01.629Z",
+        "lastUpdated": "2026-04-02T03:04:01.629Z"
+      }
+    ],
+    "typescript-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/typescript-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-02T03:04:01.634Z",
+        "lastUpdated": "2026-04-02T03:04:01.634Z"
+      }
+    ],
+    "skill-creator@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/skill-creator/unknown",
+        "version": "unknown",
+        "installedAt": "2026-04-02T03:04:01.647Z",
+        "lastUpdated": "2026-04-02T03:04:01.647Z"
+      }
+    ],
+    "pyright-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/pyright-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-02T03:04:01.652Z",
+        "lastUpdated": "2026-04-02T03:04:01.652Z"
+      }
+    ],
+    "plugin-dev@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/plugin-dev/unknown",
+        "version": "unknown",
+        "installedAt": "2026-04-02T03:04:01.672Z",
+        "lastUpdated": "2026-04-02T03:04:01.672Z"
+      }
+    ],
+    "gopls-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/gopls-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-02T03:04:01.678Z",
+        "lastUpdated": "2026-04-02T03:04:01.678Z"
+      }
+    ],
+    "lua-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/lua-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-02T03:04:01.682Z",
+        "lastUpdated": "2026-04-02T03:04:01.682Z"
+      }
+    ],
+    "ruby-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/claude-plugins-official/ruby-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-02T03:04:01.686Z",
+        "lastUpdated": "2026-04-02T03:04:01.686Z"
+      }
+    ],
+    "zap@flow": [
+      {
+        "scope": "user",
+        "installPath": "/Users/darinhaener/.claude/plugins/cache/flow/zap/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-04-05T20:59:00.829Z",
+        "lastUpdated": "2026-04-05T20:59:00.829Z",
+        "gitCommitSha": "33ade8995129ab67cc5437400361a060a577af56"
+      }
+    ]
+  }
 }

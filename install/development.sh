@@ -172,6 +172,11 @@ install_linux_packages() {
         curl
         bison
         libreadline-dev
+        libyaml-dev
+        libffi-dev
+        libgmp-dev
+        libsqlite3-dev
+        zlib1g-dev
         pdftk
         fd-find
         fzf

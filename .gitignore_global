@@ -43,3 +43,5 @@ PLAN.md
 
 tickets/
 docker/Dockerfile.dev
+
+.sisyphus

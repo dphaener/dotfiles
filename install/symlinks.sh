@@ -17,6 +17,7 @@ create_config_symlinks() {
     
     # Git configurations
     safe_link "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
+    safe_link "$DOTFILES_DIR/.gitconfig_macos" "$HOME/.gitconfig_macos"
     safe_link "$DOTFILES_DIR/.gitignore_global" "$HOME/.gitignore_global"
     
     # Zellij configuration

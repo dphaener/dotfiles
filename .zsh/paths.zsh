@@ -27,5 +27,7 @@ if [ -d "/usr/bin" ]; then
 fi
 
 # Ensure libpq is first in the path, otherwise the pq gem will not install
-# correctly
-PATH="/usr/local/opt/libpq/bin:$PATH"
+# correctly (macOS Homebrew path)
+if [ -d "/usr/local/opt/libpq/bin" ]; then
+  PATH="/usr/local/opt/libpq/bin:$PATH"
+fi

@@ -40,7 +40,7 @@ return {
     opts = {
       servers = {
         ruby_lsp = {
-          cmd = { "/Users/darinhaener/.asdf/shims/ruby-lsp" },
+          cmd = { vim.fn.expand("~/.asdf/shims/ruby-lsp") },
         },
         rubocop = {
           cmd = { "bundle", "exec", "rubocop", "--lsp" },

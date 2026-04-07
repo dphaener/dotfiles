@@ -58,7 +58,10 @@
   prune = true
 
 [credential]
-	helper = osxkeychain
+	helper = cache
+
+[includeIf "gitdir:/Users/"]
+	path = ~/.gitconfig_macos
 
 [pager]
   branch = false

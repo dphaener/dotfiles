@@ -8,8 +8,9 @@ alias vim='nvim'
 # Ruby/Rails
 alias be='bundle exec'
 
-alias ls='lsd'
+# lsd (if installed, otherwise default ls)
+command -v lsd &>/dev/null && alias ls='lsd'
 
-alias zel='zellijinator'
-
-alias mux='tmuxinator'
+# Session managers (if installed)
+command -v zellijinator &>/dev/null && alias zel='zellijinator'
+command -v tmuxinator &>/dev/null && alias mux='tmuxinator'

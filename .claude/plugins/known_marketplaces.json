@@ -5,6 +5,14 @@
       "repo": "anthropics/claude-plugins-official"
     },
     "installLocation": "/Users/darinhaener/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2025-12-18T02:37:31.436Z"
+    "lastUpdated": "2026-04-07T01:10:30.806Z"
+  },
+  "flow": {
+    "source": {
+      "source": "directory",
+      "path": "/Users/darinhaener/code/flow"
+    },
+    "installLocation": "/Users/darinhaener/code/flow",
+    "lastUpdated": "2026-04-05T20:55:17.632Z"
   }
 }
