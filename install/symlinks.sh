@@ -10,6 +10,7 @@ create_config_symlinks() {
     
     # Zsh configurations
     safe_link "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
+    safe_link "$DOTFILES_DIR/.zsh" "$HOME/.zsh"
     safe_link "$DOTFILES_DIR/.zshrc_user_default" "$HOME/.zshrc_user_default"
     if is_linux; then
         safe_link "$DOTFILES_DIR/.zshrc_linux_root" "$HOME/.zshrc_linux_root"
