@@ -44,7 +44,7 @@ install_asdf() {
         package_install "git"
         package_install "bash"
 
-        local asdf_version="0.18.0"
+        local asdf_version="0.18.1"
         local arch=""
         case "$(uname -m)" in
             x86_64)
@@ -63,7 +63,7 @@ install_asdf() {
         temp_dir=$(mktemp -d)
 
         info "Downloading ASDF v$asdf_version..."
-        curl -L "https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf_${asdf_version}_linux_${arch}.tar.gz" -o "$temp_dir/asdf.tar.gz"
+        curl -fsSL "https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf-v${asdf_version}-linux-${arch}.tar.gz" -o "$temp_dir/asdf.tar.gz"
 
         # Extract to temporary directory
         tar -xzf "$temp_dir/asdf.tar.gz" -C "$temp_dir"
