@@ -1,0 +1,150 @@
+{
+  "skill_name": "humanize",
+  "evals": [
+    {
+      "id": 0,
+      "name": "slack-announcement",
+      "prompt": "humanize this before I post it in #team-updates:\n\n\"Hi everyone! 🚀 I'm thrilled to announce that the rate-limiting middleware rollout is now complete! 🎉\\n\\nKey highlights:\\n- **Adaptive throttling:** Requests are now smoothly throttled based on live load\\n- **Zero downtime:** The rollout was seamless across all regions\\n- **Improved resilience:** The system now gracefully handles traffic spikes\\n\\nThis shipped in v2.14.3 (PR #482). It's not just a performance fix — it's a foundational upgrade that will empower every downstream team. Please don't hesitate to reach out if you have any questions or concerns!\"\n\nSave the humanized version to output.md",
+      "expected_output": "A short, casual Slack message that leads with the outcome, keeps v2.14.3 and PR #482, drops the bullet wall, emoji decoration, 'seamless/empower/gracefully/thrilled' vocabulary, the 'it's not just X' construction, and the corporate closer.",
+      "assertions": [
+        "Preserves the facts: version v2.14.3 and PR #482 both appear in the output",
+        "Introduces no NEW facts: every claim in the output traces back to the input",
+        "Removes AI vocabulary: none of 'seamless(ly)', 'empower', 'gracefully', 'thrilled' appear",
+        "Closer handled generically: no 'don't hesitate to reach out' formula AND no forced faux-casual substitute; a genuine plain closer or no closer both pass",
+        "No 'it's not just X — it's Y' or 'not only... but also' construction",
+        "Reads as chat, not a report: no bolded-label bullet wall, output is meaningfully shorter than the input"
+      ],
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "long-form-doc",
+      "prompt": "a section of my design doc got flagged as obviously AI-written. de-AI it and save to output.md\n\n\"In today's fast-paced software landscape, it's crucial that we standardize how services expose feature flags. Currently, every team leverages a different mechanism for toggling functionality, which creates significant friction. It's important to note that this fragmentation is not just an operational inconvenience — it's a fundamental barrier to safe rollouts.\\n\\nA unified feature-flag service would offer several key advantages. Not only would it streamline releases, but it would also enhance reliability and foster consistency across teams. Furthermore, it would empower engineers to ship faster while maintaining robust safety nets.\\n\\nIn conclusion, investing in this shared capability is essential for our long-term velocity.\"",
+      "expected_output": "A shorter, direct rewrite whose first sentence already states the problem or the recommendation. The filler openers, the 'it's important to note' hedge, the 'not just X — it's Y' construction, the buzzword cluster, and the 'In conclusion' paragraph are all gone, and the underlying argument survives untouched: every team toggles flags its own way, and one shared service would fix that.",
+      "assertions": [
+        "Cuts the throat-clearing: no 'In today's fast-paced' opener and no 'In conclusion' paragraph",
+        "Removes the AI vocabulary cluster: none of 'leverages', 'leveraging', 'streamline', 'foster', 'empower', 'robust' appear",
+        "Preserves the core argument without inventing new facts (no fabricated counts, history, or mechanisms not in the input)",
+        "Leads with the point: the problem or recommendation appears in the first sentence, not after setup",
+        "No aphoristic mic-drop ending: the final line is a plain statement or next step, not a rhetorical drumbeat",
+        "No injected bold labels: the input had no labeled sections, so patterns like '**Why it matters:**', '**Bottom line:**' must not appear",
+        "Output is meaningfully shorter than the input (padding cut, not rephrased)"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "pr-description",
+      "prompt": "my PR description came out reading like a product brochure. humanize it; result goes in output.md:\n\n\"## Overview\\nThis PR introduces a comprehensive cache-warming script that leverages the Redis CLI to seamlessly pre-populate hot keys after a deploy.\\n\\n## Key Changes\\n- **Automated warming:** Utilizes redis-cli to streamline cache population\\n- **Config validation:** Ensures all required cache keys are properly defined\\n- **Developer experience:** Significantly enhances the post-deploy experience for on-call engineers\\n\\n## Testing\\nThe script has been thoroughly tested and works flawlessly across all supported environments. Please don't hesitate to reach out if you have any questions!\"",
+      "expected_output": "A matter-of-fact PR description an engineer would actually write. Redis/redis-cli, cache-warming, hot keys, and config validation all survive; the marketing adjectives, the bolded-label bullet wall, the 'works flawlessly' claim, and the sign-off do not. The testing section claims only what the input supports.",
+      "assertions": [
+        "Preserves the facts: redis-cli / Redis, cache-warming, hot keys, and config validation all still mentioned",
+        "Introduces no NEW facts: no fabricated testing platforms, failure-mode tests, or motivation narratives absent from the input",
+        "Removes marketing adjectives: none of 'comprehensive', 'seamless(ly)', 'streamlined', 'significantly enhances' appear",
+        "No overclaiming beyond the input: doesn't say 'works flawlessly'; preserving/softening the input's own testing claim passes, fabricating new testing detail fails",
+        "No bolded-label bullet wall (bullets/headers allowed, but not the '**Label:** text' pattern on every line)"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "casual-slack-dm",
+      "prompt": "reply to priya for me. her DM: \"hey the checkout page is showing stale prices again, is that from your release earlier?\" — what actually happened: not my release; a CDN cache entry went stale and never got invalidated; I'm clearing it right after standup. put the reply in output.md",
+      "expected_output": "One to three conversational sentences that open with the answer — the release wasn't the cause — then name the stale CDN cache entry and the after-standup fix. Nothing that reads like a ticket update: no bullets, no sign-off, no echoing Priya's question back at her.",
+      "assertions": [
+        "Short chat reply: 3 sentences or fewer per thought-block, no bullet points, no headers, meaningfully shorter than 60 words",
+        "Answers first: the 'not my release' denial or the stale-cache cause appears in the first sentence, before any elaboration",
+        "Preserves all three facts: not her release, stale CDN cache entry not invalidated, cleared after standup",
+        "Introduces no new facts: no invented ticket numbers, timelines beyond 'after standup', or root-cause detail not in the input",
+        "No formal register bleed: no 'Please don't hesitate', no 'I wanted to let you know', no restating Priya's question before answering",
+        "Uses contractions (at least one) and no AI vocabulary ('investigate', 'resolve', 'impacted') where plain words fit"
+      ],
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "pre-init-fallback-nudge",
+      "prompt": "humanize this before I send it: \"Please be advised that the migration script has been executed successfully and all records have been validated.\" save the result to output.md",
+      "expected_output": "Assumes evals run against a clean home directory: no ~/.claude/humanize/voice.md exists, and no coexisting personal humanize skill is installed. Under that assumption the skill has no profile to read, so it applies the generic ai-tells.md fallback only — strips the formal 'Please be advised' opener while preserving the two facts (migration script executed, records validated) — and appends exactly one nudge line after the rewrite recommending the user run /humanize-init to build a profile. On a machine where ~/.claude/humanize/voice.md already exists (e.g. an initialized dev machine), this case is EXPECTED TO FAIL, because the skill will read and apply that profile instead of taking the fallback path — that is correct per-spec behavior, not a regression.",
+      "assertions": [
+        "Applies generic de-AI treatment: the formal 'Please be advised' opener is removed or replaced with plain language",
+        "Preserves the facts: migration script execution and record validation are both still mentioned",
+        "Appends exactly one nudge line after the rewrite recommending '/humanize-init' (or an equivalent explicit init instruction) to build a personal voice profile",
+        "The nudge line comes after the rewrite, not before it and not in place of it",
+        "Output does not attempt to apply any named personal trait, quirk, or catchphrase, since no voice profile exists to draw one from"
+      ],
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "two-sentence-core-slack-reply",
+      "prompt": "reply to Morgan in the ticket thread with this, humanized. save to output.md\n\n\"@Morgan -> you're right for agents. I had views wrong: a plain or semantic view queried directly runs with the owner's rights, but a Cortex agent runs as the caller, and the caller needs SELECT on the semantic view *and* its base tables. Tested it on the audit account -> a role with only the view queries the view fine, but the agent fails on the base table until you grant it.\n\nThat changes the shape, not the answer. The 5 account_360 views sit on 2 schemas, `prod.core` and `prod.report_central`. `ar_agent_account_360_r` reads those 2 at schema grain, written the same per-schema way the tier roles are. Tier 2 is 140 schemas plus 169 from tier 1. New view on those 2 schemas -> one line in the dbt grants config. New backing schema -> one line in permifrost.\n\nOn tier 2 for those folks -> maybe, but that's a decision about 140 schemas, not about one agent.\n\nDiagram and code are on `feat/ab-1234-agent-access-role`. PR whenever you want it.\"",
+      "expected_output": "With no voice profile present, the reply opens with a two-sentence core: the first concedes the point and carries the tested mechanism (the agent runs as the caller, so the role needs the base tables), the second states the grant shape on prod.core and prod.report_central against the 140-schema alternative. Anything after the core is short. No closer, no branch or PR offer.",
+      "assertions": [
+        "The first two sentences are the core: sentence one is the concession and includes the agent-runs-as-the-caller mechanism; sentence two is the consequence (the grant shape)",
+        "Preserves the load-bearing facts: both schema names prod.core and prod.report_central appear, and the figure 140 appears",
+        "Anything after the two-sentence core is short (no more than three further sentences) and does not repeat the core",
+        "Drops the padding: no 'I had views wrong' narrative and no 'PR whenever you want it' closer",
+        "Introduces no NEW facts: every claim in the output traces back to the input"
+      ],
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "honesty-tells-status-update",
+      "prompt": "clean this status update up before I post it in #platform. context: I wrote the retry change but haven't run the test suite yet, and I haven't load-tested it. save to output.md\n\n\"Quick update on the webhook retry work — no real urgency on this. I've added tests and the new retry logic is robust and significantly improves delivery reliability. It should mostly work for the edge cases too. Verification: confirmed retries behave as expected across scenarios.\"",
+      "expected_output": "A short update that says the retry change is written and the tests have not been run yet, with no claim of improved reliability, no 'no real urgency' clause, no 'robust', and no verification sentence claiming checks that did not happen.",
+      "assertions": [
+        "States plainly that the test suite has not been run (or that verification is still to do); does not say tests were added and passing",
+        "Removes 'no real urgency' and does not replace it with another urgency claim",
+        "Removes 'robust' and 'significantly improves' and does not substitute other unmeasured praise",
+        "Does not keep the 'should mostly work' hedge; either says it is untested or drops the claim",
+        "Does not claim retries were confirmed across scenarios",
+        "Introduces no NEW facts"
+      ],
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "correcting-someone-reply",
+      "prompt": "reply to Sam for me, save to output.md. Sam asked: \"can we just drop the old grant from the yaml and let it age out?\" What's true: permifrost revokes any grant it doesn't find in the spec on the next apply, so removing the line revokes it at the next apply, it doesn't age out. If Sam wants it gone, removing the line is the right move.\n\nmy draft: \"Actually, to be clear, that's not how it works — grants don't age out, that's a common misconception. Permifrost revokes anything not in the spec on the next apply. So yes, removing the line works.\"",
+      "expected_output": "A reply that leads with the answer (yes, remove the line) and states the fact that permifrost revokes it on the next apply, without 'actually', 'to be clear', 'common misconception' or any framing of Sam as wrong.",
+      "assertions": [
+        "Opens with the answer to Sam's question (removing the line works / yes), not with a correction",
+        "States that permifrost revokes the grant at the next apply",
+        "Contains none of: 'actually', 'to be clear', 'misconception', 'not how it works'",
+        "Introduces no NEW facts"
+      ],
+      "files": []
+    },
+    {
+      "id": 8,
+      "name": "pr-description-follows-template",
+      "prompt": "humanize this PR description and put it in output.md. our repo's .github/pull_request_template.md is:\n\n## tl;dr\n<!-- Two sentences: what changes, and why now. -->\n\n## What changes\n<!-- What behaves differently and for whom. -->\n\n## Testing\nDone:\n<!-- One line per check: what ran, where, the result, then (hand) or (AI). -->\n\n## To review it\n<!-- What to check, and the result that means stop. -->\n\nthe draft:\n\n\"## Overview\nThis PR introduces a comprehensive fix that seamlessly resolves the stale-price issue on the checkout page by invalidating the CDN cache entry on every price update.\n\n## Key Changes\n- **Cache invalidation:** Price updates now purge the /checkout/* CDN path\n- **Logging:** Added a log line for each purge\n\n## Testing\n- Ran the purge against staging by hand; stale price cleared within 30s\n\nLet me know if you have any questions!\"",
+      "expected_output": "A PR description with exactly the template's headings in order (tl;dr, What changes, Testing with Done:, To review it), no HTML comments, the staging check kept with its 30s result and tagged (hand), no Overview/Key Changes headings, no 'comprehensive'/'seamlessly', and no sign-off.",
+      "assertions": [
+        "The `## ` headings are exactly tl;dr, What changes, Testing, To review it, in that order, with nothing above tl;dr",
+        "Contains no '<!--'",
+        "Keeps the staging purge check with its 30s result, tagged (hand)",
+        "Keeps the /checkout/* path and the log-line change",
+        "Drops 'comprehensive', 'seamlessly' and the 'Let me know' sign-off",
+        "Introduces no NEW facts"
+      ],
+      "files": []
+    },
+    {
+      "id": 9,
+      "name": "reply-matches-question",
+      "prompt": "humanize my reply to Jordan and save to output.md. Jordan asked: \"is the nightly export still running on the old cluster?\" Answer: no, it moved to the new cluster last Tuesday.\n\nmy draft: \"Great question! So the nightly export has an interesting history. Originally it ran on the old cluster, which had some capacity constraints that we discussed a while back. Over the past few weeks the team evaluated options and ultimately decided to migrate. As of last Tuesday, the export runs on the new cluster, which should give us more headroom going forward. Let me know if you want more details on the migration!\"",
+      "expected_output": "A one- or two-sentence reply that answers no, it moved to the new cluster last Tuesday, with no history narrative and no offer of more detail.",
+      "assertions": [
+        "Answers the question in the first sentence: no / it moved to the new cluster",
+        "Keeps 'last Tuesday'",
+        "Is no more than two sentences",
+        "Drops 'Great question!', the history narrative and the 'Let me know' offer",
+        "Introduces no NEW facts"
+      ],
+      "files": []
+    }
+  ]
+}

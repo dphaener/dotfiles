@@ -37,11 +37,36 @@ config/credentials/*.key
 .solargraph.yml
 
 darin_todo.md
-PLAN.md
 
 .serena
 
 tickets/
 docker/Dockerfile.dev
-
 .sisyphus
+.claude/skills/
+.claude/hooks/
+.claude/commands/
+.claude/commands/learn.md
+.claude/commands/learning-audit.md
+.claude/commands/skill-diagnose.md
+.claude/commands/skill-report.md
+.claude/skills/knowledge-extraction/
+.claude/skills/snowflake-query
+.claude/plans
+.claude/forge
+.claude/rules/backend/
+.claude/rules/frontend/
+.claude/rules/global.md
+.claude/settings.local.json
+.claude/*.lock
+.claude/worktrees
+
+# Forge
+.forge/
+
+**/.claude/.cc-writes/
+
+**/.claude/settings.local.json
+
+# Contract docs — kept locally, not checked in
+docs/contracts/

@@ -9,6 +9,7 @@ $kubernetes\
 $ruby\
 $golang\
 $nodejs\
+$python\
 $cmd_duration\
 $line_break\
 $character"""
@@ -60,6 +61,10 @@ format = "[$symbol($version)]($style) "
 
 [ruby]
 symbol = " "
+format = "[$symbol($version)]($style) "
+
+[python]
+symbol = " "
 format = "[$symbol($version)]($style) "
 
 [kubernetes]

@@ -1,0 +1,78 @@
+#!/bin/sh
+# Global steering-capture hook (PreToolUse / Bash).
+#
+# Watches for shell commands that put a pull request into review-ready state and
+# reminds the agent to run the `capture-agent-steering` skill. Adapted from a
+# repo-local version of this hook for cross-repo use: absolute paths, no Ruby, no asdf,
+# plus git-spice (`gs`) submit detection.
+#
+# Matched: gh pr create (non-draft), gh pr ready,
+#          gs {branch,stack,upstack,downstack} submit and the bs/ss/uss/dss
+#          shorthands, spelled gs | git spice | git-spice.
+# Ignored: --draft, --dry-run/-n, --no-publish, gh's -w/--web and --undo.
+#          git-spice --web still submits, so it is NOT ignored.
+#
+# Draft state for `gs submit` can come from spice.submit.draft or an interactive
+# prompt, so the command text alone is not conclusive. The skill re-checks
+# isDraft and exits quietly when the PR is still a draft.
+#
+# Opt out: AGENT_SESSION_LOG_DISABLED=1
+# Docs: ~/.claude/agent-sessions/README.md
+
+[ "${AGENT_SESSION_LOG_DISABLED:-}" = "1" ] && exit 0
+
+JQ=/usr/bin/jq
+AWK=/usr/bin/awk
+
+[ -x "$JQ" ] || exit 0
+[ -x "$AWK" ] || exit 0
+
+payload=$(cat)
+
+# Cheap prefilter so unrelated shell calls never pay for jq or awk.
+case "$payload" in
+  *'gh pr create'* | *'gh pr ready'* | *submit* | \
+  *'gs bs'* | *'gs ss'* | *'gs uss'* | *'gs dss'* | \
+  *'spice bs'* | *'spice ss'* | *'spice uss'* | *'spice dss'*) ;;
+  *) exit 0 ;;
+esac
+
+cwd=$(printf '%s' "$payload" | "$JQ" -r '.cwd // empty' 2>/dev/null)
+command=$(printf '%s' "$payload" | "$JQ" -r '.tool_input.command // .command // empty' 2>/dev/null)
+
+[ -n "$command" ] || exit 0
+
+# Defer to a repo-local capture hook when the project ships one (e.g. <org>/<repo>).
+[ -n "$cwd" ] && [ -e "$cwd/scripts/agent_session_hook" ] && exit 0
+
+printf '%s\n' "$command" | "$AWK" '
+  { buf = buf $0 "\n" }
+  END {
+    gsub(/&&|\|\||;/, "\n", buf)
+    n = split(buf, seg, "\n")
+
+    gsp = "^[ \t]*(gs|git-spice|git[ \t]+spice)[ \t]+"
+
+    for (i = 1; i <= n; i++) {
+      s = seg[i]
+
+      # gh pr create — a draft, dry run, or browser handoff is not review-ready.
+      if (s ~ /^[ \t]*gh[ \t]+pr[ \t]+create([ \t]|$)/ &&
+          s !~ /(^|[ \t])(-d|--draft|--dry-run|-w|--web)([ \t]|$)/) found = 1
+
+      # gh pr ready — --undo puts it back to draft.
+      if (s ~ /^[ \t]*gh[ \t]+pr[ \t]+ready([ \t]|$)/ &&
+          s !~ /(^|[ \t])--undo([ \t]|$)/) found = 1
+
+      # git-spice submit, long form and concatenated shorthand.
+      if ((s ~ gsp "(branch|stack|upstack|downstack)[ \t]+submit([ \t]|$)" ||
+           s ~ gsp "(bs|ss|uss|dss)([ \t]|$)") &&
+          s !~ /(^|[ \t])(--draft|-n|--dry-run|--no-publish)([ \t]|$)/) found = 1
+    }
+    exit(found ? 0 : 1)
+  }
+' || exit 0
+
+cat <<'JSON'
+{"hookSpecificOutput":{"hookEventName":"PreToolUse","additionalContext":"If this command succeeds, use the `capture-agent-steering` skill before handing off."}}
+JSON

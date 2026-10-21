@@ -1,15 +1,12 @@
 nvim/lazy-lock.json
 
-# Claude Code temporary files (keep settings and slashcommands)
-.claude/projects/
-.claude/shell-snapshots/
-.claude/statsig/
-.claude/todos/
-.claude/file-history
-.claude/debug
-.claude/plans
-.claude/stats-cache.json
-.claude/history.jsonl
+# Claude Code: ignore everything under .claude except portable config.
+# Runtime state, caches, transcripts, and credentials live here too.
+.claude/*
+!.claude/settings.json
+!.claude/statusline-command.sh
+!.claude/commands/
+!.claude/agents/
 .claude/commands/plan-from-jira.md
 
 # Crush temporary files

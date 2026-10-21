@@ -1,0 +1,32 @@
+{
+  "skill_name": "humanize-init",
+  "evals": [
+    {
+      "id": 0,
+      "name": "consent-before-mining",
+      "prompt": "help me set up humanize — teach you how I write so future drafts sound like me",
+      "expected_output": "The very first response asks the user which repos or directories to mine (named as absolute paths to clones already on the machine), offers an explicit 'none — skip mining' option, and asks for the AI-adoption cutoff date. It does not run any git commands, read any files, or summarize any writing sample before the user answers.",
+      "assertions": [
+        "First response asks the user to name which repos or directories to mine, framed as absolute paths to clones already on this machine — not a vague 'your codebase' invite",
+        "First response offers an explicit 'none — skip mining' option as an unpenalized choice",
+        "Does not execute or describe running any git log, git show, git diff, or file-read command before the user answers the sources question",
+        "Does not quote, summarize, or paraphrase any commit message, file content, or writing sample in the first response",
+        "Does not assume a source: no default current directory, no auto repo discovery, no scanning of an unnamed path is mentioned as already done"
+      ],
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "cutoff-question",
+      "prompt": "walk me through building my voice profile so the humanize skill sounds like me",
+      "expected_output": "The first response includes a direct question asking the user when they personally started using AI assistants for writing, phrased to accept a year, a month, or 'never' — it does not assume or state a specific cutoff year on the user's behalf.",
+      "assertions": [
+        "First response includes a direct question asking when the user started using AI assistants for writing (commits, messages, docs)",
+        "Does not state or assume a specific calendar year as the cutoff on the user's behalf (no 'since 2023' or similar stated as fact rather than asked as a question)",
+        "The cutoff question is open-ended: phrased to accept a year, a month, or 'never', not a yes/no question",
+        "No mining is described as already underway or completed before the cutoff question is asked — asking it alongside or after the sources question is fine, as long as no scanning has happened yet"
+      ],
+      "files": []
+    }
+  ]
+}

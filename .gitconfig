@@ -80,3 +80,10 @@
 
 [spice "branchCreate"]
 	commit = false
+
+[url "https://github.com/"]
+	insteadOf = git://
+
+# Machine-local overrides (e.g. work email). Not tracked. Keep last so it wins.
+[include]
+	path = ~/.gitconfig_local

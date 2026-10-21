@@ -68,11 +68,10 @@ export GUM_CHOOSE_HEADER_FOREGROUND="69"
 export GUM_CHOOSE_ITEM_FOREGROUND=""
 export GUM_CHOOSE_SELECTED_FOREGROUND="69"
 
-# Git Spice Completion
-if command -v gs &>/dev/null; then
-  autoload -U +X bashcompinit && bashcompinit
-  complete -C "$(command -v gs)" gs
-fi
+# Git Spice completion
+# `_git-spice` ships with the Homebrew formula and is auto-loaded by compinit.
+# Map the `gs` alias (see .zsh/aliases/git.zsh) to use git-spice's completion.
+(( $+functions[_git-spice] )) && compdef _git-spice gs
 
 # opencode
 [ -d "$HOME/.opencode/bin" ] && export PATH="$HOME/.opencode/bin:$PATH"
@@ -88,3 +87,22 @@ export BUN_INSTALL="$HOME/.bun"
 [ -d "$HOME/.antigravity/antigravity/bin" ] && export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 export RUBY_TCP_NO_FAST_FALLBACK=1
+
+# pnpm
+if [ -d "$HOME/Library/pnpm" ]; then
+  export PNPM_HOME="$HOME/Library/pnpm"
+  case ":$PATH:" in
+    *":$PNPM_HOME:"*) ;;
+    *) export PATH="$PNPM_HOME:$PATH" ;;
+  esac
+fi
+# pnpm end
+
+[ -d "/opt/homebrew/opt/postgresql@15/bin" ] && export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
+# Cortex CLI completion (disable via /settings in cortex)
+[[ -s ~/.zsh/completions/cortex.zsh ]] && source ~/.zsh/completions/cortex.zsh
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"

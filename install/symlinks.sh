@@ -70,8 +70,27 @@ create_config_directory_symlinks() {
     # Claude configuration
     safe_link "$DOTFILES_DIR/CLAUDE.md" "$HOME/.config/CLAUDE.md"
     safe_link "$DOTFILES_DIR/.claude" "$HOME/.claude"
-    
+    link_claude_extras
+
     success "Config directory symlinks created"
+}
+
+# Link the generic skills, hooks, and voice profile from claude/ into
+# ~/.claude. Unlike safe_link, an existing target is left alone so a
+# machine-local version (e.g. a work-specific skill) is never replaced.
+link_claude_extras() {
+    local src target
+    for src in "$DOTFILES_DIR/claude/skills"/* "$DOTFILES_DIR/claude/hooks"/* "$DOTFILES_DIR/claude/humanize"/*; do
+        [[ -e "$src" ]] || continue
+        target="$HOME/.claude/${src#"$DOTFILES_DIR/claude/"}"
+        if [[ -e "$target" || -L "$target" ]]; then
+            [[ "$(readlink "$target")" == "$src" ]] || warn "Keeping existing: $target"
+            continue
+        fi
+        ensure_dir "$(dirname "$target")"
+        ln -s "$src" "$target"
+        success "Linked: $target → $src"
+    done
 }
 
 create_bin_symlinks() {
