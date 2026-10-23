@@ -5,6 +5,7 @@ nvim/lazy-lock.json
 .claude/*
 !.claude/settings.json
 !.claude/statusline-command.sh
+!.claude/statusline.sh
 !.claude/commands/
 !.claude/agents/
 .claude/commands/plan-from-jira.md

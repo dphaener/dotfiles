@@ -21,7 +21,8 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline-command.sh"
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
   },
   "enabledPlugins": {
     "shipit@flow": true,
@@ -37,13 +38,14 @@
     "ruby-lsp@claude-plugins-official": true,
     "zap@flow": true,
     "mattpocock-skills@claude-plugins-official": true,
-    "worktrunk@worktrunk": true
+    "worktrunk@worktrunk": true,
+    "kb@flow": true
   },
   "extraKnownMarketplaces": {
     "flow": {
       "source": {
-        "source": "directory",
-        "path": "~/code/flow"
+        "source": "github",
+        "repo": "dphaener/flow"
       }
     },
     "worktrunk": {
