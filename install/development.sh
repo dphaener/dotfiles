@@ -1,128 +1,56 @@
 #!/bin/bash
 
-# Install development tools (ASDF, Ruby, Node.js, etc.)
+# Install development tools (mise, Ruby, Node.js, etc.)
 
 set -e
 source "$(dirname "$0")/helpers.sh"
 
-# Helper function to set up ASDF PATH and environment
-setup_asdf_path() {
-    export ASDF_DATA_DIR="${ASDF_DATA_DIR:-$HOME/.asdf}"
-    export PATH="$ASDF_DATA_DIR/shims:$PATH"
+# Helper function to put mise and its shims on PATH for this script
+setup_mise_path() {
+    export PATH="$HOME/.local/bin:${MISE_DATA_DIR:-$HOME/.local/share/mise}/shims:$PATH"
 }
 
-install_asdf() {
-    if command_exists asdf; then
-        info "ASDF already installed"
+install_mise() {
+    setup_mise_path
+
+    if command_exists mise; then
+        info "mise already installed"
         return 0
     fi
     
-    info "Installing ASDF..."
+    info "Installing mise..."
     
     if is_macos; then
         # Install via Homebrew on macOS
         if ! command_exists brew; then
-            error "Homebrew is required to install ASDF on macOS"
+            error "Homebrew is required to install mise on macOS"
             return 1
         fi
         
-        # Install dependencies
-        brew_install "coreutils"
-        brew_install "git"
-        brew_install "bash"
-        
-        # Install ASDF
-        brew_install "asdf"
-        
-        # Set up PATH for current session
-        setup_asdf_path
+        brew_install "mise"
         
     elif is_linux; then
-        # For Linux, download pre-compiled binary
-        # First ensure dependencies are installed
         package_install "curl"
-        package_install "git"
-        package_install "bash"
 
-        local asdf_version="0.18.1"
-        local arch=""
-        case "$(uname -m)" in
-            x86_64)
-                arch="amd64"
-                ;;
-            arm64|aarch64)
-                arch="arm64"
-                ;;
-            *)
-                error "Unsupported architecture: $(uname -m)"
-                return 1
-                ;;
-        esac
-
-        local temp_dir
-        temp_dir=$(mktemp -d)
-
-        info "Downloading ASDF v$asdf_version..."
-        curl -fsSL "https://github.com/asdf-vm/asdf/releases/download/v${asdf_version}/asdf-v${asdf_version}-linux-${arch}.tar.gz" -o "$temp_dir/asdf.tar.gz"
-
-        # Extract to temporary directory
-        tar -xzf "$temp_dir/asdf.tar.gz" -C "$temp_dir"
-
-        # Create shims directory and move binary there
-        mkdir -p "$HOME/.asdf/shims"
-        mv "$temp_dir/asdf" "$HOME/.asdf/shims/asdf"
-        chmod +x "$HOME/.asdf/shims/asdf"
-
-        rm -rf "$temp_dir"
-
-        # Set up PATH for current session
-        setup_asdf_path
+        # Official installer drops the binary in ~/.local/bin
+        curl -fsSL https://mise.run | sh
     else
-        error "Unsupported operating system for ASDF installation"
+        error "Unsupported operating system for mise installation"
         return 1
     fi
     
-    success "ASDF installed"
-}
-
-configure_asdf_plugins() {
-    info "Configuring ASDF plugins..."
-
-    # Set up ASDF PATH
-    setup_asdf_path
-    
-    # Add Ruby plugin
-    asdf_plugin_add "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
-    
-    # Add Node.js plugin
-    asdf_plugin_add "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
-    
-    # Import Node.js release team keyring
-    if [[ -x "${ASDF_DATA_DIR:-$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring" ]]; then
-        info "Importing Node.js release team keyring..."
-        bash -c "${ASDF_DATA_DIR:-$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring" 2>/dev/null || \
-            warn "Could not import Node.js keyring"
-    fi
-    
-    success "ASDF plugins configured"
+    success "mise installed"
 }
 
 install_tool_versions() {
-    info "Installing tool versions from .tool-versions..."
+    info "Installing tool versions from ~/.config/mise/config.toml..."
 
-    # Set up ASDF PATH
-    setup_asdf_path
+    setup_mise_path
     
-    # Change to dotfiles directory to use .tool-versions
+    # Run from $HOME so only the global config is resolved
     (
-        cd "$DOTFILES_DIR"
-        
-        # Install all tools specified in .tool-versions
-        if [[ -f ".tool-versions" ]]; then
-            asdf install
-        else
-            warn ".tool-versions file not found"
-        fi
+        cd "$HOME"
+        mise install
     )
     
     success "Tool versions installed"
@@ -131,13 +59,13 @@ install_tool_versions() {
 install_ruby_gems() {
     info "Installing essential Ruby gems..."
 
-    # Set up ASDF PATH
-    setup_asdf_path
+    setup_mise_path
     
     # Install gems
     gem_install "bundler"
     gem_install "rails"
     gem_install "neovim"
+    gem_install "ruby-lsp"
     
     success "Ruby gems installed"
 }
@@ -224,9 +152,8 @@ main() {
         run_step "build_from_source" "Building tools from source" build_from_source
     fi
     
-    # Install ASDF and languages
-    run_step "asdf_install" "Installing ASDF" install_asdf
-    run_step "asdf_plugins" "Configuring ASDF plugins" configure_asdf_plugins
+    # Install mise and languages
+    run_step "mise_install" "Installing mise" install_mise
     run_step "tool_versions" "Installing tool versions" install_tool_versions
     run_step "ruby_gems" "Installing Ruby gems" install_ruby_gems
     

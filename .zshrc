@@ -1,7 +1,6 @@
 source $HOME/.zsh/oh-my-zsh.zsh
 source $HOME/.zsh/paths.zsh
 source $HOME/.zsh/env.zsh
-source $HOME/.zsh/asdf.zsh
 source $HOME/.zsh/aliases/all_aliases.zsh
 
 bindkey '^l' autosuggest-accept
@@ -45,7 +44,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 export PGPASSWORD=password
-export ASDF_GOLANG_MOD_VERSION_ENABLED=true
 
 # Disable Spring
 export DISABLE_SPRING=true
@@ -107,4 +105,4 @@ if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
-eval "$(mise activate zsh)"
+command -v mise &>/dev/null && eval "$(mise activate zsh)"

@@ -27,9 +27,9 @@ create_config_symlinks() {
     ensure_dir "$HOME/.config/zellij/layouts"
     safe_link "$DOTFILES_DIR/.config/zellij/layouts" "$HOME/.config/zellij/layouts"
     
-    # ASDF configuration
-    safe_link "$DOTFILES_DIR/.asdfrc" "$HOME/.asdfrc"
-    safe_link "$DOTFILES_DIR/.tool-versions" "$HOME/.tool-versions"
+    # mise configuration (global tool versions)
+    ensure_dir "$HOME/.config/mise"
+    safe_link "$DOTFILES_DIR/.config/mise/config.toml" "$HOME/.config/mise/config.toml"
     
     # Ruby configuration
     safe_link "$DOTFILES_DIR/.gemrc" "$HOME/.gemrc"

@@ -1,0 +1,10 @@
+[tools]
+node = "24.22.1"
+ruby = "3.3.12"
+python = "3.14.8"
+go = "1.24.13"
+rust = "1.99.1"
+
+[settings]
+# Honor .ruby-version, .nvmrc, .node-version, .python-version, .go-version
+idiomatic_version_file_enable_tools = ["node", "ruby", "python", "go"]

@@ -43,8 +43,8 @@ The installation system is designed with the following principles:
   - Platform-specific configs (HammerSpoon on macOS)
 
 - **`development.sh`** - Development tools setup:
-  - ASDF version manager
-  - Ruby and Node.js via ASDF
+  - mise version manager
+  - Languages from ~/.config/mise/config.toml via mise
   - Essential Ruby gems
   - Fastmod (if Rust is available)
   - Linux: build tools and compilation from source

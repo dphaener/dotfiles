@@ -235,25 +235,6 @@ package_install() {
     fi
 }
 
-# Add an ASDF plugin if not already added
-asdf_plugin_add() {
-    local plugin="$1"
-    local url="${2:-}"
-    
-    if asdf plugin list | grep -q "^$plugin\$"; then
-        info "ASDF plugin already added: $plugin"
-        return 0
-    fi
-    
-    info "Adding ASDF plugin: $plugin"
-    if [[ -n "$url" ]]; then
-        asdf plugin add "$plugin" "$url"
-    else
-        asdf plugin add "$plugin"
-    fi
-    success "Added ASDF plugin: $plugin"
-}
-
 # Install a Ruby gem if not already installed
 gem_install() {
     local gem="$1"

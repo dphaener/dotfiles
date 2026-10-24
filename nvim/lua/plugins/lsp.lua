@@ -1,25 +1,13 @@
 local util = require("lspconfig").util
 
--- Get Node.js path from global ~/.tool-versions for copilot
+-- Get the global (~/.config/mise/config.toml) Node.js bin path for copilot
 local function get_global_nodejs_path()
-  local home = vim.fn.expand("~")
-  local tool_versions = home .. "/.tool-versions"
-
-  local file = io.open(tool_versions, "r")
-  if not file then
+  local result = vim.system({ "mise", "where", "node" }, { cwd = vim.fn.expand("~"), text = true }):wait()
+  if result.code ~= 0 then
     return nil
   end
 
-  for line in file:lines() do
-    local version = line:match("^nodejs%s+(.+)$")
-    if version then
-      file:close()
-      return home .. "/.asdf/installs/nodejs/" .. version .. "/bin"
-    end
-  end
-
-  file:close()
-  return nil
+  return vim.trim(result.stdout) .. "/bin"
 end
 
 return {
@@ -40,7 +28,7 @@ return {
     opts = {
       servers = {
         ruby_lsp = {
-          cmd = { vim.fn.expand("~/.asdf/shims/ruby-lsp") },
+          cmd = { "mise", "exec", "--", "ruby-lsp" },
         },
         rubocop = {
           cmd = { "bundle", "exec", "rubocop", "--lsp" },
@@ -61,10 +49,8 @@ return {
             "--stdio",
           },
           cmd_env = {
-            -- Override PATH to use Node.js from ~/.tool-versions instead of repo's Node.js
-            PATH = (get_global_nodejs_path() or "")
-              .. ":"
-              .. vim.env.PATH:gsub(vim.fn.expand("~") .. "/.asdf/shims:", ""),
+            -- Override PATH to use the global mise Node.js instead of repo's Node.js
+            PATH = (get_global_nodejs_path() or "") .. ":" .. vim.env.PATH,
           },
         },
         cssls = {
