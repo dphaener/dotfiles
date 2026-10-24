@@ -61,7 +61,11 @@ create_config_directory_symlinks() {
     # Ghostty configuration
     ensure_dir "$HOME/.config/ghostty"
     safe_link "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
-    
+
+    # Rex configuration
+    ensure_dir "$HOME/.config/rex"
+    safe_link "$DOTFILES_DIR/.config/rex/init.lua" "$HOME/.config/rex/init.lua"
+
     # Crush configuration
     ensure_dir "$HOME/.config/crush"
     safe_link "$DOTFILES_DIR/.config/crush/crush.json" "$HOME/.config/crush/crush.json"
