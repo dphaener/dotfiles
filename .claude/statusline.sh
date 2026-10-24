@@ -1,5 +1,5 @@
 #!/bin/bash
-# Minimal status line: model | context bar | git status | worktree
+# Minimal status line: model | context bar | cwd | git status | worktree
 input=$(cat)
 
 model=$(jq -r '.model.display_name // .model.id // "?"' <<<"$input")
@@ -50,9 +50,15 @@ if [ -n "$cwd" ] && git -C "$cwd" rev-parse --git-dir >/dev/null 2>&1; then
   fi
 fi
 
+# Working directory, with $HOME shown as ~
+dir_part=""
+tilde='~'
+[ -n "$cwd" ] && dir_part="${cwd/#$HOME/$tilde}"
+
 sep=" ${dim}│${reset} "
 out="$model"
 [ -n "$ctx" ]      && out+="${sep}${ctx}"
+[ -n "$dir_part" ] && out+="${sep}${dir_part}"
 [ -n "$git_part" ] && out+="${sep}${git_part}"
 [ -n "$wt_part" ]  && out+="${sep}${wt_part}"
 printf '%s' "$out"
